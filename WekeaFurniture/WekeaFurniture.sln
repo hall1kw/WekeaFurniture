@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WekeaFurniture", "WekeaFurniture\", "{358E9137-5A1E-44AA-9164-A197CC91DE91}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_51604"
+		Debug.AspNetCompiler.PhysicalPath = "WekeaFurniture\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51604\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_51604"
+		Release.AspNetCompiler.PhysicalPath = "WekeaFurniture\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51604\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "51604"
+		SlnRelativePath = "WekeaFurniture\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{358E9137-5A1E-44AA-9164-A197CC91DE91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{358E9137-5A1E-44AA-9164-A197CC91DE91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F89E9E7F-23B4-415C-9CAF-04B2B6CC4FCE}
+	EndGlobalSection
+EndGlobal
