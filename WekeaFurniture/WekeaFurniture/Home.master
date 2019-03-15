@@ -1,6 +1,14 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Home.Master.cs"%>
 
 <!DOCTYPE html>
+<script runat="server">
+
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("home.aspx?search=" + tbSearch.Text);
+    }
+</script>
+
 
 <html>
 <head runat="server">
@@ -55,8 +63,8 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search our catalog" aria-label="Search" style="width: 28%">
-      <button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>
+        <asp:TextBox ID="tbSearch" CssClass="form-control mr-sm-2" runat="server" placeholder="Search our catalog" aria-label="Search" style="width: 28%"></asp:TextBox>
+        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-warning my-2 my-sm-0" OnClick="btnSearch_Click"/>
     &nbsp;
     </form>
       <form action="Login.aspx">
