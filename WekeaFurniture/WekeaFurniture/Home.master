@@ -59,7 +59,10 @@
       <button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>
     &nbsp;
     </form>
-      <button class="btn btn-warning my-2 my-sm-0" type="submit">Login</button>
+      <form action="Login.aspx">
+          <button class="btn btn-warning my-2 my-sm-0" type="submit">Login</button>
+      </form>
+      
   </div>
 </nav>
                     <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/gradient.png" Width="100%" Height="20px" style="margin-top:-9px" />
