@@ -38,6 +38,11 @@
             text-align: center;
             background-color: #74253D;
         }
+        .auto-style4 {
+            text-align: center;
+            background-color: #74253D;
+            color: #FFC107;
+        }
     </style>
 </head>
 <body>
@@ -92,6 +97,12 @@
             </asp:ContentPlaceHolder>
         </div>
     </form>
+    <table style="width:100%;">
+        <tr>
+            <td class="auto-style4">Wekea Furniture<br />
+                Developed by Code for Cache</td>
+        </tr>
+    </table>
 </body>
 </html>
 
