@@ -24,22 +24,29 @@ public partial class Home : System.Web.UI.Page
     {
         Product product = new Product();
 
-        using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ProductsConnection"].ConnectionString))
+        try
         {
-            SqlCommand cmd = new SqlCommand("Select * From Products Where Name = %" + n + "%", connection);
-            connection.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ProductsConnection"].ConnectionString))
             {
-                product.id = reader["id"].ToString();
-                product.name = reader["name"].ToString();
-                product.price = Convert.ToDecimal(reader["price"]);
-                product.description = reader["description"].ToString();
-                product.imageurl = reader["imageurl"].ToString();
-                product.quantity = Convert.ToInt32(reader["quantity"]);
+                SqlCommand cmd = new SqlCommand("Select * From Products Where Name = %" + n + "%", connection);
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    product.id = reader["id"].ToString();
+                    product.name = reader["name"].ToString();
+                    product.price = Convert.ToDecimal(reader["price"]);
+                    product.description = reader["description"].ToString();
+                    product.imageurl = reader["imageurl"].ToString();
+                    product.quantity = Convert.ToInt32(reader["quantity"]);
+                }
             }
-        }
 
-        return product;
+            return product;
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 }
