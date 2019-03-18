@@ -6,15 +6,14 @@ using System.Web;
 /// <summary>
 /// Summary description for Product
 /// </summary>
-namespace WekeaFurniture
-{
+
+
     public class Product
     {
-        string id;
-        string name;
-        decimal price;
-        string description;
-        string imageurl;
-        int quantity;
+        public string id;
+        public string name;
+        public decimal price;
+        public string description;
+        public string imageurl;
+        public int quantity;
     }
-}

@@ -1,66 +1,38 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.master" AutoEventWireup="true" CodeFile="Home.aspx.cs" Inherits="Home" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <script type="text/javascript">
-        $(document).ready(function ()
-        {
-            $('#tbSearch').click(function ()
-            {
-                var search = $('#tbName').val();
-
-                $.ajax({
-                    url: 'Home.aspx/GetAllProduct',
-                    method: 'post',
-                    contentType: 'application/json',
-                    data: '{productName: ' + search + '}',
-                    dataType: 'json',
-                    success: function (data)
-                    {
-                        $('#txtId').val(data.d.id);
-                        $('#txtName').val(data.d.name);
-                        $('#txtQuantity').val(data.d.quantity);
-                        $('#txtPrice').val(data.d.price);
-                        $('#txtDesc').val(data.d.description);
-                        $('#txtImage').val(data.d.imageurl);
-                    },
-                    error: function (error)
-                    {
-                        alert(error);
-                    }
-                });
-            });
-        });
-    </script>
+    <style>        
+        body {
+            background-color: f8f9fa;
+        }
+        .newStyle1 {
+            font-family: Arial;
+        }
+        .auto-style1 {
+            width: 86px;
+            height: 46px;
+        }
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div class="jumbotron">
-        <h1>WeKeA</h1>
-    </div>
-    <asp:Table ID="Table1" runat="server" Height="216px" Width="285px">
-        <asp:TableRow>
-            <asp:TableCell>ID: </asp:TableCell>
-            <asp:TableCell><input id="txtId" type="text" /></asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>Name: </asp:TableCell>
-            <asp:TableCell><input id="txtName" type="text" /></asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>Quantity: </asp:TableCell>
-            <asp:TableCell><input id="txtQuantity" type="text" /></asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>Price: </asp:TableCell>
-            <asp:TableCell><input id="txtPrice" type="text" /></asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>Desc: </asp:TableCell>
-            <asp:TableCell><input id="txtDesc" type="text" /></asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>Image: </asp:TableCell>
-            <asp:TableCell><input id="txtImage" type="text" /></asp:TableCell>
-        </asp:TableRow>
-    </asp:Table>
+    
+    
+    <table style="width:100%;">
+        <tr>
+            <td style="width:66%;">Featured Products - Needs to be databound</td>
+            <td style="width:34%;">
+                <img alt="" src="Images/account-login.png" /><br />
+                Username:&nbsp;&nbsp;
+                <input id="Text1" type="text" /><br />
+                Password:&nbsp;&nbsp;&nbsp;
+                <input id="Text2" type="password" /></td>
+        </tr>
+        <tr>
+            <td style="width:66%;">&nbsp;</td>
+            <td style="width:34%;">&nbsp;</td>
+        </tr>
+    </table>
+    
+    
 </asp:Content>
 
