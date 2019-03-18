@@ -48,5 +48,6 @@ public partial class Home : System.Web.UI.Page
         {
             Console.WriteLine(e.Message);
         }
+        return null;
     }
 }
