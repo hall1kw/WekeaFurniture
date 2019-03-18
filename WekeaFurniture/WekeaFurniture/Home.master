@@ -19,19 +19,7 @@
     <link href="Content/site.css" rel="stylesheet" />
     <script src="Scripts/jquery-3.0.0.min.js"></script>
     <script src="Scripts/popper.min.js"></script>
-    <script src="Scripts/bootstrap.min.js"></script>
-    <style>        
-        body {
-            background-color: #74253d;
-        }
-        .newStyle1 {
-            font-family: Arial;
-        }
-        .auto-style1 {
-            width: 86px;
-            height: 46px;
-        }
-    </style>
+    <script src="Scripts/bootstrap.min.js"></script>   
 </head>
 <body>
     <form id="form1" runat="server">
