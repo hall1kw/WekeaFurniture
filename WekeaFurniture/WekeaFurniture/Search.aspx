@@ -5,8 +5,48 @@
         .auto-style4 {
             width: 60%;
         }
-        .auto-style5 {
-            margin-left: 0px;
+.dropbtn {
+  background-color: #782b42;
+  color: #ffc82e;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: inline-block; height: auto;}
+
+.dropdown:hover .dropbtn {background-color: #582b42; height: auto;}
+        .auto-style6 {
+            height: 3px;
+        }
+        .auto-style8 {
+            height: auto;
+        }
+        .auto-style9 {
+            text-align: left;
+            width: 144px;
         }
     </style>
     
@@ -18,53 +58,89 @@
         <td class="auto-style4" style="border: 1px solid;">Featured Products - Needs to be databound</td>
         <td style="width:60%;" class="text-right">
             <h2 class="text-center">Search</h2>
+            <form method="get" action="SearchResults.aspx">
+            <table style="width:100%;">
+                <tr>
+                    <td class="auto-style9">Item Number:</td>
+                    <td>
+                        <input id="ID" type="text" /></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style9">Item Name:</td>
+                    <td>
+                        <input id="Name" type="text" /></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="text-left" colspan="2">
+                        <h3>Search price range</h3>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style9">Minimum Price:</td>
+                    <td>
+                        <input id="MinPrice" type="text" /></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style9">Maximum Price:</td>
+                    <td>
+                        <input id="MaxPrice" type="text" /></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style9" rowspan="2">
+                        <div class="dropdown">
+                            <button class="dropbtn">Search by Room</button>
+                            <div class="dropdown-content">
+                                <select name="Room" multiple style="width:200px; height:auto">
+                                    <option value="Bedroom">Bedroom</option>
+                                    <option value="Kitchen">Kitchen</option>
+                                    <option value="LivingRoom">Living Room</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </td>
+                    <td class="auto-style6"></td>
+                    <td class="auto-style6"></td>
+                </tr>
+                <tr>
+                    <td class="auto-style8"></td>
+                    <td class="auto-style8"></td>
+                </tr>
+                <tr>
+                    <td class="text-left" colspan="2">Ctrl + Click to select multiple rooms / categories</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style9" rowspan="2"><div class="dropdown">
+                            <button class="dropbtn">Search by Categories</button>
+                            <div class="dropdown-content">
+                                <select name="Category" multiple style="width:200px; height:200px">
+                                    <option value="Beds">Beds</option>
+                                    <option value="Chairs">Chairs</option>
+                                    <option value="Couches">Couches</option>
+                                    <option value="Desks">Desks</option>
+                                    <option value="Dressers">Dressers</option>
+                                    <option value="Lamps">Lamps</option>
+                                    <option value="Tables">Tables</option>
+                                </select>
+                            </div>
+                        </div></td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
             <br />
-            <div class="text-left">
-            <asp:Table ID="Table1" runat="server" Height="216px" Width="346px" CssClass="auto-style5">
-        <asp:TableRow>
-            <asp:TableCell>ID: </asp:TableCell>
-            <asp:TableCell>
-                <asp:TextBox ID="tbId" runat="server" Text=""></asp:TextBox></asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>Name: </asp:TableCell>
-            <asp:TableCell>
-                <asp:TextBox ID="tbName" runat="server" Text=""></asp:TextBox></asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>Min Price: </asp:TableCell>
-            <asp:TableCell>
-                <asp:TextBox ID="tbMinPrice" runat="server" Text=""></asp:TextBox></asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>Max Price: </asp:TableCell>
-            <asp:TableCell>
-                <asp:TextBox ID="tbMaxPrice" runat="server" Text="" AutoPostBack="False" CausesValidation="False"></asp:TextBox></asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>Room</asp:TableCell>
-            <asp:TableCell>
-                <asp:CheckBox ID="cbKitchen" Text="Kitchen" runat="server" />
-                <asp:CheckBox ID="cbLivingRoom" Text="LivingRoom" runat="server" />
-                <asp:CheckBox ID="cbBedroom" Text="Bedroom" runat="server" />
-            </asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>Category</asp:TableCell>
-            <asp:TableCell>
-                <asp:CheckBox ID="cbChairs" Text="Chairs" runat="server" />
-                <asp:CheckBox ID="cbCouches" Text="Couches" runat="server" />
-                <asp:CheckBox ID="cbDesks" Text="Desks" runat="server" />
-                <asp:CheckBox ID="cbDressers" Text="Dressers" runat="server" />
-                <asp:CheckBox ID="cbLamps" Text="Lamps" runat="server" />
-                <asp:CheckBox ID="cbTables" Text="Tables" runat="server" />
-                <asp:CheckBox ID="cbBeds" Text="Beds" runat="server" />
-            </asp:TableCell>
-        </asp:TableRow>
-    </asp:Table>
-            </div>
             <br />
-            <input id="Reset1" type="reset" value="Reset" />&nbsp;<asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click" UseSubmitBehavior="False" /> </td>
+            <input id="Reset1" type="reset" value="Reset" />&nbsp;<input type="submit" value="Search" </td>
     </tr>
  
 </table>
