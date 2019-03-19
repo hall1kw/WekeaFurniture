@@ -2,11 +2,6 @@
 
 <!DOCTYPE html>
 <script runat="server">
-
-    protected void btnSearch_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("SearchResults.aspx?Name=" + tbSearch.Text);
-    }
 </script>
 
 
@@ -22,7 +17,7 @@
     <script src="Scripts/bootstrap.min.js"></script>
     <style>        
         body {
-            background-color: #FFF;
+            background-color: #74253d;
         }
         .newStyle1 {
             font-family: Arial;
@@ -31,46 +26,40 @@
             width: 86px;
             height: 46px;
         }
-        .auto-style2 {
-            color: #FFFF00;
-        }
-        .auto-style3 {
-            text-align: center;
-            background-color: #74253D;
-        }
-        .auto-style4 {
-            text-align: center;
-            background-color: #74253D;
-            color: #FFC107;
-        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <img alt="WeKea logo" class="auto-style1" src="Images/logoSmall.png" />
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Home.aspx">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Link One</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Search.aspx">Shop our store</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Link Two</a>
-                </li>
-        </ul>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Link One</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Shop our store
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Search products by name</a>
+          <a class="dropdown-item" href="#">Advanced Search</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Link Two</a>
+      </li>
+    </ul>
     <form class="form-inline my-2 my-lg-0">
-        <asp:TextBox ID="tbSearch" CssClass="form-control mr-sm-2" runat="server" placeholder="Search our catalog" aria-label="Search" style="width: 28%"></asp:TextBox>
-        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-warning my-2 my-sm-0" OnClick="btnSearch_Click"/>
+      <asp:TextBox class="form-control mr-sm-2" id="Search" placeholder="Search our catalog" aria-label="Search" style="width: 28%">
+      <asp:Button id="SearchButton" class="btn btn-warning my-2 my-sm-0" type="submit">Search</asp:Button>
     &nbsp;
     </form>
       <form action="Login.aspx">
@@ -79,17 +68,7 @@
       
   </div>
 </nav>
-                    <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/gradient.png" Width="100%" Height="20px" style="margin-top:-9px; margin-bottom:-9px" />
-
-
-        <br />
-    <table style="width:100%;">
-        <tr class="auto-style2">
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Room=Kitchen" style="color:#ffc82e;">Kitchen</a></td>
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Room=LivingRoom" style="color:#ffc82e;">Living Room</a></td>
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Room=Bedroom" style="color:#ffc82e;">Bedroom</a></td>
-        </tr>
-    </table>
+                    <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/gradient.png" Width="100%" Height="20px" style="margin-top:-9px" />
 
 
         <div>
@@ -97,12 +76,6 @@
             </asp:ContentPlaceHolder>
         </div>
     </form>
-    <table style="width:100%;">
-        <tr>
-            <td class="auto-style4">Wekea Furniture<br />
-                Developed by Code for Cache</td>
-        </tr>
-    </table>
 </body>
 </html>
 
