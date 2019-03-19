@@ -63,7 +63,7 @@
                 <tr>
                     <td class="auto-style9">Item Number:</td>
                     <td>
-                        <input id="ID" type="text" /></td>
+                        <input id="PID" type="text" /></td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
@@ -81,13 +81,13 @@
                 <tr>
                     <td class="auto-style9">Minimum Price:</td>
                     <td>
-                        <input id="MinPrice" type="text" /></td>
+                        <input id="MinP" type="text" /></td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
                     <td class="auto-style9">Maximum Price:</td>
                     <td>
-                        <input id="MaxPrice" type="text" /></td>
+                        <input id="MaxP" type="text" /></td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
@@ -95,7 +95,7 @@
                         <div class="dropdown">
                             <button class="dropbtn">Search by Room</button>
                             <div class="dropdown-content">
-                                <select name="Room" multiple style="width:200px; height:auto">
+                                <select name="Rm" multiple style="width:200px; height:auto">
                                     <option value="Bedroom">Bedroom</option>
                                     <option value="Kitchen">Kitchen</option>
                                     <option value="LivingRoom">Living Room</option>
@@ -119,7 +119,7 @@
                     <td class="auto-style9" rowspan="2"><div class="dropdown">
                             <button class="dropbtn">Search by Categories</button>
                             <div class="dropdown-content">
-                                <select name="Category" multiple style="width:200px; height:200px">
+                                <select name="Cat" multiple style="width:200px; height:200px">
                                     <option value="Beds">Beds</option>
                                     <option value="Chairs">Chairs</option>
                                     <option value="Couches">Couches</option>
