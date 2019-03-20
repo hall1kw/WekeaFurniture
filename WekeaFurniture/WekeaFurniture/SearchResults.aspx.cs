@@ -27,7 +27,7 @@ public partial class _Default : System.Web.UI.Page
             }
             if (!name.Equals("") && command.ToString().Equals("SELECT * FROM PRODUCTS WHERE "))
             {
-                command.Append("NAME LIKE '*" + name + "*'");
+                command.Append("NAME LIKE'%" + name +"%'");
             }
 
             dlSearchResults.DataSource = DataAccess.selectQuery(command.ToString());
