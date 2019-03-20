@@ -63,13 +63,13 @@
                 <tr>
                     <td class="auto-style9">Item Number:</td>
                     <td>
-                        <input id="PID" type="text" /></td>
+                        <input name="PID" type="text" /></td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
                     <td class="auto-style9">Item Name:</td>
                     <td>
-                        <input id="Name" type="text" /></td>
+                        <input name="Name" type="text" /></td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
@@ -81,13 +81,13 @@
                 <tr>
                     <td class="auto-style9">Minimum Price:</td>
                     <td>
-                        <input id="MinP" type="text" /></td>
+                        <input name="MinP" type="text" /></td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
                     <td class="auto-style9">Maximum Price:</td>
                     <td>
-                        <input id="MaxP" type="text" /></td>
+                        <input name="MaxP" type="text" /></td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
@@ -139,8 +139,12 @@
                 </tr>
             </table>
             <br />
-            <br />
-            <input id="Reset1" type="reset" value="Reset" />&nbsp;<input type="submit" value="Search" </td>
+            <input id="Reset1" type="reset" value="Reset" />&nbsp;<input type="submit" value="Search" /> 
+                </form>
+
+        </td>
+            
+        
     </tr>
  
 </table>
