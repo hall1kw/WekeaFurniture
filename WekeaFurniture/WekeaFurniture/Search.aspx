@@ -93,7 +93,7 @@
                 <tr>
                     <td class="auto-style9" rowspan="2">
                         <div class="dropdown">
-                            <button class="dropbtn">Search by Room</button>
+                            <button class="dropbtn" onclick="return false">Search by Room</button>
                             <div class="dropdown-content">
                                 <select name="Rm" multiple style="width:200px; height:auto">
                                     <option value="Bedroom">Bedroom</option>
@@ -117,7 +117,7 @@
                 </tr>
                 <tr>
                     <td class="auto-style9" rowspan="2"><div class="dropdown">
-                            <button class="dropbtn">Search by Categories</button>
+                            <button class="dropbtn" onclick="return false">Search by Categories</button>
                             <div class="dropdown-content">
                                 <select name="Cat" multiple style="width:200px; height:200px">
                                     <option value="Beds">Beds</option>
