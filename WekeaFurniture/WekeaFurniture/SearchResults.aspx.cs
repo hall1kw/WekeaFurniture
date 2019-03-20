@@ -13,11 +13,17 @@ public partial class _Default : System.Web.UI.Page
         if (!IsPostBack)
         {
             string id = Request.QueryString["PID"];
+            if (id == null) id = "";
             string name = Request.QueryString["Name"];
+            if (name == null) name = "";
             string minPrice = Request.QueryString["minP"];
+            if (minPrice == null) minPrice = "";
             string maxPrice = Request.QueryString["maxP"];
+            if (maxPrice == null) maxPrice = "";
             string room = Request.QueryString["Rm"];
+            if (room == null) room = "";
             string category = Request.QueryString["Cat"];
+            if (category == null) category = "";
 
             /*
              * KH - Construction of the SQL query.
@@ -52,7 +58,97 @@ public partial class _Default : System.Web.UI.Page
             {
                 command.Append(" AND Price <=" + maxPrice);
             }
-            if (room.Contains("Kitchen"))
+            if (room.Contains("Kitchen") && command.ToString().Equals("SELECT * FROM PRODUCTS WHERE "))
+            {
+                command.Append("IDROOM = 1");
+            } else if (room.Contains("Kitchen"))
+            {
+                command.Append("AND IDROOM = 1");
+            }
+            if (room.Contains("LivingRoom") && command.ToString().Equals("SELECT * FROM PRODUCTS WHERE "))
+            {
+                command.Append("IDROOM = 2");
+            }
+            else if (room.Contains("LivingRoom") && ((room.Contains("Kitchen") || (room.Contains("BedRoom")))))
+            {
+                command.Append("OR IDROOM = 2");
+            }
+            else if (room.Contains("LivingRoom"))
+            {
+                command.Append("AND IDROOM = 2");
+            }
+            if (room.Contains("Bedroom") && command.ToString().Equals("SELECT * FROM PRODUCTS WHERE "))
+            {
+                command.Append("IDROOM = 3");
+            }
+            else if (room.Contains("BedRoom") && ((room.Contains("Kitchen") || (room.Contains("LivingRoom")))))
+            {
+                command.Append("OR IDROOM = 2");
+            }
+            else if (room.Contains("Bedroom"))
+            {
+                command.Append("AND IDROOM = 3");
+            }
+            if (category != "")
+            {
+                if (!(command.ToString().Equals("SELECT * FROM PRODUCTS WHERE ")))
+                {
+                    command.Append("AND (");
+                }
+                if (category.Contains("Chairs") && (command.ToString().EndsWith("AND (") || command.ToString().EndsWith("WHERE ")))
+                {
+                    command.Append(" IDCAT=1");
+                } 
+                if (category.Contains("Couches") && (command.ToString().EndsWith("AND (") || command.ToString().EndsWith("WHERE ")))
+                {
+                    command.Append(" IDCAT=2");
+                } else if (category.Contains("Couches"))
+                {
+                    command.Append(" OR IDCAT=2");
+                }
+                if (category.Contains("Tables") && (command.ToString().EndsWith("AND (") || command.ToString().EndsWith("WHERE ")))
+                {
+                    command.Append(" IDCAT=3");
+                }
+                else if (category.Contains("Tables"))
+                {
+                    command.Append(" OR IDCAT=3");
+                }
+                if (category.Contains("Dressers") && (command.ToString().EndsWith("AND (") || command.ToString().EndsWith("WHERE ")))
+                {
+                    command.Append(" IDCAT=4");
+                }
+                else if (category.Contains("Dressers"))
+                {
+                    command.Append(" OR IDCAT=4");
+                }
+                if (category.Contains("Beds") && (command.ToString().EndsWith("AND (") || command.ToString().EndsWith("WHERE ")))
+                {
+                    command.Append(" IDCAT=5");
+                }
+                else if (category.Contains("Beds"))
+                {
+                    command.Append(" OR IDCAT=5");
+                }
+                if (category.Contains("Lamps") && (command.ToString().EndsWith("AND (") || command.ToString().EndsWith("WHERE ")))
+                {
+                    command.Append(" IDCAT=6");
+                }
+                else if (category.Contains("Lamps"))
+                {
+                    command.Append(" OR IDCAT=6");
+                }
+                if (category.Contains("Desks") && (command.ToString().EndsWith("AND (") || command.ToString().EndsWith("WHERE ")))
+                {
+                    command.Append(" IDCAT=7");
+                }
+                else if (category.Contains("Desks"))
+                {
+                    command.Append(" OR IDCAT=7");
+                }
+                if (command.ToString().Contains("AND ("))
+                    command.Append(")");
+            }
 
             dlSearchResults.DataSource = DataAccess.selectQuery(command.ToString());
             dlSearchResults.DataBind();
