@@ -48,18 +48,44 @@
             text-align: left;
             width: 144px;
         }
-    </style>
+        </style>
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <br />
-<table style="margin-left:20px; margin-right:-20px;">
+    <table>
     <tr>
-        <td class="auto-style4" style="border: 1px solid;">Featured Products - Needs to be databound</td>
-        <td style="width:60%;" class="text-right">
+        <td class="auto-style5"  style="width:250px; border-right-style:solid; border-right-width:3px; border-right-color:#782b42">
+            <div class="text-center">
+                <h3>Featured Products<br />
+                </h3>
+            </div>
+            <asp:DataList ID="dlSearchFeat" runat="server">
+                <ItemTemplate>
+                    <table style="width:100%;">
+                        <tr>
+                            <td class="text-center">
+                                <asp:Image ID="Image2" runat="server" style="width:200px; height:200px;" ImageUrl='<%# "/Images/ProductImages/" + Eval("IMAGE") %>' />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="text-center" ><strong>
+                                    <asp:HyperLink ID="Label1" style="color:#782b42;" runat="server" NavigateUrl='<%# "ProductDetail.aspx?ID="+Eval("ID") %>' Text='<%# Eval("NAME") %>'></asp:HyperLink>
+                                    </strong></h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:250px; border-bottom-style:solid; border-bottom-width:3px; border-bottom-color:#782b42;">$<asp:Label ID="Label2" runat="server" Text='<%# Eval("PRICE") %>'></asp:Label>
+                            </td>
+                        </tr>
+                    </table>
+                </ItemTemplate>
+            </asp:DataList>
+        </td>
+        <td class="text-right">
             <h2 class="text-center">Search</h2>
             <form method="get" action="SearchResults.aspx">
-            <table style="width:100%;">
+            <table style="width:100%;" align="center">
                 <tr>
                     <td class="auto-style9">Item Number:</td>
                     <td>
@@ -108,7 +134,7 @@
                     <td class="auto-style6"></td>
                 </tr>
                 <tr>
-                    <td class="auto-style8"></td>
+                    <td class="h-auto"></td>
                     <td class="auto-style8"></td>
                 </tr>
                 <tr>

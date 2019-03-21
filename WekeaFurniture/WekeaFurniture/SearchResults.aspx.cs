@@ -83,7 +83,7 @@ public partial class _Default : System.Web.UI.Page
             }
             else if (room.Contains("BedRoom") && ((room.Contains("Kitchen") || (room.Contains("LivingRoom")))))
             {
-                command.Append("OR IDROOM = 2");
+                command.Append("OR IDROOM = 3");
             }
             else if (room.Contains("Bedroom"))
             {
