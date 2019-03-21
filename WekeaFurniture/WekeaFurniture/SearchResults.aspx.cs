@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -152,6 +153,17 @@ public partial class _Default : System.Web.UI.Page
 
             dlSearchResults.DataSource = DataAccess.selectQuery(command.ToString());
             dlSearchResults.DataBind();
+
+            float count = dlSearchResults.Items.Count;
+            int finalCount;
+            if (count <= 5) finalCount = 1;
+            else if (count % 5 == 0) finalCount = (int) count / 5;
+            else finalCount = (int) count / 5 + 1;
+
+            dlSearchResFeat.DataSource = DataAccess.selectQuery("SELECT TOP " + finalCount + " * FROM PRODUCTS WHERE FEATURED = 1 ORDER BY NEWID()");
+            dlSearchResFeat.DataBind();
+
+
 
 
 
