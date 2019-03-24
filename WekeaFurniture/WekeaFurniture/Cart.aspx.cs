@@ -7,14 +7,15 @@ using System.Web.UI.WebControls;
 
 public partial class Cart : System.Web.UI.Page
 {
-    Cart thisCart;
+    ShoppingCart thisCart = null;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["thisCart"] == null)
         {
-            Session["thisCart"] = new Cart();
+            Session["thisCart"] = new ShoppingCart();
         }
-        thisCart = (Cart)Session["thisCart"];
+        thisCart = (ShoppingCart)Session["thisCart"];
+
         if (!IsPostBack)
         {
             FillData();
@@ -44,7 +45,7 @@ public partial class Cart : System.Web.UI.Page
 
     protected void gvShoppingCart_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        thisCart.Delete(e.RowIndex);
+        thisCart.Delete(e.RowIndex);    
         FillData();
     }
 

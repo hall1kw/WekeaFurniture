@@ -5,13 +5,13 @@ using System.Web;
 
 
 
-public class Cart
+public class ShoppingCart
 {
     public List<CartItem> _items;
 
     public List<CartItem> Items { get => _items; set => _items = value; }
 
-    public Cart()
+    public ShoppingCart()
     {
         Items = new List<CartItem>();
     }
