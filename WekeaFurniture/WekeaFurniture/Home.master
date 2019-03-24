@@ -34,6 +34,10 @@
         .auto-style2 {
             color: #FFFF00;
         }
+        .auto-style3 {
+            text-align: center;
+            background-color: #74253D;
+        }
         .auto-style4 {
             text-align: center;
             background-color: #74253D;
@@ -61,7 +65,7 @@
                     <a class="nav-link" href="/Search.aspx">Shop our store</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="Cart.aspx">Link Two</a>
+                    <a class="nav-link active" href="#">Link Two</a>
                 </li>
         </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -71,7 +75,7 @@
     </form>
       <form action="Login.aspx">
           <button class="btn btn-warning my-2 my-sm-0" type="submit">Login</button>
-      &nbsp;</form>
+      </form>
       
   </div>
 </nav>
@@ -96,7 +100,7 @@
     <table style="width:100%;">
         <tr>
             <td class="auto-style4">Wekea Furniture<br />
-                Developed by Code for Cache </td>
+                Developed by Code for Cache</td>
         </tr>
     </table>
 </body>
