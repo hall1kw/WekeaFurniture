@@ -65,7 +65,7 @@
                             </tr>
                             <tr>
                                 <td class="text-right">
-                                    <asp:Button ID="Button1" runat="server" Text="Add To Cart" />
+                                    <asp:Button ID="btnAddToCart" runat="server" Text="Add To Cart" OnClick="btnAddToCart_Click" />
                                 </td>
                             </tr>
                         </table>
