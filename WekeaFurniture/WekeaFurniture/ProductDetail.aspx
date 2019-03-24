@@ -31,7 +31,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="width:250px; border-bottom-style:solid; border-bottom-width:3px; border-bottom-color:#782b42" class="text-right">$<asp:Label ID="Label2" runat="server" Text='<%# Eval("PRICE") %>'></asp:Label>
+                            <td style="width:250px; border-bottom-style:solid; border-bottom-width:3px; border-bottom-color:#782b42" class="text-right">$<asp:Label ID="Label2" runat="server" Text='<%# Eval("PRICE")  %>'></asp:Label>
                             </td>
                         </tr>
                     </table>
