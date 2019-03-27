@@ -45,9 +45,10 @@
         } else
         {
             Random r = new Random();
-            int rInt = r.Next(0, 100000);
+            int rInt = r.Next(0, 1000);
+            string uniqueId = this.Session.SessionID;
             thisCart = new ShoppingCart();
-            cartID = rInt.ToString();
+            cartID = rInt.ToString() + uniqueId;
             HttpCookie cookie = new HttpCookie("cart", cartID);
             cookie.Expires = DateTime.Now.AddHours(2);
             Response.Cookies.Add(cookie);
