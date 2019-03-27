@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.master" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.master" CodeFile="Login.aspx.cs" Inherits="Login"%>
 
 <script runat="server">
 
@@ -48,6 +48,7 @@
            
         </table>
         <br />
+        <asp:Label ID="errorLabel" runat="server" Text="" ForeColor="Red" Font-Bold="true"></asp:Label><br />
         <asp:Button id="btnSignUp" class="btn btn-warning my-2 my-sm-0" runat="server" Text="Login"/>
 
     </form>

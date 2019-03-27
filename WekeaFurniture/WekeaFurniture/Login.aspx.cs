@@ -20,7 +20,14 @@ public partial class SignUp : System.Web.UI.Page
     protected void btnSignUp_Click(object sender, EventArgs e)
     {
         string query = "SELECT (*)Count FROM user WHERE email=" + email.Text + " AND password=" + pw.Text + ";";
-        DataAccess.selectQuery(query);
+        DataTable dt = DataAccess.selectQuery(query);
+        if (dt.Rows.Count.ToString() == "1")
+        {
+
+        } else
+        {
+            errorLabel.Text = "UserName does not exist. Sign Up";
+        }
 
 
     }
