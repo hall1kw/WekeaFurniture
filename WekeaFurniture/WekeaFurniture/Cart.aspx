@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-     <asp:GridView ID="gvShoppingCart" runat="server" AutoGenerateColumns="False" OnRowCancelingEdit="gvShoppingCart_RowCancelingEdit" OnRowDeleting="gvShoppingCart_RowDeleting" OnRowEditing="gvShoppingCart_RowEditing" OnRowUpdating="gvShoppingCart_RowUpdating">
+     <asp:GridView ID="gvShoppingCart" runat="server" AutoGenerateColumns="False" OnRowCancelingEdit="gvShoppingCart_RowCancelingEdit" OnRowDeleting="gvShoppingCart_RowDeleting" OnRowEditing="gvShoppingCart_RowEditing" OnRowUpdating="gvShoppingCart_RowUpdating" ClientIDMode="AutoID">
         <Columns>
             <asp:BoundField DataField="NAME" HeaderText="Product name" ReadOnly="True" />
             <asp:ImageField DataImageUrlField="IMAGE" DataImageUrlFormatString="~\Images\{0}" HeaderText="Image" ReadOnly="True">
@@ -19,7 +19,7 @@
             <asp:CommandField ShowDeleteButton="True" />
         </Columns>
     </asp:GridView>
-    <asp:Label ID="lblGrandTotal" runat="server" Visible="False"></asp:Label>
+    <asp:Label ID="lblGrandTotal" runat="server"  Visible="False"></asp:Label>
 
 </asp:Content>
 

@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.Expressions;
 
 public partial class Cart : System.Web.UI.Page
 {
-    ShoppingCart thisCart = null;
+    string newQ;
+    ShoppingCart thisCart;
+    TextBox txtQuantity;
+    
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["thisCart"] == null)
@@ -16,10 +21,11 @@ public partial class Cart : System.Web.UI.Page
         }
         thisCart = (ShoppingCart)Session["thisCart"];
 
-        if (!IsPostBack)
+        if (!Page.IsPostBack)
         {
             FillData();
         }
+
     }
 
     private void FillData()
@@ -51,11 +57,11 @@ public partial class Cart : System.Web.UI.Page
 
     protected void gvShoppingCart_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
-        TextBox txtQuantity = (TextBox)gvShoppingCart.Rows[e.RowIndex].Cells[3].Controls[0];
-        int quantity = Int32.Parse(txtQuantity.Text);
+        txtQuantity = (TextBox)gvShoppingCart.Rows[e.RowIndex].Cells[3].Controls[0];
+        int quantity = Int32.Parse(txtQuantity.Text);       
         thisCart.Update(e.RowIndex, quantity);
         gvShoppingCart.EditIndex = -1;
-        FillData();
+        FillData();        
     }
 
     protected void gvShoppingCart_RowEditing(object sender, GridViewEditEventArgs e)
