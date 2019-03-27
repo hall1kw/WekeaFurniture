@@ -23,11 +23,11 @@
     void Session_Start(object sender, EventArgs e)
     {
         //log in
-        //String userid = Request.Cookies["userid"].Value;
-        //String passHash = Request.Cookies["passHash"].Value;
+        String userid = Request.Cookies["userid"].Value;
+        String passHash = Request.Cookies["passHash"].Value;
 
         //if it can verify the user
-        //Session["userid"] = userid;
+        Session["userid"] = userid;
 
         //load the cart
 

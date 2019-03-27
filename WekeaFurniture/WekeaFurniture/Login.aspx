@@ -29,7 +29,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     
-    <form id="loginForm" method="post" action="Home.aspx">
+    <form id="loginForm" method="post" action="Validate.php">
         <h1>Login</h1>
         <table id="loginTable">
           <tr>
