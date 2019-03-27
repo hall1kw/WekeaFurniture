@@ -48,7 +48,7 @@
            
         </table>
         <br />
-        <asp:Label ID="errorLabel" runat="server" Text="" ForeColor="Red" Font-Bold="true"></asp:Label><br />
+        <asp:Button id="errorLabel" runat="server" Text="" ForeColor="Red" Font-Bold="true"></asp:Button><br />
         <asp:Button id="btnSignUp" class="btn btn-warning my-2 my-sm-0" runat="server" Text="Login"/>
 
     </form>
