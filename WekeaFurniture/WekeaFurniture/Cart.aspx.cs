@@ -11,10 +11,11 @@ public partial class Cart : System.Web.UI.Page
 {
     string newQ;
     ShoppingCart thisCart;
-    TextBox txtQuantity;
-    
+    private bool isEditMode = false;
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        
         if (Session["thisCart"] == null)
         {
             Session["thisCart"] = new ShoppingCart();
@@ -27,6 +28,16 @@ public partial class Cart : System.Web.UI.Page
         }
 
     }
+
+    protected bool IsInEditMode
+    {
+
+        get { return this.isEditMode; }
+
+        set { this.isEditMode = value; }
+
+    }
+
 
     private void FillData()
     {
@@ -57,7 +68,8 @@ public partial class Cart : System.Web.UI.Page
 
     protected void gvShoppingCart_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
-        txtQuantity = (TextBox)gvShoppingCart.Rows[e.RowIndex].Cells[3].Controls[0];
+        
+        TextBox txtQuantity = gvShoppingCart.Rows[e.RowIndex].FindControl("txt_Qty") as TextBox;
         int quantity = Int32.Parse(txtQuantity.Text);       
         thisCart.Update(e.RowIndex, quantity);
         gvShoppingCart.EditIndex = -1;
@@ -66,7 +78,10 @@ public partial class Cart : System.Web.UI.Page
 
     protected void gvShoppingCart_RowEditing(object sender, GridViewEditEventArgs e)
     {
+        isEditMode = true;
         gvShoppingCart.EditIndex = e.NewEditIndex;
         FillData();
     }
+
+    
 }
