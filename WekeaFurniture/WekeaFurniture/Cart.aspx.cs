@@ -49,7 +49,7 @@ public partial class Cart : System.Web.UI.Page
         }
         else
         {
-            lblGrandTotal.Text = string.Format("Grand Total = {0,19:C}", thisCart.GrandTotal);
+            lblGrandTotal.Text = string.Format("Your Cart's Total: {0,19:C}", thisCart.GrandTotal);
             lblGrandTotal.Visible = true;
         }
     }
@@ -69,7 +69,12 @@ public partial class Cart : System.Web.UI.Page
     protected void gvShoppingCart_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {        
         TextBox txtQuantity = gvShoppingCart.Rows[e.RowIndex].Cells[1].Controls[0] as TextBox;
-        int quantity = Int32.Parse(txtQuantity.Text);       
+        int quantity;
+        if (!Int32.TryParse(txtQuantity.Text, out quantity))
+        {
+            Response.Write("<script>alert('Please enter a valid number!')</script>");
+            return;
+        }
         thisCart.Update(e.RowIndex, quantity);
         gvShoppingCart.EditIndex = -1;
         FillData();        

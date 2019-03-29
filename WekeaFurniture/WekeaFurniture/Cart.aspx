@@ -49,7 +49,11 @@
             width: 752px;
         }
         .auto-style8 {
-            width: 463px;
+            width: 503px;
+        }
+        .auto-style10 {
+            text-align: right;
+            width: 909px;
         }
     </style>
 </head>
@@ -103,23 +107,27 @@
 
 
         <div>
-            <asp:GridView ID="gvShoppingCart" runat="server" AutoGenerateColumns="False" OnRowCancelingEdit="gvShoppingCart_RowCancelingEdit" OnRowDeleting="gvShoppingCart_RowDeleting" OnRowEditing="gvShoppingCart_RowEditing" OnRowUpdating="gvShoppingCart_RowUpdating" ClientIDMode="AutoID">
+            <div class="text-center">
+                <h4>Shopping Cart</h4>
+                <br />
+            </div>
+            <asp:GridView ID="gvShoppingCart" runat="server" AutoGenerateColumns="False" OnRowCancelingEdit="gvShoppingCart_RowCancelingEdit" OnRowDeleting="gvShoppingCart_RowDeleting" OnRowEditing="gvShoppingCart_RowEditing" OnRowUpdating="gvShoppingCart_RowUpdating" ClientIDMode="AutoID" HorizontalAlign="Center">
         <Columns>
             <asp:TemplateField HeaderText="Item">
                 <ItemTemplate>
                     <table class="auto-style7">
                         <tr>
-                            <td colspan="2" style="border-bottom-style: outset; border-bottom-width: 3px">
+                            <td colspan="2" style="margin-left:15px; border-bottom-style: outset; border-bottom-color:#74253D; border-bottom-width: 3px">
                                 <h5>
-                                    <asp:Label ID="Label2" runat="server" Text='<%# Eval("NAME") %>'></asp:Label>
+                                    <asp:Label ID="Label2" style="margin-left:15px;" runat="server" Text='<%# Eval("NAME") %>'></asp:Label>
                                 </h5>
                             </td>
-                            <td class="text-right" style="border-bottom-style: outset; border-bottom-width: 3px; border-bottom-color:#74253D;">Price per unit: $<asp:Label ID="Label4" runat="server" Text='<%# Eval("PRICE") %>'></asp:Label>
+                            <td class="text-right" style="border-bottom-style: outset; border-bottom-width: 3px; border-bottom-color:#74253D;">&nbsp;$<asp:Label style="margin-right:15px;" ID="Label4" runat="server" Text='<%# Eval("PRICE") %>'></asp:Label>
                             </td>
                         </tr>
                         <tr>
-                            <td rowspan="2" class="auto-style6">
-                                <asp:Image style="width:100px; height:100px;" ID="Image2" runat="server" ImageUrl='<%# "/Images/ProductImages/" + Eval("IMAGE") %>' />
+                            <td rowspan="2" style="margin-left:15px;" class="auto-style6">
+                                <asp:Image style="margin-left:15px; width:100px; height:100px;" ID="Image2" runat="server" ImageUrl='<%# "/Images/ProductImages/" + Eval("IMAGE") %>' />
                             </td>
                             <td rowspan="2" class="auto-style8">
                                 <asp:Label ID="Label3" runat="server" Text='<%# Eval("DESCRIPTION") %>'></asp:Label>
@@ -127,7 +135,7 @@
                             <td class="auto-style5">&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
-                            <td class="text-right">Total: $<asp:Label ID="Label5" runat="server" Text='<%# Double.Parse(Eval("PRICE").ToString()) * Int32.Parse(Eval("QUANTITY").ToString()) %>'></asp:Label>
+                            <td class="text-right">Total: $<asp:Label ID="Label5" runat="server" Text='<%# String.Format("{0:n}", Double.Parse(Eval("PRICE").ToString()) * Int32.Parse(Eval("QUANTITY").ToString())) %>'></asp:Label>
                             </td>
                         </tr>
                     </table>
@@ -139,7 +147,13 @@
         </Columns>
                 <EditRowStyle HorizontalAlign="Center" VerticalAlign="Top" />
     </asp:GridView>
+            <table style="width:800px;" align="center">
+                <tr>
+                    <td class="auto-style10">
     <asp:Label ID="lblGrandTotal" runat="server"  Visible="False"></asp:Label>
+                    </td>
+                </tr>
+            </table>
         </div>
     </form>
     <table style="width:100%;">
