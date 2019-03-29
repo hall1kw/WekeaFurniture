@@ -55,6 +55,19 @@
             text-align: right;
             width: 909px;
         }
+        .auto-style11 {
+            text-align: right;
+            height: 26px;
+            margin-left: 40px;
+        }
+        .newStyle2 {
+            font-family: Arial;
+            font-size: x-small;
+        }
+        .newStyle3 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: x-small;
+        }
     </style>
 </head>
 <body>
@@ -126,17 +139,22 @@
                             </td>
                         </tr>
                         <tr>
-                            <td rowspan="2" style="margin-left:15px;" class="auto-style6">
+                            <td rowspan="3" style="margin-left:15px;" class="auto-style6">
                                 <asp:Image style="margin-left:15px; width:100px; height:100px;" ID="Image2" runat="server" ImageUrl='<%# "/Images/ProductImages/" + Eval("IMAGE") %>' />
                             </td>
-                            <td rowspan="2" class="auto-style8">
+                            <td rowspan="3" class="auto-style8">
                                 <asp:Label ID="Label3" runat="server" Text='<%# Eval("DESCRIPTION") %>'></asp:Label>
                             </td>
                             <td class="auto-style5">&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
-                            <td class="text-right">Total: $<asp:Label ID="Label5" runat="server" Text='<%# String.Format("{0:n}", Double.Parse(Eval("PRICE").ToString()) * Int32.Parse(Eval("QUANTITY").ToString())) %>'></asp:Label>
+                            <td class="auto-style11">Total: $<asp:Label ID="Label5" runat="server" Text='<%# String.Format("{0:n}", Double.Parse(Eval("PRICE").ToString()) * Int32.Parse(Eval("QUANTITY").ToString())) %>'></asp:Label>
                             </td>
+                        </tr>
+                        <tr>
+                            <td class="auto-style11">
+                                <asp:Label ID="Label6" runat="server" CssClass="newStyle3" Text='<%# Eval("INVENTORY") %>'></asp:Label>
+                                <span class="newStyle2">&nbsp;in stock</span></td>
                         </tr>
                     </table>
                 </ItemTemplate>

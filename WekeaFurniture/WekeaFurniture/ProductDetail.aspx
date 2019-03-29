@@ -43,29 +43,33 @@
                     <ItemTemplate>
                         <table style="width:100%;">
                             <tr>
-                                <td>
+                                <td colspan="2">
                                     <h2>
                                         <asp:Label ID="Label1" runat="server" Text='<%# Eval("NAME") %>'></asp:Label>
                                     </h2>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td colspan="2">
                                     <asp:Image ID="Image2" runat="server" style="width:500px; height:500px;" ImageUrl='<%# "Images/ProductImages/" + Eval("IMAGE") %>' />
                                 </td>
                             </tr>
                             <tr>
-                                <td style="border-top-style:solid; border-top-color:#772b43; border-top-width:3px;">
+                                <td style="border-top-style:solid; border-top-color:#772b43; border-top-width:3px;" colspan="2">
                                     <asp:Label ID="Label3"  runat="server" Text='<%# Eval("DESCRIPTION") %>' Width="500px"></asp:Label>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="text-right">$<asp:Label ID="Label2" runat="server" Text='<%# Eval("PRICE") %>'></asp:Label>
+                                <td class="text-right" colspan="2">$<asp:Label ID="Label2" runat="server" Text='<%# Eval("PRICE") %>'></asp:Label>
                                 </td>
                             </tr>
                             <tr>
+                                <td class="text-left">
+                                    Currently in stock:
+                                    <asp:Label ID="Label4" runat="server" Text='<%# Eval("INVENTORY") %>'></asp:Label>
+                                </td>
                                 <td class="text-right">
-                                    <asp:Button ID="Button1" runat="server" Text="Add To Cart" OnClick="Button1_Click" UseSubmitBehavior="False" />
+                                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Add To Cart" UseSubmitBehavior="False" />
                                 </td>
                             </tr>
                         </table>

@@ -75,6 +75,13 @@ public partial class Cart : System.Web.UI.Page
             Response.Write("<script>alert('Please enter a valid number!')</script>");
             return;
         }
+        if (thisCart.Items[e.RowIndex].Inventory < quantity)
+        {
+            string error = "<script>alert('The number you requested, " + quantity + ", exceeds our current inventory of "
+                + thisCart.Items[e.RowIndex].Inventory + ". Please enter a lower number.')</script>";
+            Response.Write(error);
+            return;
+        }
         thisCart.Update(e.RowIndex, quantity);
         gvShoppingCart.EditIndex = -1;
         FillData();        
