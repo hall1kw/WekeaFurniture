@@ -67,9 +67,8 @@ public partial class Cart : System.Web.UI.Page
     }
 
     protected void gvShoppingCart_RowUpdating(object sender, GridViewUpdateEventArgs e)
-    {
-        
-        TextBox txtQuantity = gvShoppingCart.Rows[e.RowIndex].FindControl("txt_Qty") as TextBox;
+    {        
+        TextBox txtQuantity = gvShoppingCart.Rows[e.RowIndex].Cells[1].Controls[0] as TextBox;
         int quantity = Int32.Parse(txtQuantity.Text);       
         thisCart.Update(e.RowIndex, quantity);
         gvShoppingCart.EditIndex = -1;

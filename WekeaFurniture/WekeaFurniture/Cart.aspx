@@ -38,6 +38,19 @@
             background-color: #74253D;
             color: #FFC107;
         }
+        .auto-style5 {
+            text-align: right;
+            height: 74px;
+        }
+        .auto-style6 {
+            width: 103px;
+        }
+        .auto-style7 {
+            width: 752px;
+        }
+        .auto-style8 {
+            width: 463px;
+        }
     </style>
 </head>
 <body>
@@ -92,44 +105,39 @@
         <div>
             <asp:GridView ID="gvShoppingCart" runat="server" AutoGenerateColumns="False" OnRowCancelingEdit="gvShoppingCart_RowCancelingEdit" OnRowDeleting="gvShoppingCart_RowDeleting" OnRowEditing="gvShoppingCart_RowEditing" OnRowUpdating="gvShoppingCart_RowUpdating" ClientIDMode="AutoID">
         <Columns>
-            <asp:TemplateField>
+            <asp:TemplateField HeaderText="Item">
                 <ItemTemplate>
-                    <table style="width:600px;">
+                    <table class="auto-style7">
                         <tr>
-                            <td rowspan="2">
-                                <asp:Image ID="Image2" style="width:100px; height:100px;" runat="server" ImageUrl='<%# "Images/ProductImages/" + Eval("IMAGE") %>' />
+                            <td colspan="2" style="border-bottom-style: outset; border-bottom-width: 3px">
+                                <h5>
+                                    <asp:Label ID="Label2" runat="server" Text='<%# Eval("NAME") %>'></asp:Label>
+                                </h5>
                             </td>
-                            <td rowspan="2">
+                            <td class="text-right" style="border-bottom-style: outset; border-bottom-width: 3px; border-bottom-color:#74253D;">Price per unit: $<asp:Label ID="Label4" runat="server" Text='<%# Eval("PRICE") %>'></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" class="auto-style6">
+                                <asp:Image style="width:100px; height:100px;" ID="Image2" runat="server" ImageUrl='<%# "/Images/ProductImages/" + Eval("IMAGE") %>' />
+                            </td>
+                            <td rowspan="2" class="auto-style8">
                                 <asp:Label ID="Label3" runat="server" Text='<%# Eval("DESCRIPTION") %>'></asp:Label>
                             </td>
-                            <td class="text-right" style="width:150px;">Price per unit: $<asp:Label ID="Label4" runat="server" Text='<%# Eval("PRICE") %>'></asp:Label>
-                            </td>
+                            <td class="auto-style5">&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
-                            <td class="text-right">Qty:
-                                <ItemTemplate>
-                                    <asp:Label style="width:20px;" ID="lbl_Qty" runat="server" ReadOnly="true"  Visible='<%# !(bool) IsInEditMode %>' Text='<%# Eval("Quantity") %>'></asp:Label>
-                                </ItemTemplate>
-                                <EditItemTemplate>  
-                                    <asp:TextBox ID="txt_Qty" runat="server"  Visible='<%# IsInEditMode %>' Text='<%#Eval("Quantity") %>'></asp:TextBox>  
-                                </EditItemTemplate>
-                            
-                                <asp:Button ID="btn_Edit" runat="server" Text="Edit" CommandName="Edit" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <asp:Label ID="Label2" runat="server" Text='<%# Eval("NAME") %>'></asp:Label>
-                            </td>
                             <td class="text-right">Total: $<asp:Label ID="Label5" runat="server" Text='<%# Double.Parse(Eval("PRICE").ToString()) * Int32.Parse(Eval("QUANTITY").ToString()) %>'></asp:Label>
                             </td>
                         </tr>
                     </table>
                 </ItemTemplate>
             </asp:TemplateField>
+            <asp:BoundField DataField="QUANTITY" HeaderText="Quantity" />
             <asp:CommandField ShowEditButton="True" />
             <asp:CommandField ShowDeleteButton="True" />
         </Columns>
+                <EditRowStyle HorizontalAlign="Center" VerticalAlign="Top" />
     </asp:GridView>
     <asp:Label ID="lblGrandTotal" runat="server"  Visible="False"></asp:Label>
         </div>
