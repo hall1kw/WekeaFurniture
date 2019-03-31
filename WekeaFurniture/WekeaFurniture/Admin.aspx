@@ -1,60 +1,197 @@
-﻿<%@ Page Title="Admin.aspx" Language="C#" MasterPageFile="~/Home.master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Admin.aspx.cs" Inherits="Admin" MasterPageFile="~/Home.master" %>
 
-<script runat="server">
-
-</script>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="row">
-                <div class="col-xs-12">
-                    <asp:GridView ID="grdProducts" runat="server" AllowPaging="True" 
-                        AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="ObjectDataSource1" 
-                        CssClass="table table-bordered table-condensed" 
-                        OnRowUpdated="grdProducts_RowUpdated">
-                        <Columns>
-                            <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID"
-                                ReadOnly="True">
-                                <HeaderStyle CssClass="col-sm-2" />
-                            </asp:BoundField>
-                            <asp:BoundField DataField="NAME" HeaderText="Name" SortExpression="NAME" 
-                                ReadOnly="True">
-                                <HeaderStyle CssClass="col-sm-6" />
-                            </asp:BoundField>
-                            <asp:TemplateField HeaderText="Price" SortExpression="PRICE">
-                                <EditItemTemplate>
-                                    <div class="col-xs-11 col-edit">
-                                        <asp:TextBox runat="server" Text='<%# Bind("PRICE") %>' ID="txtPrice" 
-                                            CssClass="form-control"></asp:TextBox>
-                                    </div>
-                                    <asp:RequiredFieldValidator ID="rfvPrice" runat="server" ControlToValidate="txtPrice" 
-                                        Text="*" ErrorMessage="Price is a required field." 
-                                        Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
-                                    <asp:CompareValidator ID="cvOnPrice" runat="server" ControlToValidate="txtPrice"  
-                                        Text="*" ErrorMessage="On Hand must be a non-negative decimal number." 
-                                        Operator="GreaterThanEqual" Type="Double" ValueToCompare="0" 
-                                        Display="Dynamic" CssClass="text-danger"></asp:CompareValidator>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label runat="server" Text='<%# Bind("PRICE") %>' ID="lblPrice"></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="col-sm-2 text-right"></HeaderStyle>
-                                <ItemStyle CssClass="text-right"></ItemStyle>
-                            </asp:TemplateField>
-                            <asp:CommandField ShowEditButton="True" />
-                        </Columns>
-                        <HeaderStyle CssClass="bg-halloween" />
-                        <AlternatingRowStyle CssClass="altRow" />
-                        <EditRowStyle CssClass="warning" />
-                        <PagerStyle CssClass="bg-halloween" HorizontalAlign="Center" />
-                    </asp:GridView>  
-                    <asp:ObjectDataSource ID="ObjectDataSource1" runat="server"
-                        DataObjectTypeName="Product" OldValuesParameterFormatString="original_{0}"
-                        SelectMethod="GetProducts" TypeName="ProductDB" UpdateMethod="UpdateProduct">
-                    </asp:ObjectDataSource>
-                </div>  
-            </div>
-</asp:Content>
+        <div class="col-sm-6 table-responsive">
+            <asp:GridView ID="GridView1" runat="server" OnPageIndexChanging="GridView1_PagingIndexChanging" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID"  EmptyDataText="There are no data records to display." CellPadding="4" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="SelectEvent">
+                <AlternatingRowStyle BackColor="White" />
+                <Columns>
+                    <asp:CommandField ShowSelectButton="True" />
+                    <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
+                    <asp:BoundField DataField="NAME" HeaderText="NAME" SortExpression="NAME" />
+                    <asp:BoundField DataField="PRICE" HeaderText="PRICE" SortExpression="PRICE" />
+                </Columns>
+                <FooterStyle BackColor="#FFC107" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#74253D" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#FFC107" ForeColor="#333333" HorizontalAlign="Center" />
+                <RowStyle BackColor="#FFFBD6" ForeColor="#333333" />
+                <SelectedRowStyle BackColor="#FFC107" Font-Bold="True" ForeColor="Navy" Font-Overline="False" />
+                <SortedAscendingCellStyle BackColor="#FDF5AC" />
+                <SortedAscendingHeaderStyle BackColor="#4D0000" />
+                <SortedDescendingCellStyle BackColor="#FCF6C0" />
+                <SortedDescendingHeaderStyle BackColor="#820000" />
+            </asp:GridView>
+        </div>
+        <div class="col-sm-5">
+            <asp:DetailsView ID="DetailsView1" runat="server" OnItemDeleting="DetailsView1_ItemDeleting" 
+                OnItemUpdating="DetailsView1_ItemUpdating" OnModeChanging="DetailsView1_ModeChanging" 
+                DataKeyNames="ID" AutoGenerateDeleteButton="true" AutoGenerateEditButton="true" AutoGenerateInsertButton="true" 
+                AutoGenerateRows="false" Height="60px" Width="600px" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" 
+                BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical" RowStyle-Width="200px">
+                <Fields>
+                    <asp:TemplateField HeaderText="ID">
+                        <ItemTemplate>
+                            <asp:Label ID="lblId" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:Label ID="lblId" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
+                        </EditItemTemplate>
+                        <InsertItemTemplate>
+                            <asp:Label ID="lblId" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
+                        </InsertItemTemplate>
+                    </asp:TemplateField>
+                    
+                    <asp:TemplateField HeaderText= "NAME">
+                        <ItemTemplate>
+                            <asp:Label ID="lblName" runat="server" Text='<%# Bind("NAME") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtName" runat="server" Text='<%# Bind("NAME") %>' CssClass="form-control" MaxLength="50"></asp:TextBox>
+                        </EditItemTemplate>
+                        <InsertItemTemplate>
+                            <asp:TextBox ID="txtName" runat="server" Text='<%# Bind("NAME") %>' CssClass="form-control" MaxLength="50"></asp:TextBox>
+                        </InsertItemTemplate>
+                    </asp:TemplateField>
 
-<%-- <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnection %>" DeleteCommand="DELETE FROM [Products] WHERE [ID] = @ID" InsertCommand="INSERT INTO [Products] ([NAME], [IMAGE], [PRICE], [DESCRIPTION], [IDCAT], [IDROOM], [FEATURED], [TAXABLE]) VALUES (@NAME, @IMAGE, @PRICE, @DESCRIPTION, @IDCAT, @IDROOM, @FEATURED, @TAXABLE)" ProviderName="<%$ ConnectionStrings:ProductsConnection.ProviderName %>" SelectCommand="SELECT [ID], [NAME], [IMAGE], [PRICE], [DESCRIPTION], [IDCAT], [IDROOM], [FEATURED], [TAXABLE] FROM [Products]" UpdateCommand="UPDATE [Products] SET [NAME] = @NAME, [IMAGE] = @IMAGE, [PRICE] = @PRICE, [DESCRIPTION] = @DESCRIPTION, [IDCAT] = @IDCAT, [IDROOM] = @IDROOM, [FEATURED] = @FEATURED, [TAXABLE] = @TAXABLE WHERE [ID] = @ID"> --%>
+                    <asp:TemplateField HeaderText="PRICE">
+                        <ItemTemplate>
+                            <asp:Label ID="lblPrice" runat="server" Text='<%# Bind("PRICE") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtPrice" runat="server" Text='<%# Bind("PRICE") %>' TextMode="Number" CssClass="form-control" MaxLength="25"></asp:TextBox>
+                        </EditItemTemplate>
+                        <InsertItemTemplate>
+                            <asp:TextBox ID="txtPrice" runat="server" Text='<%# Bind("PRICE") %>' TextMode="Number" CssClass="form-control" MaxLength="8"></asp:TextBox>
+                        </InsertItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="IMAGE">
+                        <ItemTemplate>
+                            <asp:Label ID="lblImage" runat="server" Text='<%# Bind("IMAGE") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <div class="row">
+                                <div class="col-xs-4 offset-1">                                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("IMAGE") %>'></asp:Label>
+                                    <asp:FileUpload ID="fuImage" runat="server" Visible="false" />
+                                </div>
+                                <div class="col-xs-2 offset-1">
+                                    <asp:Button ID="Button1" runat="server" Text="New Image" OnClick="Button1_Click" CssClass="form-control" />
+                                </div>
+                            </div>
+                        </EditItemTemplate>
+                        <InsertItemTemplate>
+                            <asp:FileUpload runat="server" ></asp:FileUpload>
+                        </InsertItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="DESCRIPTION">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDescription" runat="server" Text='<%# Bind("DESCRIPTION") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine" Rows="5" Text='<%# Bind("DESCRIPTION") %>' CssClass="form-control" MaxLength="25"></asp:TextBox>
+                        </EditItemTemplate>
+                        <InsertItemTemplate>
+                            <asp:TextBox ID="txtDescription" runat="server" Text='<%# Bind("PRICE") %>' CssClass="form-control" MaxLength="8"></asp:TextBox>
+                        </InsertItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="ID CATEGORY">
+                        <ItemTemplate>
+                            <asp:Label ID="lblCat" runat="server" Text='<%# Bind("IDCAT") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddlCat" runat="server" CssClass="form-control">
+                                <asp:ListItem Text="Chair (1)" Value="1"></asp:ListItem>
+                                <asp:ListItem Text="Couch (2)" Value="2"></asp:ListItem>
+                                <asp:ListItem Text="Table (3)" Value="3"></asp:ListItem>
+                                <asp:ListItem Text="Dresser (4)" Value="4"></asp:ListItem>
+                                <asp:ListItem Text="Bed (5)" Value="5"></asp:ListItem>
+                                <asp:ListItem Text="Lamp (6)" Value="6"></asp:ListItem>
+                                <asp:ListItem Text="Desk (7)" Value="7"></asp:ListItem>
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                        <InsertItemTemplate>
+                            <asp:DropDownList ID="ddlCat" runat="server" CssClass="form-control">
+                                <asp:ListItem Text="Chair (1)" Value="1"></asp:ListItem>
+                                <asp:ListItem Text="Couch (2)" Value="2"></asp:ListItem>
+                                <asp:ListItem Text="Table (3)" Value="3"></asp:ListItem>
+                                <asp:ListItem Text="Dresser (4)" Value="4"></asp:ListItem>
+                                <asp:ListItem Text="Bed (5)" Value="5"></asp:ListItem>
+                                <asp:ListItem Text="Lamp (6)" Value="6"></asp:ListItem>
+                                <asp:ListItem Text="Desk (7)" Value="7"></asp:ListItem>
+                            </asp:DropDownList>
+                        </InsertItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="ID ROOM">
+                        <ItemTemplate>
+                            <asp:Label ID="lblRoom" runat="server" Text='<%# Bind("IDROOM") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddlRoom" runat="server" CssClass="form-control">
+                                <asp:ListItem Text="Kitchen (1)" Value="1"></asp:ListItem>
+                                <asp:ListItem Text="Living Room (2)" Value="2"></asp:ListItem>
+                                <asp:ListItem Text="Bedroom (3)" Value="3"></asp:ListItem>
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                        <InsertItemTemplate>
+                            <asp:DropDownList ID="ddlRoom" runat="server" CssClass="form-control">
+                                <asp:ListItem Text="Kitchen (1)" Value="1"></asp:ListItem>
+                                <asp:ListItem Text="Living Room (2)" Value="2"></asp:ListItem>
+                                <asp:ListItem Text="Bedroom (3)" Value="3"></asp:ListItem>
+                            </asp:DropDownList>
+                        </InsertItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="FEATURED">
+                        <ItemTemplate>
+                            <asp:Label ID="lblFeatured" runat="server" Text='<%# Bind("FEATURED") %>' ></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtFeatured" runat="server" TextMode="Number" Text='<%# Bind("FEATURED") %>' CssClass="form-control"></asp:TextBox>
+                        </EditItemTemplate>
+                        <InsertItemTemplate>
+                            <asp:TextBox ID="txtFeatured" runat="server" TextMode="Number" Text='<%# Bind("FEATURED") %>' CssClass="form-control"></asp:TextBox>
+                        </InsertItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="TAXABLE">
+                        <ItemTemplate>
+                            <asp:CheckBox ID="cbTaxable" runat="server" Checked='<%# Eval("TAXABLE") == DBNull.Value ? false : Eval("TAXABLE") %>' />
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:CheckBox ID="cbTaxableEdit" runat="server" Checked='<%# Eval("TAXABLE") == DBNull.Value ? false : Eval("TAXABLE") %>' ></asp:CheckBox>
+                        </EditItemTemplate>
+                        <InsertItemTemplate>
+                            <asp:CheckBox ID="cbTaxableEdit" runat="server" ></asp:CheckBox>
+                        </InsertItemTemplate>
+                    </asp:TemplateField>
+                    
+                </Fields>
+                <AlternatingRowStyle BackColor="White" />
+                <EditRowStyle BackColor="Maroon" Font-Bold="True" ForeColor="White" />
+                <FooterStyle BackColor="#CCCC99" />
+                <HeaderStyle BackColor="#6B696B" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#F7F7DE" ForeColor="Black" HorizontalAlign="Right" />
+                <RowStyle BackColor="#F7F7DE" />
+            </asp:DetailsView>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <p><asp:Label ID="lblError" runat="server" 
+                CssClass="text-danger" EnableViewState="false"></asp:Label></p>
+        </div>
+    </div>
+</asp:Content>
+<%--             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnection %>" 
+    DeleteCommand="DELETE FROM [Products] WHERE [ID] = @ID" 
+    InsertCommand="INSERT INTO [Products] ([NAME], [IMAGE], [PRICE], [DESCRIPTION], [IDCAT], [IDROOM], [FEATURED], [TAXABLE]) VALUES (@NAME, @IMAGE, @PRICE, @DESCRIPTION, @IDCAT, @IDROOM, @FEATURED, @TAXABLE)" 
+    ProviderName="<%$ ConnectionStrings:ProductsConnection.ProviderName %>" 
+    SelectCommand="SELECT [ID], [NAME], [IMAGE], [PRICE], [DESCRIPTION], [IDCAT], [IDROOM], [FEATURED], [TAXABLE] FROM [Products]" 
+    UpdateCommand="UPDATE [Products] SET [NAME] = @NAME, [IMAGE] = @IMAGE, [PRICE] = @PRICE, [DESCRIPTION] = @DESCRIPTION, [IDCAT] = @IDCAT, [IDROOM] = @IDROOM, [FEATURED] = @FEATURED, [TAXABLE] = @TAXABLE WHERE [ID] = @ID"> --%>

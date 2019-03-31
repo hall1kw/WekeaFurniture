@@ -17,7 +17,7 @@ public class ProductDB
     public static List<AdminProduct> GetProducts()
     {
         List<AdminProduct> productList = new List<AdminProduct>();
-        string sql = "SELECT ID, NAME, PRICE, IMAGEURL, IDCAT, IDROOM, FEATURED, TAXABLE FROM Products";
+        string sql = "SELECT ID, NAME, PRICE, IMAGE, IDCAT, IDROOM, FEATURED, TAXABLE FROM Products";
 
         using (SqlConnection con = new SqlConnection(GetConnectionString()))
         {
@@ -29,14 +29,14 @@ public class ProductDB
                 while (rdr.Read())
                 {
                     product = new AdminProduct();
-                    product.ID = rdr["ID"].ToString();
-                    product.NAME = rdr["NAME"].ToString();
-                    product.PRICE = Convert.ToDecimal(rdr["PRICE"]);
-                    product.IMAGEURL = rdr["IMAGE"].ToString();
-                    product.IDCAT = rdr["IDCAT"].ToString();
-                    product.IDROOM = rdr["IDROOM"].ToString();
-                    product.FEATURED = rdr["FEATURED"].ToString();
-                    product.TAXABLE = rdr["TAXABLE"].ToString();
+                    product.id = rdr["ID"].ToString();
+                    product.name = rdr["NAME"].ToString();
+                    product.price = Convert.ToDecimal(rdr["PRICE"]);
+                    product.image = rdr["IMAGE"].ToString();
+                    product.idcat = rdr["IDCAT"].ToString();
+                    product.idroom = rdr["IDROOM"].ToString();
+                    product.featured = rdr["FEATURED"].ToString();
+                    product.taxable = rdr["TAXABLE"].ToString();
                     productList.Add(product);
                 }
                 rdr.Close();
@@ -51,27 +51,27 @@ public class ProductDB
     {
         string sql =
             "UPDATE Products " +
-            "SET name = @name " +
-            "SET price = @price" +
-            "SET imageurl = @imageurl" +
-            "SET idcat = @idcat" +
-            "SET idroom = @idroom" +
-            "SET featured = @featured" +
-            "SET taxable = @taxable" +
-            "WHERE ProductID = @original_ProductID";
+            "SET name = @name, " +
+            "price = @price, " +
+            "image = @image, " +
+            "idcat = @idcat, " +
+            "idroom = @idroom, " +
+            "featured = @featured, " +
+            "taxable = @taxable " +
+            "WHERE id = @id";
 
         using (SqlConnection con = new SqlConnection(GetConnectionString()))
         {
             using (SqlCommand cmd = new SqlCommand(sql, con))
             {
-                cmd.Parameters.AddWithValue("@name", product.NAME);
-                cmd.Parameters.AddWithValue("@price", product.PRICE);
-                cmd.Parameters.AddWithValue("@imageurl", product.IMAGEURL);
-                cmd.Parameters.AddWithValue("@idcat", product.IDCAT);
-                cmd.Parameters.AddWithValue("@idroom", product.IDROOM);
-                cmd.Parameters.AddWithValue("@featured", product.FEATURED);
-                cmd.Parameters.AddWithValue("@taxable", product.TAXABLE);
-                cmd.Parameters.AddWithValue("@original_ProductID", product.ID);
+                cmd.Parameters.AddWithValue("@id", product.id);
+                cmd.Parameters.AddWithValue("@name", product.name);
+                cmd.Parameters.AddWithValue("@image", product.image);
+                cmd.Parameters.AddWithValue("@price", product.price);
+                cmd.Parameters.AddWithValue("@idcat", product.idcat);
+                cmd.Parameters.AddWithValue("@idroom", product.idroom);
+                cmd.Parameters.AddWithValue("@featured", product.featured);
+                cmd.Parameters.AddWithValue("@taxable", product.taxable);
                 con.Open();
                 cmd.ExecuteNonQuery();
 

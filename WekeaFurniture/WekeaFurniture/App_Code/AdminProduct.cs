@@ -7,13 +7,13 @@ using System.Web;
 /// </summary>
 public class AdminProduct
 {
-    public string ID { set; get; }
-    public string NAME { set; get; }
-    public string IMAGEURL { set; get; }
-    public decimal PRICE { set; get; }
-    public string DESCRIPTION { set; get; }
-    public string IDCAT { set; get; }
-    public string IDROOM { set; get; }
-    public string FEATURED { set; get; }
-    public string TAXABLE { set; get; }
+    public string id { set; get; }
+    public string name { set; get; }
+    public string image { set; get; }
+    public decimal price { set; get; }
+    public string description { set; get; }
+    public string idcat { set; get; }
+    public string idroom { set; get; }
+    public string featured { set; get; }
+    public string taxable { set; get; }
 }
