@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.master" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.master" CodeFile="Login.aspx.cs" Inherits="Login"%>
 
 <script runat="server">
 
@@ -29,7 +29,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     
-    <form id="loginForm" method="post" action="Home.aspx">
+    <form id="loginForm" method="post" action="Validate.php">
         <h1>Login</h1>
         <table id="loginTable">
           <tr>
@@ -48,6 +48,7 @@
            
         </table>
         <br />
+        <asp:Button id="errorLabel" runat="server" Text="" ForeColor="Red" Font-Bold="true"></asp:Button><br />
         <asp:Button id="btnSignUp" class="btn btn-warning my-2 my-sm-0" runat="server" Text="Login"/>
 
     </form>
