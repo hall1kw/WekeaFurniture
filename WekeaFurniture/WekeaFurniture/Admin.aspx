@@ -1,91 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Admin.aspx.cs" Inherits="Admin" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Admin.aspx.cs" Inherits="Admin"  MasterPageFile="~/Home.master"%>
 
-<! DOCTYPE html>
-
-<script runat="server">
-
-    protected void btnSearch_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("SearchResults.aspx?Name=" + tbSearch.Text);
-    }
-</script>
-
-<html>
-<head runat="server">
-    <title></title>
-    <link href="Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="Content/site.css" rel="stylesheet" />
-    <script src="Scripts/jquery-3.0.0.min.js"></script>
-    <script src="Scripts/popper.min.js"></script>
-    <script src="Scripts/bootstrap.min.js"></script>
-    <style>        
-        body {
-            background-color: #FFF;
-        }
-        .newStyle1 {
-            font-family: Arial;
-        }
-        .auto-style1 {
-            width: 86px;
-            height: 46px;
-        }
-        .auto-style2 {
-            color: #FFFF00;
-        }
-        .auto-style4 {
-            text-align: center;
-            background-color: #74253D;
-            color: #FFC107;
-        }
-    </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <img alt="WeKea logo" class="auto-style1" src="Images/logoSmall.png" />
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Home.aspx">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Admin.aspx">Admin</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Search.aspx">Shop our store</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Link Two</a>
-                </li>
-        </ul>
-    <form class="form-inline my-2 my-lg-0">
-        <asp:TextBox ID="tbSearch" CssClass="form-control mr-sm-2" runat="server" placeholder="Search our catalog" aria-label="Search" style="width: 28%"></asp:TextBox>
-        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-warning my-2 my-sm-0" OnClick="btnSearch_Click"/>
-    &nbsp;
-    </form>
-      <form action="Login.aspx">
-          <button class="btn btn-warning my-2 my-sm-0" type="submit">Login</button>
-      </form>
-      
-  </div>
-</nav>
-                    <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/gradient.png" Width="100%" Height="20px" style="margin-top:-9px; margin-bottom:-9px" />
-
-
-        <br />
-    <table style="width:100%;">
-        <tr class="auto-style2">
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Kitchen" style="color:#ffc82e;">Kitchen</a></td>
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=LivingRoom" style="color:#ffc82e;">Living Room</a></td>
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Bedroom" style="color:#ffc82e;">Bedroom</a></td>
-            <td style="width:45px;" class="auto-style4">
-                <a href="Cart.aspx"><img alt="Shopping Cart" src="Images/cartIcon.png" /> </a></td>
-        </tr>
-    </table>
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
         <div class="row">
             <div class="col-sm-6 table-responsive">
                 <asp:GridView ID="GridView1" runat="server" OnPageIndexChanging="GridView1_PagingIndexChanging" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID"  EmptyDataText="There are no data records to display." CellPadding="4" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="SelectEvent">
@@ -244,7 +159,7 @@
 
                         <asp:TemplateField HeaderText="TAXABLE">
                             <ItemTemplate>
-                                <asp:CheckBox ID="cbTaxable" runat="server" Checked='<%# Eval("TAXABLE") == DBNull.Value ? false : Eval("TAXABLE") %>' />
+                                <asp:CheckBox ID="cbTaxable" runat="server" Checked='<%# Eval("TAXABLE") == DBNull.Value ? false : Eval("TAXABLE") %>' onclick="return false;" />
                             </ItemTemplate>
                             <EditItemTemplate>
                                 <asp:CheckBox ID="cbTaxableEdit" runat="server" Checked='<%# Eval("TAXABLE") == DBNull.Value ? false : Eval("TAXABLE") %>' ></asp:CheckBox>
@@ -253,7 +168,6 @@
                                 <asp:CheckBox ID="cbTaxableEdit" runat="server" ></asp:CheckBox>
                             </InsertItemTemplate>
                         </asp:TemplateField>
-                    
                     </Fields>
                     <AlternatingRowStyle BackColor="White" />
                     <EditRowStyle BackColor="Maroon" Font-Bold="True" ForeColor="White" />
@@ -264,21 +178,9 @@
                 </asp:DetailsView>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <p><asp:Label ID="lblError" runat="server" 
-                    CssClass="text-danger" EnableViewState="false"></asp:Label></p>
-            </div>
-        </div>
-    </form>
-    <table style="width:100%;">
-        <tr>
-            <td class="auto-style4">Wekea Furniture<br />
-                Developed by Code for Cache</td>
-        </tr>
-    </table>
-</body>
-</html>
+    <asp:Button ID="Button2" runat="server" Text="Run Test" OnClick="Button2_Click" />
+    <asp:Label ID="LabelTest" runat="server" Text="Yup"></asp:Label>
+    </asp:Content>
 
 <%--             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnection %>" 
     DeleteCommand="DELETE FROM [Products] WHERE [ID] = @ID" 

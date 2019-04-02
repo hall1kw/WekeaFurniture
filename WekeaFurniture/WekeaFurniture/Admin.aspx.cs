@@ -10,6 +10,13 @@ using System.Data.SqlClient;
 
 public partial class Admin : System.Web.UI.Page
 {
+    private static string myConnectionString;
+
+    static Admin()
+    {
+        myConnectionString = WebConfigurationManager.ConnectionStrings["ProductsConnection"].ConnectionString;
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -79,30 +86,14 @@ public partial class Admin : System.Web.UI.Page
 
         //e.Values.
         //DataAccess.insertQuery(name, image, price, description, idcat, idroom, featured, taxable);
-        //DataAccess.insertQuery("Temp", "temp.png", 22.22, "desc temp", 2, 3, 1, false);
+        //DataAccess.insertQuery("Temp", "temp.png", 22.22, "desc temp", 2, 3, 1, true);
         Response.Write("<script language='javascript'>alert('Product added to the Database.');</script>");
         DetailsView1.DataBind();
     }
 
     protected void DetailsView1_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
     {
-        if (e.Exception != null)
-        {
-            lblError.Text = "A database error has occurred. " + "Message: " + e.Exception.Message;
-            lblError.EnableViewState = true;
-            e.ExceptionHandled = true;
-        }
-        else if (e.AffectedRows == 0)
-        {
-            lblError.Text = "Another user may have updated that product. Please try again.";
-            lblError.EnableViewState = true;
-        }
-        else
-        {
-            lblError.EnableViewState = false;
-            DetailsView1.DataBind();
-            UpdateGridView();
-        }
+        
     }
 
     protected void DetailsView1_ItemUpdating(object sender, DetailsViewUpdateEventArgs e)
@@ -115,23 +106,7 @@ public partial class Admin : System.Web.UI.Page
 
     protected void DetailsView1_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
     {
-        if (e.Exception != null)
-        {
-            lblError.Text = "A database error has occurred. " + "Message: " + e.Exception.Message;
-            lblError.EnableViewState = true;
-            e.ExceptionHandled = true;
-        }
-        else if (e.AffectedRows == 0)
-        {
-            lblError.Text = "Another user may have updated that product. Please try again.";
-            lblError.EnableViewState = true;
-        }
-        else
-        {
-            lblError.EnableViewState = false;
-            DetailsView1.DataBind();
-            UpdateGridView();
-        }
+        
     }
 
     protected void DetailsView1_ItemDeleting(object sender, DetailsViewDeleteEventArgs e)
@@ -162,5 +137,10 @@ public partial class Admin : System.Web.UI.Page
     {
         GridView1.DataSource = DataAccess.selectQuery("SELECT * FROM PRODUCTS");
         GridView1.DataBind();
+    }
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Home.aspx");
     }
 }
