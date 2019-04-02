@@ -9,8 +9,9 @@
         else
             $_POST["email"] = $email;
 
-        //password_hash($pwd, SHA_256);
         $pwd = password_hash($pwd, PASSWORD_DEFAULT);
         $_POST["pw"] = $pwd;
+
+        $_SESSION["rand1"] = $pwd;
     }
 ?>
