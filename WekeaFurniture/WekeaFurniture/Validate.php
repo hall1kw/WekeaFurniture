@@ -1,6 +1,4 @@
 <?php
-
-/*
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
         $email = $_POST["email"];
@@ -15,7 +13,4 @@
         $pwd = password_hash($pwd, PASSWORD_DEFAULT);
         $_POST["pw"] = $pwd;
     }
-*/
-
-echo "<h1>IT WORKS</h1>"
 ?>

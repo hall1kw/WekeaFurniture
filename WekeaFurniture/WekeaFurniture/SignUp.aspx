@@ -28,7 +28,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     
-    <form id="SignUpForm" method="post" action="Home.aspx">
+    <form id="SignUpForm" method="post" action="Validate.php">
         <h1>Sign Up</h1>
         <table id="signUpTable">
           <tr>
