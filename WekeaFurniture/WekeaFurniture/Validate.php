@@ -5,7 +5,7 @@
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
         $email = $_POST["email"];
-        $pwd = $_POST["pw"];
+        $pwd = $_POST["pwd"];
 
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
 			echo "<h1>Invalid email format</h1>"
@@ -14,6 +14,6 @@
 
         //password_hash($pwd, SHA_256);
         $pwd = password_hash($pwd, PASSWORD_DEFAULT);
-        $_SESSION["pwd"] = $pwd;
+        echo "<script type='text/javascript'>alert('$pwd');</script>";
     }
 ?>
