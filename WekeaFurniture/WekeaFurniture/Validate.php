@@ -1,13 +1,13 @@
 <?php
 
     echo session_start();
-    echo '<br>'
+    echo '<br>';
     echo $_SERVER['HTTP_REFERER'];
-    echo '<br>'
+    echo '<br>';
     echo $_SERVER['REQUEST_URI'];
-    echo '<br>'
+    echo '<br>';
     echo $_POST['email'];
-    echo '<br>'
+    echo '<br>';
     echo $_POST['pw'];
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
