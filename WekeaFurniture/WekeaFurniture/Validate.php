@@ -6,13 +6,13 @@
     echo '<br>';
     echo $_SERVER['REQUEST_URI'];
     echo '<br>';
-    echo $_POST['email'];
+    echo $_POST['ctl00$ContentPlaceHolder1$email'];
     echo '<br>';
-    echo $_POST['pw'];
+    echo $_POST['ctl00$ContentPlaceHolder1$pw'];
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
-        if($_SERVER["PHP_SELF"] == "/SignUp.aspx")
+        if($_SERVER["HTTP_REFERER"] == "https://wekeafurniture20190329101320.azurewebsites.net/SignUp.aspx")
         {
             $email = $_POST["email"];
             $pwd = $_POST["pw"];
@@ -27,7 +27,7 @@
             exit();
         }
 
-        elseif ($_SERVER["PHP_SELF"] == "/Login.aspx") 
+        elseif ($_SERVER["HTTP_REFERER"] == "https://wekeafurniture20190329101320.azurewebsites.net/Login.aspx") 
         {
             $email = $_POST["email"];
             $pwd = $_POST["pw"];
