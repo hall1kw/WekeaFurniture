@@ -65,22 +65,21 @@ public partial class Admin : System.Web.UI.Page
     protected void DetailsView1_ItemInserting(object sender, DetailsViewInsertEventArgs e)
     {
         string name = ((TextBox)DetailsView1.FindControl("txtName")).Text;
-        string image = "example.jpg";
+        string image;
+        if (((FileUpload)DetailsView1.FindControl("fuImage")).HasFile)
+        {
+            image = ((FileUpload)DetailsView1.FindControl("fuImage")).FileName.ToString();
+        }
+        else
+        {
+            image = "NULL";
+        }
         double price = Convert.ToDouble(((TextBox)DetailsView1.FindControl("txtPrice")).Text);
         string description = ((TextBox)DetailsView1.FindControl("txtDescription")).Text;
         int idcat = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlCat")).SelectedIndex + 1);
         int idroom = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlRoom")).SelectedIndex + 1);
         int featured = Convert.ToInt32(((TextBox)DetailsView1.FindControl("txtFeatured")).Text);
         bool taxable = Convert.ToBoolean(((CheckBox)DetailsView1.FindControl("cbTaxableEdit")).Checked);
-        
-        System.Diagnostics.Debug.WriteLine(((TextBox)DetailsView1.FindControl("txtName")).Text.ToString());
-        System.Diagnostics.Debug.WriteLine("example.jpg");
-        System.Diagnostics.Debug.WriteLine(((TextBox)DetailsView1.Rows[3].Cells[0].FindControl("txtPrice")).Text);
-        System.Diagnostics.Debug.WriteLine(((TextBox)DetailsView1.Rows[4].Cells[0].FindControl("txtDescription")).Text);
-        System.Diagnostics.Debug.WriteLine(((DropDownList)DetailsView1.Rows[5].Cells[0].FindControl("ddlCat")).SelectedIndex + 1);
-        System.Diagnostics.Debug.WriteLine(((DropDownList)DetailsView1.Rows[6].Cells[0].FindControl("ddlRoom")).SelectedIndex + 1);
-        System.Diagnostics.Debug.WriteLine(((TextBox)DetailsView1.Rows[7].Cells[0].FindControl("txtFeatured")).Text);
-        System.Diagnostics.Debug.WriteLine(((CheckBox)DetailsView1.Rows[8].Cells[0].FindControl("cbTaxableEdit")).Checked);
 
         DetailsView1.DataBind();
         string query = "INSERT INTO PRODUCTS (NAME, IMAGE, PRICE, DESCRIPTION, IDCAT, IDROOM, FEATURED, TAXABLE) values (@name, @image, @price, @description, @idcat, @idroom, @featured, @taxable)";
@@ -107,7 +106,7 @@ public partial class Admin : System.Web.UI.Page
                 }
                 catch (SqlException ex)
                 {
-                    //Response.Write("<script language='javascript'>alert('Problem adding to Database:\n " + ex.Message + "');</script>");
+                    //Response.Write("<script language='javascript'>alert('Error has occured.');</script>");
                     System.Diagnostics.Debug.WriteLine(ex.Message);
                 }
                 finally
@@ -129,7 +128,15 @@ public partial class Admin : System.Web.UI.Page
     {
         int id = Convert.ToInt32(((Label)DetailsView1.FindControl("lblId")).Text);
         string name = ((TextBox)DetailsView1.FindControl("txtName")).Text;
-        string image = "example.jpg";
+        string image;
+        if (((FileUpload)DetailsView1.FindControl("fuImage")).HasFile)
+        {
+            image = ((FileUpload)DetailsView1.FindControl("fuImage")).FileName.ToString();
+        }
+        else
+        {
+            image = ((Label)DetailsView1.FindControl("lblImage")).Text;
+        }
         double price = Convert.ToDouble(((TextBox)DetailsView1.FindControl("txtPrice")).Text);
         string description = ((TextBox)DetailsView1.FindControl("txtDescription")).Text;
         int idcat = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlCat")).SelectedIndex + 1);
@@ -214,15 +221,17 @@ public partial class Admin : System.Web.UI.Page
     
     protected void Button1_Click(object sender, EventArgs e)
     {
-        /*  if (((Button)DetailsView1.Rows[3].Cells[1].FindControl("Button1")).Text == "New Image")
-          {
-              ((FileUpload)DetailsView1.Rows[3].Cells[1].FindControl("fuImage")).Enabled = true;
-              ((Button)DetailsView1.Rows[3].Cells[1].FindControl("Button1")).Text = "Cancel";
-          }*/
-        //System.Diagnostics.Debug.WriteLine(((FileUpload)DetailsView1.FindControl("fuImage")).Text);
-        if (((Button)DetailsView1.FindControl("Button1")).Text.Equals("New Image"))
+        if (((Button)DetailsView1.FindControl("Button1")).Text == "New Image")
         {
+            ((Label)DetailsView1.FindControl("lblImage")).Visible = false;
+            ((FileUpload)DetailsView1.FindControl("fuImage")).Visible = true;
             ((Button)DetailsView1.FindControl("Button1")).Text = "Cancel";
+        }
+        else
+        {
+            ((Label)DetailsView1.FindControl("lblImage")).Visible = true;
+            ((FileUpload)DetailsView1.FindControl("fuImage")).Visible = false;
+            ((Button)DetailsView1.FindControl("Button1")).Text = "New Image";
         }
     }
 

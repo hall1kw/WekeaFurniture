@@ -1,93 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Admin.aspx.cs" Inherits="Admin" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Admin.aspx.cs" Inherits="Admin" MasterPageFile="~/Home.master"%>
 
-<!DOCTYPE html>
-<%--
-<script runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server"></asp:Content>
 
-    protected void btnSearch_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("SearchResults.aspx?Name=" + tbSearch.Text);
-    }
-</script>
---%>
-
-<html>
-<head runat="server">
-    <title></title>
-    <link href="Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="Content/site.css" rel="stylesheet" />
-    <script src="Scripts/jquery-3.0.0.min.js"></script>
-    <script src="Scripts/popper.min.js"></script>
-    <script src="Scripts/bootstrap.min.js"></script>
-    <style>        
-        body {
-            background-color: #FFF;
-        }
-        .newStyle1 {
-            font-family: Arial;
-        }
-        .auto-style1 {
-            width: 86px;
-            height: 46px;
-        }
-        .auto-style2 {
-            color: #FFFF00;
-        }
-        .auto-style4 {
-            text-align: center;
-            background-color: #74253D;
-            color: #FFC107;
-        }
-    </style>
-</head>
-<body>
-    <form id="form1" runat="server"><%-- 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <img alt="WeKea logo" class="auto-style1" src="Images/logoSmall.png" />
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Home.aspx">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Link One</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Search.aspx">Shop our store</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Link Two</a>
-                </li>
-        </ul>
-    <form class="form-inline my-2 my-lg-0">
-        <asp:TextBox ID="tbSearch" CssClass="form-control mr-sm-2" runat="server" placeholder="Search our catalog" aria-label="Search" style="width: 28%"></asp:TextBox>
-        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-warning my-2 my-sm-0" OnClick="btnSearch_Click"/>
-    &nbsp;
-    </form>
-      <form action="Login.aspx">
-          <button class="btn btn-warning my-2 my-sm-0" type="submit">Login</button>
-      </form>
-      
-  </div>
-</nav>
-                    <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/gradient.png" Width="100%" Height="20px" style="margin-top:-9px; margin-bottom:-9px" />
-
-
-        <br />
-    <table style="width:100%;">
-        <tr class="auto-style2">
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Kitchen" style="color:#ffc82e;">Kitchen</a></td>
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=LivingRoom" style="color:#ffc82e;">Living Room</a></td>
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Bedroom" style="color:#ffc82e;">Bedroom</a></td>
-            <td style="width:45px;" class="auto-style4">
-                <a href="Cart.aspx"><img alt="Shopping Cart" src="Images/cartIcon.png" /> </a></td>
-        </tr>
-    </table> --%>
-        <div class="row">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">        <div class="row">
             <div class="col-sm-6 table-responsive">
                 <asp:GridView ID="GridView1" runat="server" OnPageIndexChanging="GridView1_PagingIndexChanging" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID"  EmptyDataText="There are no data records to display." CellPadding="4" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="SelectEvent">
                     <AlternatingRowStyle BackColor="White" />
@@ -158,7 +73,7 @@
                             <EditItemTemplate>
                                 <div class="row">
                                     <div class="col-xs-4 offset-1">                                    
-                                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("IMAGE") %>'></asp:Label>
+                                        <asp:Label ID="lblImage" runat="server" Text='<%# Bind("IMAGE") %>'></asp:Label>
                                         <asp:FileUpload ID="fuImage" runat="server" Visible="false" />
                                     </div>
                                     <div class="col-xs-2 offset-1">
@@ -167,7 +82,7 @@
                                 </div>
                             </EditItemTemplate>
                             <InsertItemTemplate>
-                                <asp:FileUpload runat="server" ></asp:FileUpload>
+                                <asp:FileUpload ID="fuImage" runat="server" ></asp:FileUpload>
                             </InsertItemTemplate>
                         </asp:TemplateField>
 
@@ -264,16 +179,7 @@
                 </asp:DetailsView>
             </div>
         </div>
-    </form>
-    <table style="width:100%;">
-        <tr>
-            <td class="auto-style4">Wekea Furniture<br />
-                Developed by Code for Cache</td>
-        </tr>
-    </table>
-</body>
-</html>
-
+</asp:Content>
         
 
 

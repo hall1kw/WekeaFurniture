@@ -72,16 +72,15 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Link Two</a>
                 </li>
-        </ul>
-    <form class="form-inline my-2 my-lg-0">
-        <asp:TextBox ID="tbSearch" CssClass="form-control mr-sm-2" runat="server" placeholder="Search our catalog" aria-label="Search" style="width: 28%"></asp:TextBox>
+       </ul>
+    <div class="form-inline my-2 my-lg-0">
+        <asp:TextBox ID="tbSearch" CssClass="form-control mr-sm-2" runat="server" placeholder="Search our catalog" aria-label="Search" Width="423px"></asp:TextBox>
         <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-warning my-2 my-sm-0" OnClick="btnSearch_Click"/>
     &nbsp;
-    </form>
-      <form action="Login.aspx">
-          <button class="btn btn-warning my-2 my-sm-0" type="submit">Login</button>
-      </form>
-      
+        </div>
+            <div>
+          <a class="btn btn-warning my-2 my-sm-0" href="Login.aspx">Login</a>
+      </div>
   </div>
 </nav>
                     <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/gradient.png" Width="100%" Height="20px" style="margin-top:-9px; margin-bottom:-9px" />
