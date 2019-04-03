@@ -1,4 +1,8 @@
 <?php
+ 
+    echo $_SERVER['PHP_SELF'];
+    echo $_POST['email'];
+    echo $_POST['pw'];
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
