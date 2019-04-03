@@ -114,7 +114,10 @@
             <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=LivingRoom" style="color:#ffc82e;">Living Room</a></td>
             <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Bedroom" style="color:#ffc82e;">Bedroom</a></td>
             <td style="width:45px;" class="auto-style4">
-                <a href="Cart.aspx"><img alt="Shopping Cart" src="Images/cartIcon.png" /><asp:Label ID="lblCart" runat="server" Text=""></asp:Label></a></td>
+                <a href="Cart.aspx">
+                    <asp:Label ID="lblCart" runat="server" style="color:#ffc82e;" Text=""></asp:Label>
+                    <img alt="Shopping Cart" src="Images/cartIcon.png" />
+                </a>
         </tr>
     </table>
 

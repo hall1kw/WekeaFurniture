@@ -1,5 +1,15 @@
 <?php
 
+    echo session_start();
+    echo '<br>';
+    echo $_SERVER['HTTP_REFERER'];
+    echo '<br>';
+    echo $_SERVER['REQUEST_URI'];
+    echo '<br>';
+    echo $_POST['email'];
+    echo '<br>';
+    echo $_POST['pw'];
+
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
         if($_SERVER["PHP_SELF"] == "/SignUp.aspx")
@@ -27,15 +37,9 @@
             else
                 $_POST["email"] = $email;
 
-<<<<<<< HEAD
-        $pwd = password_hash($pwd, PASSWORD_DEFAULT);
-        $_POST["pw"] = $pwd;
-
-        $_SESSION["rand1"] = $pwd;
-=======
             $pwd = password_hash($pwd, PASSWORD_DEFAULT);
             header("Location: https://wekeafurniture20190329101320.azurewebsites.net/Login.aspx.cs");
+            exit();
         }
->>>>>>> f257484bf9bbb429170fc44d07a33c36ff1b868f
     }
 ?>
