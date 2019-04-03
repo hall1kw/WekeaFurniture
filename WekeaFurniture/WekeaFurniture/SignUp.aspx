@@ -37,11 +37,11 @@
           </tr>
           <tr class ="trow">
             <td class="labelCol">Email</td>
-            <td class="inputCol"><asp:TextBox id="email" runat="server"/></td> 
+            <td class="inputCol"><asp:TextBox id="email" name="email" runat="server"/></td> 
           </tr>
           <tr class ="trow">
             <td class="labelCol">Password</td>
-            <td class="inputCol"><asp:TextBox id="pw" runat="server" TextMode="Password"/></td> 
+            <td class="inputCol"><asp:TextBox id="pw" name="pw" runat="server" TextMode="Password"/></td> 
           </tr>
 
            
