@@ -179,7 +179,6 @@
             </div>
         </div>
     <asp:Button ID="Button2" runat="server" Text="Run Test" OnClick="Button2_Click" />
-    <asp:Label ID="LabelTest" runat="server" Text="Yup"></asp:Label>
     </asp:Content>
 
 <%--             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnection %>" 
