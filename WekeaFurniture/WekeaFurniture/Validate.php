@@ -8,7 +8,7 @@
             $pwd = $_POST["pw"];
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
-                echo "<h1>Invalid email format</h1>";
+                echo "<script>alert('email is not valid')</script>";
             else
                 $_POST["email"] = $email;
 
@@ -23,7 +23,7 @@
             $pwd = $_POST["pw"];
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
-                echo "<h1>Invalid email format</h1>";
+                echo "<script>alert('email is not valid')</script>";
             else
                 $_POST["email"] = $email;
 
