@@ -1,4 +1,8 @@
 <?php
+ 
+    echo $_SERVER['PHP_SELF'];
+    echo $_POST['email'];
+    echo $_POST['pw'];
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
@@ -27,15 +31,9 @@
             else
                 $_POST["email"] = $email;
 
-<<<<<<< HEAD
-        $pwd = password_hash($pwd, PASSWORD_DEFAULT);
-        $_POST["pw"] = $pwd;
-
-        $_SESSION["rand1"] = $pwd;
-=======
             $pwd = password_hash($pwd, PASSWORD_DEFAULT);
             header("Location: https://wekeafurniture20190329101320.azurewebsites.net/Login.aspx.cs");
+            exit();
         }
->>>>>>> f257484bf9bbb429170fc44d07a33c36ff1b868f
     }
 ?>
