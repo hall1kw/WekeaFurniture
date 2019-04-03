@@ -2,10 +2,6 @@
 
     echo session_start();
     echo '<br>';
-    echo $_SERVER['HTTP_REFERER'];
-    echo '<br>';
-    echo $_SERVER['REQUEST_URI'];
-    echo '<br>';
     echo $_POST['ctl00$ContentPlaceHolder1$email'];
     echo '<br>';
     echo $_POST['ctl00$ContentPlaceHolder1$pw'];
@@ -23,6 +19,7 @@
                 $_POST['email'] = $email;
 
             $pwd = password_hash($pwd, PASSWORD_DEFAULT);
+            $_POST['pw'] = $pwd;
             //header("Location: https://wekeafurniture20190329101320.azurewebsites.net/SignUp.aspx.cs");
             //exit();
         }
