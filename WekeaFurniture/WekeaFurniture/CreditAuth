@@ -75,6 +75,6 @@
 
         $_SESSION["valid"] = $valid;
         header("Location: https://wekeafurniture20190329101320.azurewebsites.net/Checkout.aspx.cs");
+        exit();
     }
-    
 ?>
