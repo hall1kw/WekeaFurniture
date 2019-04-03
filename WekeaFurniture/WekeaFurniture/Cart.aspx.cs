@@ -22,6 +22,11 @@ public partial class Cart : System.Web.UI.Page
         }
         thisCart = (ShoppingCart)Session["thisCart"];
 
+        if (thisCart != null)
+        {
+            lblCart.Text = thisCart.getSize().ToString();
+        }
+
         if (!Page.IsPostBack)
         {
             FillData();

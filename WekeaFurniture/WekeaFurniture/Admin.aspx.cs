@@ -98,7 +98,15 @@ public partial class Admin : System.Web.UI.Page
 
     protected void DetailsView1_ItemUpdating(object sender, DetailsViewUpdateEventArgs e)
     {
-        DataAccess.updateQuery(1, "NewTemp", "Newtemp.png", 12.34, "desc temp", 2, 3, 1, false);
+        //DataAccess.updateQuery(1, "NewTemp", "Newtemp.png", 12.34, "desc temp", 2, 3, 1, false);
+        string sql = "";
+        using (SqlConnection conn = new SqlConnection(myConnectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(sql))
+            {
+                
+            }
+        }
         Response.Write("<script language='javascript'>alert('Product updated within Database.');</script>");
         DetailsView1.DataBind();
         UpdateGridView();
@@ -113,10 +121,24 @@ public partial class Admin : System.Web.UI.Page
     {
         //Response.Write("<script language='javascript'>confirm('Are you sure?')</script>");
         string sql = "DELETE FROM PRODUCTS WHERE ID = " + (((Label)DetailsView1.Rows[0].Cells[0].FindControl("lblId")).Text.ToString());
-        DataAccess.deleteQuery(sql);
-        UpdateGridView();
-        DetailsView1.DataBind();
-        Response.Write("<script language='javascript'>alert('Product removed from Database.')</script>");
+        SqlConnection con = new SqlConnection(myConnectionString);
+        SqlCommand cmd = new SqlCommand(sql);
+        try
+        {
+            con.Open();
+            cmd.ExecuteNonQuery();
+            Response.Write("<script language='javascript'>alert('Product removed from Database.')</script>");
+        }
+        catch (Exception er)
+        {
+            Response.Write("<script language='javascript'>alert('Error has occured.')</script>");
+        }
+        finally
+        {
+            con.Close();
+            UpdateGridView();
+            DetailsView1.DataBind();
+        }
     }
     
     protected void Button1_Click(object sender, EventArgs e)
