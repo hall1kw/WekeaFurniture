@@ -15,4 +15,8 @@ public partial class Checkout : System.Web.UI.Page
             dlProductDetail.DataBind();
         }
     }
+
+    //TODO: Create Submit Button Action That Uses Session Variable 'valid'
+    //to determine if credit card should be handled further. Refer to
+    //CreditAuth.php for the deets.
 }
