@@ -137,7 +137,7 @@ public partial class Admin : System.Web.UI.Page
         int featured = Convert.ToInt32(((TextBox)DetailsView1.FindControl("txtFeatured")).Text);
         bool taxable = Convert.ToBoolean(((CheckBox)DetailsView1.FindControl("cbTaxableEdit")).Checked);
 
-        string query = "UPDATE PRODUCTS SET @NAME = @name, IMAGE = @image, PRICE = @price, DESCRIPTION = @description, IDCAT = @idcat, IDROOM = @idroom, FEATURED = @featured, TAXABLE = @taxable WHERE ID = @id";
+        string query = "UPDATE PRODUCTS SET NAME = @name, IMAGE = @image, PRICE = @price, DESCRIPTION = @description, IDCAT = @idcat, IDROOM = @idroom, FEATURED = @featured, TAXABLE = @taxable WHERE ID = @id";
         using (SqlConnection cnn = new SqlConnection(myConnectionString))
         {
             using (SqlCommand cmd = new SqlCommand())
