@@ -7,6 +7,15 @@
     {
         Response.Redirect("SearchResults.aspx?Name=" + tbSearch.Text);
     }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        ShoppingCart cart = (ShoppingCart) Session["thisCart"];
+        if(cart != null)
+        {
+            lblCart.Text = cart.getSize().ToString();
+        }
+    }
 </script>
 
 
@@ -33,10 +42,6 @@
         }
         .auto-style2 {
             color: #FFFF00;
-        }
-        .auto-style3 {
-            text-align: center;
-            background-color: #74253D;
         }
         .auto-style4 {
             text-align: center;
@@ -88,12 +93,15 @@
             <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Kitchen" style="color:#ffc82e;">Kitchen</a></td>
             <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=LivingRoom" style="color:#ffc82e;">Living Room</a></td>
             <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Bedroom" style="color:#ffc82e;">Bedroom</a></td>
+            <td style="width:45px;" class="auto-style4">
+                <a href="Cart.aspx"><img alt="Shopping Cart" src="Images/cartIcon.png" /><asp:Label ID="lblCart" runat="server" Text=""></asp:Label> </a></td>
         </tr>
     </table>
 
 
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                
             </asp:ContentPlaceHolder>
         </div>
     </form>

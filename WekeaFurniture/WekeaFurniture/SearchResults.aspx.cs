@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,27 +64,27 @@ public partial class _Default : System.Web.UI.Page
                 command.Append("IDROOM = 1");
             } else if (room.Contains("Kitchen"))
             {
-                command.Append("AND IDROOM = 1");
+                command.Append("AND IDROOM = 1 ");
             }
             if (room.Contains("LivingRoom") && command.ToString().Equals("SELECT * FROM PRODUCTS WHERE "))
             {
-                command.Append("IDROOM = 2");
+                command.Append("IDROOM = 2 ");
             }
             else if (room.Contains("LivingRoom") && ((room.Contains("Kitchen") || (room.Contains("BedRoom")))))
             {
-                command.Append("OR IDROOM = 2");
+                command.Append("OR IDROOM = 2 ");
             }
             else if (room.Contains("LivingRoom"))
             {
-                command.Append("AND IDROOM = 2");
+                command.Append("AND IDROOM = 2 ");
             }
             if (room.Contains("Bedroom") && command.ToString().Equals("SELECT * FROM PRODUCTS WHERE "))
             {
-                command.Append("IDROOM = 3");
+                command.Append("IDROOM = 3 ");
             }
-            else if (room.Contains("BedRoom") && ((room.Contains("Kitchen") || (room.Contains("LivingRoom")))))
+            else if (room.Contains("Bedroom") && ((room.Contains("Kitchen") || (room.Contains("LivingRoom")))))
             {
-                command.Append("OR IDROOM = 2");
+                command.Append("OR IDROOM = 3 ");
             }
             else if (room.Contains("Bedroom"))
             {
@@ -152,6 +153,17 @@ public partial class _Default : System.Web.UI.Page
 
             dlSearchResults.DataSource = DataAccess.selectQuery(command.ToString());
             dlSearchResults.DataBind();
+
+            float count = dlSearchResults.Items.Count;
+            int finalCount;
+            if (count <= 5) finalCount = 1;
+            else if (count % 5 == 0) finalCount = (int) count / 5;
+            else finalCount = (int) count / 5 + 1;
+
+            dlSearchResFeat.DataSource = DataAccess.selectQuery("SELECT TOP " + finalCount + " * FROM PRODUCTS WHERE FEATURED = 1 ORDER BY NEWID()");
+            dlSearchResFeat.DataBind();
+
+
 
 
 

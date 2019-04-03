@@ -28,7 +28,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     
-    <form id="SignUpForm" method="post" action="Home.aspx">
+    <form id="SignUpForm" method="post" action="Validate.php">
         <h1>Sign Up</h1>
         <table id="signUpTable">
           <tr>
@@ -36,20 +36,8 @@
             <th class="auto-style5"></th> 
           </tr>
           <tr class ="trow">
-            <td class="auto-style6">First Name</td>
-            <td class="auto-style6"><asp:TextBox id="firstName" runat="Server"/></td> 
-          </tr>
-          <tr class ="trow">
-            <td class="labelCol">Last Name</td>
-            <td class="inputCol"><asp:TextBox id="lastName" runat="Server"/></td> 
-          </tr>
-          <tr class ="trow">
             <td class="labelCol">Email</td>
             <td class="inputCol"><asp:TextBox id="email" runat="server"/></td> 
-          </tr>
-          <tr class ="trow">
-            <td class="labelCol">UserName</td>
-            <td class="inputCol"><asp:TextBox id="userName" runat="server"/></td> 
           </tr>
           <tr class ="trow">
             <td class="labelCol">Password</td>
