@@ -1,7 +1,8 @@
 <?php
 
-    echo session_status();
-    echo $_SERVER['PHP_SELF'];
+    echo session_start();
+    echo $_SERVER['HTTP_REFERER'];
+    echo $_SERVER['REQUEST_URI'];
     echo $_POST['email'];
     echo $_POST['pw'];
 
