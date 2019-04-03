@@ -63,19 +63,17 @@ public partial class Admin : System.Web.UI.Page
     }
 
     protected void DetailsView1_ItemInserting(object sender, DetailsViewInsertEventArgs e)
-    {/*
-        string name = ((TextBox)DetailsView1.Rows[1].Cells[0].FindControl("txtName")).Text;
+    {
+        string name = ((TextBox)DetailsView1.FindControl("txtName")).Text;
         string image = "example.jpg";
-        double price = Convert.ToDouble(((TextBox)DetailsView1.Rows[3].Cells[0].FindControl("txtPrice")).Text);
-        string description = ((TextBox)DetailsView1.Rows[4].Cells[0].FindControl("txtDescription")).Text;
-        int idcat = Convert.ToInt16(((TextBox)DetailsView1.Rows[5].Cells[0].FindControl("txtCat")).SelectedValue);
-        int idroom = Convert.ToInt16(((TextBox)DetailsView1.Rows[6].Cells[0].FindControl("txtRoom")).Text);
-        int featured = Convert.ToInt16(((TextBox)DetailsView1.Rows[7].Cells[0].FindControl("txtFeatured")).Text);
-        bool taxable = Convert.ToBoolean(((CheckBox)DetailsView1.Rows[8].Cells[0].FindControl("txtTaxable")).Checked);
-        */
+        double price = Convert.ToDouble(((TextBox)DetailsView1.FindControl("txtPrice")).Text);
+        string description = ((TextBox)DetailsView1.FindControl("txtDescription")).Text;
+        int idcat = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlCat")).SelectedIndex + 1);
+        int idroom = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlRoom")).SelectedIndex + 1);
+        int featured = Convert.ToInt32(((TextBox)DetailsView1.FindControl("txtFeatured")).Text);
+        bool taxable = Convert.ToBoolean(((CheckBox)DetailsView1.FindControl("cbTaxableEdit")).Checked);
         
-        //System.Diagnostics.Debug.WriteLine(e.Values["ID"].ToString());
-        System.Diagnostics.Debug.WriteLine(((TextBox)DetailsView1.FindControl("txtName2")).Text.ToString());
+        System.Diagnostics.Debug.WriteLine(((TextBox)DetailsView1.FindControl("txtName")).Text.ToString());
         System.Diagnostics.Debug.WriteLine("example.jpg");
         System.Diagnostics.Debug.WriteLine(((TextBox)DetailsView1.Rows[3].Cells[0].FindControl("txtPrice")).Text);
         System.Diagnostics.Debug.WriteLine(((TextBox)DetailsView1.Rows[4].Cells[0].FindControl("txtDescription")).Text);
@@ -84,11 +82,42 @@ public partial class Admin : System.Web.UI.Page
         System.Diagnostics.Debug.WriteLine(((TextBox)DetailsView1.Rows[7].Cells[0].FindControl("txtFeatured")).Text);
         System.Diagnostics.Debug.WriteLine(((CheckBox)DetailsView1.Rows[8].Cells[0].FindControl("cbTaxableEdit")).Checked);
 
-        //e.Values.
-        //DataAccess.insertQuery(name, image, price, description, idcat, idroom, featured, taxable);
-        //DataAccess.insertQuery("Temp", "temp.png", 22.22, "desc temp", 2, 3, 1, true);
-        Response.Write("<script language='javascript'>alert('Product added to the Database.');</script>");
         DetailsView1.DataBind();
+        string query = "INSERT INTO PRODUCTS (NAME, IMAGE, PRICE, DESCRIPTION, IDCAT, IDROOM, FEATURED, TAXABLE) values (@name, @image, @price, @description, @idcat, @idroom, @featured, @taxable)";
+        using (SqlConnection cnn = new SqlConnection(myConnectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = cnn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@image", image);
+                cmd.Parameters.AddWithValue("@price", price);
+                cmd.Parameters.AddWithValue("@description", description);
+                cmd.Parameters.AddWithValue("@idcat", idcat);
+                cmd.Parameters.AddWithValue("@idroom", idroom);
+                cmd.Parameters.AddWithValue("@featured", featured);
+                cmd.Parameters.AddWithValue("@taxable", taxable);
+                try
+                {
+                    cnn.Open();
+                    cmd.ExecuteNonQuery();
+                    Response.Write("<script language='javascript'>alert('Product added to the Database.');</script>");
+                }
+                catch (SqlException ex)
+                {
+                    //Response.Write("<script language='javascript'>alert('Problem adding to Database:\n " + ex.Message + "');</script>");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    cnn.Close();
+                    UpdateGridView();
+                }
+            }
+        }
+        
     }
 
     protected void DetailsView1_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
@@ -98,18 +127,52 @@ public partial class Admin : System.Web.UI.Page
 
     protected void DetailsView1_ItemUpdating(object sender, DetailsViewUpdateEventArgs e)
     {
-        //DataAccess.updateQuery(1, "NewTemp", "Newtemp.png", 12.34, "desc temp", 2, 3, 1, false);
-        string sql = "";
-        using (SqlConnection conn = new SqlConnection(myConnectionString))
+        int id = Convert.ToInt32(((Label)DetailsView1.FindControl("lblId")).Text);
+        string name = ((TextBox)DetailsView1.FindControl("txtName")).Text;
+        string image = "example.jpg";
+        double price = Convert.ToDouble(((TextBox)DetailsView1.FindControl("txtPrice")).Text);
+        string description = ((TextBox)DetailsView1.FindControl("txtDescription")).Text;
+        int idcat = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlCat")).SelectedIndex + 1);
+        int idroom = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlRoom")).SelectedIndex + 1);
+        int featured = Convert.ToInt32(((TextBox)DetailsView1.FindControl("txtFeatured")).Text);
+        bool taxable = Convert.ToBoolean(((CheckBox)DetailsView1.FindControl("cbTaxableEdit")).Checked);
+
+        string query = "UPDATE PRODUCTS SET @NAME = @name, IMAGE = @image, PRICE = @price, DESCRIPTION = @description, IDCAT = @idcat, IDROOM = @idroom, FEATURED = @featured, TAXABLE = @taxable WHERE ID = @id";
+        using (SqlConnection cnn = new SqlConnection(myConnectionString))
         {
-            using (SqlCommand cmd = new SqlCommand(sql))
+            using (SqlCommand cmd = new SqlCommand())
             {
-                
+                cmd.Connection = cnn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@image", image);
+                cmd.Parameters.AddWithValue("@price", price);
+                cmd.Parameters.AddWithValue("@description", description);
+                cmd.Parameters.AddWithValue("@idcat", idcat);
+                cmd.Parameters.AddWithValue("@idroom", idroom);
+                cmd.Parameters.AddWithValue("@featured", featured);
+                cmd.Parameters.AddWithValue("@taxable", taxable);
+                try
+                {
+                    cnn.Open();
+                    cmd.ExecuteNonQuery();
+                    Response.Write("<script language='javascript'>alert('Product updated within Database.')</script>");
+                }
+                catch (Exception er)
+                {
+                    Response.Write("<script language='javascript'>alert('Error has occured.')</script>");
+                    System.Diagnostics.Debug.WriteLine(er.Message);
+                }
+                finally
+                {
+                    cnn.Close();
+                    UpdateGridView();
+                    DetailsView1.DataBind();
+                }
             }
         }
-        Response.Write("<script language='javascript'>alert('Product updated within Database.');</script>");
-        DetailsView1.DataBind();
-        UpdateGridView();
     }
 
     protected void DetailsView1_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
@@ -120,24 +183,32 @@ public partial class Admin : System.Web.UI.Page
     protected void DetailsView1_ItemDeleting(object sender, DetailsViewDeleteEventArgs e)
     {
         //Response.Write("<script language='javascript'>confirm('Are you sure?')</script>");
-        string sql = "DELETE FROM PRODUCTS WHERE ID = " + (((Label)DetailsView1.Rows[0].Cells[0].FindControl("lblId")).Text.ToString());
-        SqlConnection con = new SqlConnection(myConnectionString);
-        SqlCommand cmd = new SqlCommand(sql);
-        try
+        string query = "DELETE FROM PRODUCTS WHERE ID = " + (((Label)DetailsView1.FindControl("lblId")).Text.ToString());
+        using (SqlConnection cnn = new SqlConnection(myConnectionString))
         {
-            con.Open();
-            cmd.ExecuteNonQuery();
-            Response.Write("<script language='javascript'>alert('Product removed from Database.')</script>");
-        }
-        catch (Exception er)
-        {
-            Response.Write("<script language='javascript'>alert('Error has occured.')</script>");
-        }
-        finally
-        {
-            con.Close();
-            UpdateGridView();
-            DetailsView1.DataBind();
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = cnn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = query;
+                try
+                {
+                    cnn.Open();
+                    cmd.ExecuteNonQuery();
+                    Response.Write("<script language='javascript'>alert('Product removed from Database.')</script>");
+                }
+                catch (Exception er)
+                {
+                    Response.Write("<script language='javascript'>alert('Error has occured.')</script>");
+                    System.Diagnostics.Debug.WriteLine(er.Message);
+                }
+                finally
+                {
+                    cnn.Close();
+                    UpdateGridView();
+                    DetailsView1.DataBind();
+                }
+            }
         }
     }
     
@@ -159,10 +230,5 @@ public partial class Admin : System.Web.UI.Page
     {
         GridView1.DataSource = DataAccess.selectQuery("SELECT * FROM PRODUCTS");
         GridView1.DataBind();
-    }
-
-    protected void Button2_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("Home.aspx");
     }
 }
