@@ -57,6 +57,7 @@ public partial class Cart : System.Web.UI.Page
             lblGrandTotal.Text = string.Format("Your Cart's Total: {0,19:C}", thisCart.GrandTotal);
             lblGrandTotal.Visible = true;
         }
+        lblCart.Text = thisCart.getSize().ToString();
     }
 
     protected void gvShoppingCart_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)

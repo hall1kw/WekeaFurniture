@@ -76,6 +76,19 @@
                     </ItemTemplate>
                 </asp:DataList>
             </td>
+            <td>
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnection %>" SelectCommand="SELECT [RATING], [REVIEW] FROM [Reviews] WHERE ([PID] = @PID)">
+                    <SelectParameters>
+                        <asp:QueryStringParameter DefaultValue="0" Name="PID" QueryStringField="ID" Type="Int32" />
+                    </SelectParameters>
+                </asp:SqlDataSource>
+                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" AllowPaging="True">
+                    <Columns>
+                        <asp:BoundField DataField="RATING" HeaderText="RATING" SortExpression="RATING" />
+                        <asp:BoundField DataField="REVIEW" HeaderText="REVIEW" SortExpression="REVIEW" />
+                    </Columns>
+                </asp:GridView>
+            </td>
         </tr>
     </table>
 </asp:Content>
