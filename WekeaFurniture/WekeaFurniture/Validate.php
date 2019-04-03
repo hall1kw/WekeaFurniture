@@ -1,19 +1,34 @@
 <?php
 
-	session_start();
-
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
-        $email = $_POST["email"];
-        $pwd = $_POST["pw"];
+        if($_SERVER["PHP_SELF"] == "/SignUp.aspx")
+        {
+            $email = $_POST["email"];
+            $pwd = $_POST["pw"];
 
-		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
-			echo "<h1>Invalid email format</h1>"
-        else
-            $_POST["email"] = $email;
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+                echo "<h1>Invalid email format</h1>";
+            else
+                $_POST["email"] = $email;
 
-        //password_hash($pwd, SHA_256);
-        $pwd = password_hash($pwd, PASSWORD_DEFAULT);
-        echo "<script type='text/javascript'>alert('$pwd');</script>";
+            $pwd = password_hash($pwd, PASSWORD_DEFAULT);
+            header("Location: https://wekeafurniture20190329101320.azurewebsites.net/SignUp.aspx.cs");
+            exit();
+        }
+
+        elseif ($_SERVER["PHP_SELF"] == "/Login.aspx") 
+        {
+            $email = $_POST["email"];
+            $pwd = $_POST["pw"];
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+                echo "<h1>Invalid email format</h1>";
+            else
+                $_POST["email"] = $email;
+
+            $pwd = password_hash($pwd, PASSWORD_DEFAULT);
+            header("Location: https://wekeafurniture20190329101320.azurewebsites.net/Login.aspx.cs");
+        }
     }
 ?>
