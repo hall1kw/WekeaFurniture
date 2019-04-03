@@ -1,4 +1,7 @@
 <?php
+
+	session_start();
+
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
         $email = $_POST["email"];
@@ -11,6 +14,6 @@
 
         //password_hash($pwd, SHA_256);
         $pwd = password_hash($pwd, PASSWORD_DEFAULT);
-        $_POST["pw"] = $pwd;
+        $_SESSION["pwd"] = $pwd;
     }
 ?>
