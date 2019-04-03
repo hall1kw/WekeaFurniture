@@ -77,5 +77,10 @@ public class ShoppingCart
         }
 
     }
+
+    public int getSize()
+    {
+        return _items.Count();
+    }
 }
 

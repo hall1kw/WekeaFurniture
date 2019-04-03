@@ -36,6 +36,6 @@ public partial class ProductDetail : System.Web.UI.Page
         DataRow row = dt.Rows[0];
 
         thisCart.Insert(new CartItem(Int32.Parse(id), row["NAME"].ToString(), row["Image"].ToString(), row["DESCRIPTION"].ToString(), Double.Parse(row["PRICE"].ToString()), 1, Int32.Parse(row["INVENTORY"].ToString())));
-
+        Response.Redirect(Request.RawUrl);
     }
 }
