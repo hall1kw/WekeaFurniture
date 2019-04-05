@@ -1,0 +1,122 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="HomeForms.master.cs" Inherits="HomeForms" %>
+
+<!DOCTYPE html>
+<script runat="server">
+
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
+        if(tbSearch.Text != "")
+        {
+            Response.Redirect("SearchResults.aspx?Name=" + tbSearch.Text);
+        }
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        ShoppingCart cart = (ShoppingCart) Session["thisCart"];
+        if(cart != null)
+        {
+            lblCart.Text = cart.getSize().ToString();
+        }
+    }
+</script>
+
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/site.css" rel="stylesheet" />
+    <script src="Scripts/jquery-3.0.0.min.js"></script>
+    <script src="Scripts/popper.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <style>        
+        body {
+            background-color: #FFF;
+        }
+        .newStyle1 {
+            font-family: Arial;
+        }
+        .auto-style1 {
+            width: 86px;
+            height: 46px;
+        }
+        .auto-style2 {
+            color: #FFFF00;
+        }
+        .auto-style4 {
+            text-align: center;
+            background-color: #74253D;
+            color: #FFC107;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <img alt="WeKea logo" class="auto-style1" src="Images/logoSmall.png" />
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/Home.aspx">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/Admin.aspx">Store Admin</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/Search.aspx">Shop our store</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Link Two</a>
+                </li>
+       </ul>
+    <form class="form-inline my-2 my-lg-0">
+        <asp:TextBox ID="tbSearch" CssClass="form-control mr-sm-2" runat="server" placeholder="Search our catalog" aria-label="Search" style="width: 28%"></asp:TextBox>
+        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-warning my-2 my-sm-0" OnClick="btnSearch_Click"/>
+    &nbsp;
+    </form>
+      <form action="Login.aspx">
+          <button class="btn btn-warning my-2 my-sm-0" type="submit">Login</button>
+      </form>
+  </div>
+</nav>
+                    <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/gradient.png" Width="100%" Height="20px" style="margin-top:-9px; margin-bottom:-9px" />
+
+
+        <br />
+    <table style="width:100%;">
+        <tr class="auto-style2">
+            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Kitchen" style="color:#ffc82e;">Kitchen</a></td>
+            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=LivingRoom" style="color:#ffc82e;">Living Room</a></td>
+            <td style="width:23%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Bedroom" style="color:#ffc82e;">Bedroom</a></td>
+            <td style="width:10%;" class="auto-style4">
+                <a href="Cart.aspx">
+                    <img alt="Shopping Cart" src="Images/cartIcon.png" />
+                    <asp:Label ID="lblCart" runat="server" style="color:#ffc82e;" Text=""></asp:Label>
+                    
+                </a>
+            </td>
+        </tr>
+    </table>
+
+
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+    <table style="width:100%;">
+        <tr>
+            <td class="auto-style4">Wekea Furniture<br />
+                Developed by Code for Cache</td>
+        </tr>
+    </table>
+</body>
+</html>
