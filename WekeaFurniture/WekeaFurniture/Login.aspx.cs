@@ -19,8 +19,19 @@ public partial class Login : System.Web.UI.Page
 
     protected void btnSignUp_Click(object sender, EventArgs e)
     {
-        string query = "SELECT (*)Count FROM user WHERE email=" + email.Text + " AND password=" + pw.Text + ";";
+
+        if(SignUp.IsValidEmail(email))
+        {
+            string pwd = SignUp.PassHash(pw);
+        }
+        else
+        {
+            Response.Redirect("https://wekeafurniture20190329101320.azurewebsites.net/Login.aspx", true);
+        }
+
+        string query = "SELECT (*)Count FROM user WHERE email=" + email.Text + " AND password=" + pwd + ";";
         DataTable dt = DataAccess.selectQuery(query);
+
         if (dt.Rows.Count.ToString() == "1")
         {
             HttpCookie mycookie = new HttpCookie("Login");
@@ -37,7 +48,5 @@ public partial class Login : System.Web.UI.Page
         {
             errorLabel.Text = "UserName does not exist. Sign Up";
         }
-
-
     }
 }
