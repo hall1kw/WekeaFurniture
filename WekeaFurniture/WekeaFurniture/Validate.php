@@ -20,8 +20,8 @@
 
             $pwd = password_hash($pwd, PASSWORD_DEFAULT);
             $_POST['ctl00$ContentPlaceHolder1$pw'] = $pwd;
-            //header("Location: https://wekeafurniture20190329101320.azurewebsites.net/SignUp.aspx.cs");
-            //exit();
+            header("Location: https://wekeafurniture20190329101320.azurewebsites.net/SignUp.aspx.cs");
+            exit();
         }
 
         elseif ($_SERVER["HTTP_REFERER"] == "https://wekeafurniture20190329101320.azurewebsites.net/Login.aspx") 
@@ -36,8 +36,8 @@
 
             $pwd = password_hash($pwd, PASSWORD_DEFAULT);
             $_POST['ctl00$ContentPlaceHolder1$pw'] = $pwd;
-           //header("Location: https://wekeafurniture20190329101320.azurewebsites.net/Login.aspx.cs");
-            //exit();
+            header("Location: https://wekeafurniture20190329101320.azurewebsites.net/Login.aspx.cs");
+            exit();
         }
     }
 ?>
