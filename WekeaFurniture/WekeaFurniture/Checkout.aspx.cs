@@ -6,12 +6,26 @@ using System.Web.UI.WebControls;
 
 public partial class Checkout : System.Web.UI.Page
 {
+    protected ShoppingCart thisCart;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["thisCart"] == null)
+        {
+            Response.Write("<script>alert('There was an error loading your shopping cart!')</script>");
+            Response.Redirect("/Home.aspx");
+        } else
+        {
+            thisCart = (ShoppingCart)Session["thisCart"];
+        }
+        if (thisCart.Items.Count == 0)
+        {
+            Response.Write("<script>alert('Your shopping cart is empty!')</script>");
+            Response.Redirect("/Home.aspx");
+        }
+        
         if (!IsPostBack)
         {
-            string id = "5";
-            dlProductDetail.DataSource = DataAccess.selectQuery("SELECT * FROM PRODUCTS WHERE ID=" + id);
+            dlProductDetail.DataSource = thisCart.Items;
             dlProductDetail.DataBind();
         }
     }
