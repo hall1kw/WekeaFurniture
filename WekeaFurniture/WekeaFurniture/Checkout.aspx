@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script>
         $(document).ready(function () {
-            var submitButton = '<input id="submitFormButton" type="submit" value="Submit" />';
+            var submitButton = '<asp:Button id="submitFormButton" class="btn btn-warning my-2 my-sm-0" runat="server" type="submit" OnClick="submitFormButton_Click" value="Submit" />';
             $("#billingform").hide();
             $("#credit").hide();
             $("#gift").hide();
@@ -119,7 +119,7 @@
                     &nbsp;&nbsp; Card Number:&nbsp;&nbsp;&nbsp;
                     <br />
                     &nbsp;&nbsp;
-                    <asp:TextBox id="cardnumber" name="cardnumber" runat="server" TextMode="Number" /><br />
+                    <asp:TextBox id="cardnumber" name="cardnumber" runat="server" /><br />
                     <br />
                     &nbsp;&nbsp; Expiration Date:&nbsp;&nbsp;&nbsp;
                     <br />
