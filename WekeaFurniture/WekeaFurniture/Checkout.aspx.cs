@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
+using System.Data;
 using System.Web.UI.WebControls;
 
 public partial class Checkout : System.Web.UI.Page
 {
     protected ShoppingCart thisCart;
+    protected string[] shippingInfo;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["thisCart"] == null)
@@ -22,11 +24,57 @@ public partial class Checkout : System.Web.UI.Page
             Response.Write("<script>alert('Your shopping cart is empty!')</script>");
             Response.Redirect("/Home.aspx");
         }
-        
+        if (Session["shippingInfo"] == null)
+        {
+            Session["shippingInfo"] = shippingInfo;
+        } else
+        {
+            shippingInfo = (string[]) Session["shippingInfo"];
+        }
         if (!IsPostBack)
         {
+            lblTax.Text = "";
+            lblTotal.Text = "";
             dlProductDetail.DataSource = thisCart.Items;
             dlProductDetail.DataBind();
+
+            ddlState.DataSource = DataAccess.selectQuery("SELECT * FROM SalesTax");
+            ddlState.DataTextField = "STATENAME";
+            ddlState.DataBind();
+
+            lblSubtotaL.Text = string.Format("Item's Subtotal: {0,19:C}", thisCart.GrandTotal);
+        }
+    }
+    protected void checkShippingInfo()
+    {
+        /* 
+         * KH - Need to convert all fields to asp field, not html.  Intent is to save each line after editing as a session variable.
+         * 
+         */ 
+        if (Session["shippingInfo"] == null)
+        {
+            Session["shippingInfo"] = shippingInfo;
+        }
+        else
+        {
+            shippingInfo = (string[])Session["shippingInfo"];
+        }
+    }
+    protected void calcTax(object sender, EventArgs e)
+    {
+        if (ddlState.SelectedItem.ToString().Equals("--- Select state ---"))
+        {
+            Response.Write("<script>alert('Please select state!')</script>");
+            lblTax.Text = "";
+            lblTotal.Text = "";
+            return;
+        }
+        else
+        {
+            DataTable dt = DataAccess.selectQuery("SELECT TAXRATE FROM SalesTax WHERE STATENAME = '" + ddlState.SelectedItem + "'");
+            double tax = thisCart.GrandTotal * Double.Parse(dt.Rows[0][0].ToString());
+            lblTax.Text = string.Format(ddlState.SelectedItem + " Tax: {0,19:C}", tax);
+            lblTotal.Text = string.Format("Grand Total: {0,19:C}", tax + thisCart.GrandTotal);
         }
     }
     
