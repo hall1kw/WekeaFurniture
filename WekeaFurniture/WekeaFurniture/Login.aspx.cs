@@ -19,10 +19,11 @@ public partial class Login : System.Web.UI.Page
 
     protected void btnSignUp_Click(object sender, EventArgs e)
     {
+        string pwd = "";
 
-        if(SignUp.IsValidEmail(email))
+        if(Validation.ValidEmail(email.Text))
         {
-            string pwd = SignUp.PassHash(pw);
+            pwd = Validation.PassHash(pw.Text);
         }
         else
         {

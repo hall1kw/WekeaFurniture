@@ -119,7 +119,7 @@
                     &nbsp;&nbsp; Card Number:&nbsp;&nbsp;&nbsp;
                     <br />
                     &nbsp;&nbsp;
-                    <input id="CardNumber" type="text" name="cardnumber"/><br />
+                    <asp:TextBox id="cardnumber" name="cardnumber" runat="server" TextMode="Number" /><br />
                     <br />
                     &nbsp;&nbsp; Expiration Date:&nbsp;&nbsp;&nbsp;
                     <br />
