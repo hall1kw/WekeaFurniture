@@ -172,7 +172,7 @@
                 <tr>
                     <td class="auto-style10">
     <asp:Label ID="lblGrandTotal" runat="server"  Visible="False"></asp:Label>
-                    &nbsp;<asp:Button ID="Button1" runat="server" PostBackUrl="~/Checkout.aspx" Text="Checkout" />
+                    &nbsp;<asp:Button ID="Button1" runat="server" PostBackUrl="~/Checkoutstepone.aspx" Text="Checkout" />
                     </td>
                 </tr>
             </table>
