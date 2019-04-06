@@ -47,7 +47,7 @@
            
         </table>
         <br />
-         <asp:Button id="btnSignUp" class="btn btn-warning my-2 my-sm-0" runat="server" Text="Sign Up"/><br />
+         <asp:Button id="btnSignUp" class="btn btn-warning my-2 my-sm-0" runat="server" Text="Sign Up" OnClick="btnSignUp_Click"/><br />
         
 
     </form>

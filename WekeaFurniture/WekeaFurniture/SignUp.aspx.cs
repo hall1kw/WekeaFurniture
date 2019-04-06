@@ -18,9 +18,12 @@ public partial class SignUp : System.Web.UI.Page
     {
        
     }
-
+    
     protected void btnSignUp_Click(object sender, EventArgs e)
     {
+        Console.WriteLine("This works");
+
+        
         string pwd = "";
 
         if(Validation.ValidEmail(email.Text))
@@ -31,5 +34,6 @@ public partial class SignUp : System.Web.UI.Page
             DataAccess.selectQuery(query);
 
         Response.Redirect("Home.aspx");
+        
     }
 }

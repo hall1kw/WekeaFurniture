@@ -49,7 +49,7 @@
         </table>
         <br />
         <asp:Button id="errorLabel" runat="server" Text="" ForeColor="Red" Font-Bold="true"></asp:Button><br />
-        <asp:Button id="btn_SignUp" class="btn btn-warning my-2 my-sm-0" runat="server" Text="Login"/>
+        <asp:Button id="btn_SignUp" class="btn btn-warning my-2 my-sm-0" runat="server" OnClick="btnSignUp_Click" Text="Login"/>
 
     </form>
     <p>or</p>
