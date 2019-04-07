@@ -35,6 +35,14 @@
             <th class="auto-style5"></th>
             <th class="auto-style5"></th> 
           </tr>
+        <tr class ="trow">
+            <td class="labelCol">First Name</td>
+            <td class="inputCol"><asp:TextBox id="first_name" runat="server"/></td> 
+          </tr>
+        <tr class ="trow">
+            <td class="labelCol">Last Name</td>
+            <td class="inputCol"><asp:TextBox id="last_name" runat="server"/></td> 
+          </tr>
           <tr class ="trow">
             <td class="labelCol">Email</td>
             <td class="inputCol"><asp:TextBox id="email" name="email" runat="server"/></td> 

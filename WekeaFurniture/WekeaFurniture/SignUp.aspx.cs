@@ -8,32 +8,33 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Diagnostics;
 using System.Collections;
-using System.Globalization;
-using System.Text.RegularExpressions;
 
 public partial class SignUp : System.Web.UI.Page
 {
-    
+
     protected void Page_Load(object sender, EventArgs e)
     {
        
     }
-    
+
     protected void btnSignUp_Click(object sender, EventArgs e)
     {
-        Console.WriteLine("This works");
+            
+        string query = "INSERT INTO users (email, first_name, last_name, pass_hash) VALUES(" + email.Text + ", " + first_name.Text + ", " + last_name.Text + ", " + pw.Text + ");"; 
+        DataAccess.selectQuery(query);
 
-        
-        string pwd = "";
+        query = "SELECT ID from users WHERE EMAIL=" + email.Text + ";";
+        DataTable userinfo = DataAccess.selectQuery(query);
 
-        if(Validation.ValidEmail(email.Text))
-        {
-            pwd = Validation.PassHash(pw.Text);
-        }
-            string query = "INSERT INTO user (email, password) VALUES(" + email.Text + ", " + pwd + ");";
-            DataAccess.selectQuery(query);
+        String userid = userinfo.Rows[0][1].ToString();
+        System.Diagnostics.Debug.WriteLine(userid);
 
-        Response.Redirect("Home.aspx");
-        
+        HttpCookie userInfo = new HttpCookie("userInfo");
+        userInfo["userid"] = userid;
+        userInfo["passhash"] = pw.Text;
+        userInfo.Expires = DateTime.Now.AddHours(2);
+        Response.Cookies.Add(userInfo);
+
+
     }
 }
