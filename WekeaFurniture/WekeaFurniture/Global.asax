@@ -24,8 +24,8 @@
     {
         //log in
         /*
-        String userid = null;
-        String passHash = null;
+        string userid = null;
+        string passHash = null;
         
         if(Request.Cookies["userid"].Value != null && Request.Cookies["passHash"].Value != null)
         {
