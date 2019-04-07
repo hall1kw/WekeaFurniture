@@ -38,18 +38,18 @@
           </tr>
           <tr class ="trow">
             <td class="labelCol">Email</td>
-            <td class="inputCol"><asp:TextBox id="email" name="email" runat="server"/></td> 
+            <td class="inputCol"><asp:TextBox id="email" name="email" runat="server" required/></td> 
           </tr>
           <tr class ="trow">
             <td class="labelCol">Password</td>
-            <td class="inputCol"><asp:TextBox id="pw" name="pw" runat="server" TextMode="Password"/></td> 
+            <td class="inputCol"><asp:TextBox id="pw" name="pw" runat="server" TextMode="Password" required/></td> 
           </tr>
 
            
         </table>
         <br />
         <asp:Button id="errorLabel" runat="server" Text="" ForeColor="Red" Font-Bold="true"></asp:Button><br />
-        <asp:Button id="btn_SignUp" class="btn btn-warning my-2 my-sm-0" runat="server" OnClick="btnSignUp_Click" Text="Login"/>
+        <asp:Button id="btn_SignUp" class="btn btn-warning my-2 my-sm-0" runat="server" OnClick="btnLogin_Click" Text="Login"/>
 
     </form>
     <p>or</p>

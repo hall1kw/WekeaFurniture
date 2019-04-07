@@ -19,39 +19,59 @@ public partial class SignUp : System.Web.UI.Page
 
     }
 
+    /*
+     * Runs when the user clicks the "Sign Up" button. 
+     * 
+     * This method checks to see if the email and password is valid.
+     * If the fields aren't valid, alert the user of wrong input.
+     * 
+     * If they are valid, hash the password and insert all fields into User table.
+     * Create a cookie containing the ID and the password hash of the user.
+     */ 
     protected void btnSignUp_Click(object sender, EventArgs e)
     {
-        Console.WriteLine("This works");
-
-
-        string pwd = "";
-
-        if (Validation.ValidEmail(email.Text))
-        {
-            pwd = Validation.PassHash(pw.Text);
-        }
-        string query = "INSERT INTO Users (email, first_name, last_name, pass_hash) VALUES('" + email.Text + "', '" +
-            first_name.Text + "', '" + last_name.Text + "', '" + pwd + "');";
-        DataAccess.selectQuery(query);
-        
-        query = "SELECT ID from Users WHERE EMAIL='" + email.Text + "';";
+        //Check to see if email and password combination is taken already
+        string query = "SELECT ID from Users WHERE EMAIL='" + email.Text + "';";
         DataTable userinfo = DataAccess.selectQuery(query);
 
-        String userid = userinfo.Rows[0][0].ToString();
-        /*
-        System.Diagnostics.Debug.WriteLine(userid + "\nHKFDLFKDLFKLSFHDLSHFLKSDHFLD");
+        //If taken, alert them to choose a different password. If not, continue
+        if (userinfo.Rows.Count == 1)
+        {
+            //Alert for different password
+        } else
+        {
+            string pwd = "";
+
+            if (Validation.ValidEmail(email.Text))
+            {
+                pwd = Validation.PassHash(pw.Text);
+            }
+            else
+            {
+                //Create alert that says "Email not valid"
+            }
+            query = "INSERT INTO Users (email, first_name, last_name, pass_hash) VALUES('" + email.Text + "', '" +
+                first_name.Text + "', '" + last_name.Text + "', '" + pwd + "');";
+            DataAccess.selectQuery(query);
+
+            query = "SELECT ID from Users WHERE EMAIL='" + email.Text + "' AND PASS_HASH='" + pwd + "';";
+            userinfo = DataAccess.selectQuery(query);
+
+            String userid = userinfo.Rows[0][0].ToString();
+
+
+            HttpCookie userInfo = new HttpCookie("userInfo");
+            userInfo["userid"] = userid;
+            userInfo["passhash"] = pwd;
+            userInfo.Expires = DateTime.Now.AddHours(2);
+            Response.Cookies.Add(userInfo);
+
+            HttpContext.Current.Session["userLoggedIn"] = true;
+
+            Response.Redirect("Home.aspx");
+        }
+
         
-        HttpCookie userInfo = new HttpCookie("userInfo");
-        userInfo["userid"] = userid;
-        userInfo["passhash"] = pwd;
-        userInfo.Expires = DateTime.Now.AddHours(2);
-        Response.Cookies.Add(userInfo);
-        */
-        Response.Redirect("Home.aspx");
 
     }
 }
-
-/*
-
-*/

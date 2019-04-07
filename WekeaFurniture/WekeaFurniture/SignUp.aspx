@@ -37,19 +37,19 @@
           </tr>
         <tr class ="trow">
             <td class="labelCol">First Name</td>
-            <td class="inputCol"><asp:TextBox id="first_name" runat="server"/></td> 
+            <td class="inputCol"><asp:TextBox id="first_name" runat="server" required/></td> 
           </tr>
         <tr class ="trow">
             <td class="labelCol">Last Name</td>
-            <td class="inputCol"><asp:TextBox id="last_name" runat="server"/></td> 
+            <td class="inputCol"><asp:TextBox id="last_name" runat="server" required/></td> 
           </tr>
           <tr class ="trow">
             <td class="labelCol">Email</td>
-            <td class="inputCol"><asp:TextBox id="email" name="email" runat="server"/></td> 
+            <td class="inputCol"><asp:TextBox id="email" name="email" runat="server" required/></td> 
           </tr>
           <tr class ="trow">
             <td class="labelCol">Password</td>
-            <td class="inputCol"><asp:TextBox id="pw" name="pw" runat="server" TextMode="Password"/></td> 
+            <td class="inputCol"><asp:TextBox id="pw" name="pw" runat="server" TextMode="Password" pattern=".{5,}" required title="5 characters minimum"/></td> 
           </tr>
 
            
