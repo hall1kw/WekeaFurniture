@@ -27,7 +27,7 @@
         string userid = null;
         string passHash = null;
         
-        if(Request.Cookies["userid"].Value != null && Request.Cookies["passHash"].Value != null)
+        if(Request.Cookies["userid"] != null && Request.Cookies["passHash"] != null)
         {
             Random r = new Random();
             int rInt = r.Next(0, 1000);
