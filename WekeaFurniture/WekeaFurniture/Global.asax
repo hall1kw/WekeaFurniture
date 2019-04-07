@@ -23,8 +23,23 @@
     void Session_Start(object sender, EventArgs e)
     {
         //log in
-        //String userid = Request.Cookies["userid"].Value;
-        //String passHash = Request.Cookies["passHash"].Value;
+        /*
+        String userid = null;
+        String passHash = null;
+        
+        if(Request.Cookies["userid"].Value != null && Request.Cookies["passHash"].Value != null)
+        {
+            Random r = new Random();
+            int rInt = r.Next(0, 1000);
+            string uniqueId = this.Session.SessionID;
+            string userID = rInt.ToString() + uniqueId;
+            HttpContext.Current.Cache[userID] = true;
+            Session["userLoggedIn"] = true;
+        } else
+        {
+            Session["userLoggedIn"] = false;
+        }
+        */
 
         //if it can verify the user
         //Session["userid"] = userid;
