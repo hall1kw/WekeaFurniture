@@ -10,6 +10,7 @@ public partial class CheckoutNew : System.Web.UI.Page
 {
     protected ShoppingCart thisCart;
     protected string[] shippingInfo;
+    protected double tax;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["thisCart"] == null)
@@ -28,7 +29,7 @@ public partial class CheckoutNew : System.Web.UI.Page
         }
         if (Session["shippingInfo"] == null)
         {
-            Session["shippingInfo"] = new string[6];
+            Session["shippingInfo"] = new string[9];
             shippingInfo = (string[]) Session["shippingInfo"];
         }
         else
@@ -38,7 +39,6 @@ public partial class CheckoutNew : System.Web.UI.Page
         FindFocus();
         if (!IsPostBack)
         {
-            CheckShippingInfo();
             lblTax.Text = "";
             lblTotal.Text = "";
             dlCartSummary.DataSource = thisCart.Items;
@@ -48,6 +48,7 @@ public partial class CheckoutNew : System.Web.UI.Page
             ddlState.DataTextField = "STATENAME";
             ddlState.DataBind();
 
+            CheckShippingInfo();
             lblSubtotal.Text = string.Format("Item's Subtotal: {0,19:C}", thisCart.GrandTotal);
         }
     }
@@ -78,6 +79,14 @@ public partial class CheckoutNew : System.Web.UI.Page
         {
             txtZip.Text = shippingInfo[5];
         }
+        if (shippingInfo[6] != null)
+        {
+            lblTax.Text = shippingInfo[6];
+        }
+        if (shippingInfo[7] != null)
+        {
+            lblTotal.Text = shippingInfo[7];
+        }
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
@@ -89,6 +98,7 @@ public partial class CheckoutNew : System.Web.UI.Page
         ddlState.SelectedIndex = 0;
         lblTax.Text = "";
         lblTotal.Text = "";
+        Session["shippingInfo"] = new string[9];
     }
     protected void CalcTax(object sender, EventArgs e)
     {
@@ -102,15 +112,18 @@ public partial class CheckoutNew : System.Web.UI.Page
         else
         {
             DataTable dt = DataAccess.selectQuery("SELECT TAXRATE FROM SalesTax WHERE STATENAME = '" + ddlState.SelectedItem + "'");
-            double tax = thisCart.GrandTotal * Double.Parse(dt.Rows[0][0].ToString());
+            tax = thisCart.GrandTotal * Double.Parse(dt.Rows[0][0].ToString());
             lblTax.Text = string.Format(ddlState.SelectedItem + " Tax: {0,19:C}", tax);
             lblTotal.Text = string.Format("Grand Total: {0,19:C}", tax + thisCart.GrandTotal);
             shippingInfo[4] = ddlState.SelectedIndex.ToString();
+            shippingInfo[8] = ddlState.SelectedItem.ToString();
         }
     }
     protected void Button2_Click(object sender, EventArgs e)
     {
-
+        shippingInfo[6] = lblTax.Text.ToString();
+        shippingInfo[7] = lblTotal.Text.ToString();
+        Response.Redirect("/CheckoutStepTwo.aspx");
     }
 
     protected void ShipNameChanged(object sender, EventArgs e)
