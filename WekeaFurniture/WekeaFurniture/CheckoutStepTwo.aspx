@@ -15,11 +15,11 @@
         .auto-style10 {
             height: 26px;
             margin-left: 80px;
-            width: 301px;
+            width: 462px;
         }
         .auto-style11 {
             margin-left: 40px;
-            width: 301px;
+            width: 462px;
         }
         .auto-style12 {
             height: 26px;
@@ -34,7 +34,7 @@
             width: 35px;
         }
         .auto-style16 {
-            width: 301px;
+            width: 462px;
         }
         .auto-style17 {
             width: 34px;
@@ -47,7 +47,7 @@
         }
         .auto-style20 {
             margin-left: 40px;
-            width: 301px;
+            width: 462px;
             height: 26px;
         }
         .auto-style25 {
@@ -69,7 +69,7 @@
             text-decoration: underline;
         }
         .auto-style30 {
-            width: 301px;
+            width: 462px;
             text-align: right;
         }
     </style>
@@ -190,7 +190,9 @@
                                     </td>
                                     <td class="auto-style12">&nbsp;</td>
                                     <td class="auto-style10">
-                                        &nbsp;</td>
+                                        Card Number:
+                                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="auto-style27">&nbsp;</td>
