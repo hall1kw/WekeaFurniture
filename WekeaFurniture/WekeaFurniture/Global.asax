@@ -23,6 +23,16 @@
     void Session_Start(object sender, EventArgs e)
     {
         //log in
+        if (HttpContext.Current.Response.Cookies.AllKeys.ToString().Contains("userInfo"))
+        {
+            System.Diagnostics.Debug.WriteLine("Session Global: " + Session["userLoggedIn"].ToString() + "\n");
+            Session["userLoggedIn"] = new bool();
+            Session["userLoggedIn"] = true;
+            System.Diagnostics.Debug.WriteLine("Session Global: " + Session["userLoggedIn"].ToString() + "\n");
+        } else
+        {
+            Session["userLoggedIn"] = false;
+        }
         /*
         string userid = null;
         string passHash = null;
@@ -44,7 +54,7 @@
         System.Diagnostics.Debug.WriteLine("User Session: " + Session["userLoggedIn"] + "\n");
         System.Diagnostics.Debug.WriteLine("User Cookie: " + Request.Cookies["userid"] + "\n");
         */
-        
+
 
         //if it can verify the user
         //Session["userid"] = userid;
