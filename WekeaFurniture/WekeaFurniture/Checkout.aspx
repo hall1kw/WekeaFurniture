@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script>
         $(document).ready(function () {
-            var submitButton = '<input id="submitFormButton" type="submit" value="Submit" />';
+            var submitButton = '<asp:Button id="submitFormButton" class="btn btn-warning my-2 my-sm-0" runat="server" type="submit" OnClick="submitFormButton_Click" value="Submit" />';
             $("#billingform").hide();
             $("#credit").hide();
             $("#gift").hide();
@@ -81,20 +81,20 @@
             &nbsp;&nbsp;
             <input id="City" type="text" name="city"/><br />
             <br />
-            &nbsp;&nbsp; State/Province/Region:&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp; State:&nbsp;&nbsp;&nbsp;
             <br />
-            &nbsp;&nbsp;
-            <input id="State" type="text" name="state"/> <br />
+&nbsp;&nbsp;
+            <asp:DropDownList ID="ddlState" runat="server" OnSelectedIndexChanged="calcTax" AutoPostBack="True" AppendDataBoundItems="true" Width="188px">
+                <asp:ListItem>--- Select state ---</asp:ListItem>
+            </asp:DropDownList>
+&nbsp;<br />
             <br />
             &nbsp;&nbsp; Zip:&nbsp;&nbsp;&nbsp;
             <br />
             &nbsp;&nbsp;
-            <input id="Zip" type="text" name="zip"/> <br />
+            <input id="Zip" type="text" name="zip"/> 
             <br />
-            &nbsp;&nbsp; Country/Region:&nbsp;&nbsp;&nbsp;
-            <br />
-            &nbsp;&nbsp;
-            <input id="Country" type="text" name="country"/> <br />
+            &nbsp;&nbsp;&nbsp;
             <br />
             &nbsp;&nbsp; Phone Number:&nbsp;&nbsp;&nbsp;
             <br />
@@ -119,7 +119,7 @@
                     &nbsp;&nbsp; Card Number:&nbsp;&nbsp;&nbsp;
                     <br />
                     &nbsp;&nbsp;
-                    <input id="CardNumber" type="text" name="cardnumber"/><br />
+                    <asp:TextBox id="cardnumber" name="cardnumber" runat="server" /><br />
                     <br />
                     &nbsp;&nbsp; Expiration Date:&nbsp;&nbsp;&nbsp;
                     <br />
@@ -145,7 +145,7 @@
         </div>
 
         <div id="cartinfo" style="margin-left: 20px; padding-left: 10px; padding-right: 10px; float: left">
-            &nbsp;&nbsp;&nbsp;<h1>Cart:</h1>
+            &nbsp;&nbsp;&nbsp;<h4>Cart:</h4>
         <table style="width:100%;">
         <tr>
             <td>
@@ -166,7 +166,14 @@
             </td>
         </tr>
     </table>
-            &nbsp;&nbsp;&nbsp;<h1>Total:</h1>
+            &nbsp;&nbsp;&nbsp;<h5 class="text-right">
+                <asp:Label ID="lblSubtotaL" runat="server" Text="Label"></asp:Label>
+            </h5>
+            <h5 class="text-right"><asp:Label ID="lblTax" runat="server" Text="Label"></asp:Label>
+            </h5>
+            <h4 class="text-right">
+                <asp:Label ID="lblTotal" runat="server" Text="Label"></asp:Label>
+            </h4>
         </div>
     </div>
     </form>

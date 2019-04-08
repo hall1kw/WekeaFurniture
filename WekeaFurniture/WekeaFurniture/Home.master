@@ -67,7 +67,7 @@
                     <a class="nav-link" href="/Home.aspx">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Link One</a>
+                    <a class="nav-link" href="/Admin.aspx">Store Admin</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/Search.aspx">Shop our store</a>
@@ -94,11 +94,12 @@
         <tr class="auto-style2">
             <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Kitchen" style="color:#ffc82e;">Kitchen</a></td>
             <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=LivingRoom" style="color:#ffc82e;">Living Room</a></td>
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Bedroom" style="color:#ffc82e;">Bedroom</a></td>
-            <td style="width:45px;" class="auto-style4">
+            <td style="width:23%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Bedroom" style="color:#ffc82e;">Bedroom</a></td>
+            <td style="width:10%;" class="auto-style4">
                 <a href="Cart.aspx">
-                    <asp:Label ID="lblCart" runat="server" style="color:#ffc82e;" Text=""></asp:Label>
                     <img alt="Shopping Cart" src="Images/cartIcon.png" />
+                    <asp:Label ID="lblCart" runat="server" style="color:#ffc82e;" Text=""></asp:Label>
+                    
                 </a>
             </td>
         </tr>
