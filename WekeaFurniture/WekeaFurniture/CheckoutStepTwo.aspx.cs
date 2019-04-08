@@ -35,7 +35,17 @@ public partial class CheckoutStepTwo : System.Web.UI.Page
             PopulateShippingInfo();
             
         }
-        FindFocus();
+
+        if (cbSameAsBilling.Checked.ToString().Equals("False"))
+        {
+            ClearBilling();
+            txtBillName.Text = "";
+            txtBillAddOne.Text = "";
+            txtBillAddTwo.Text = "";
+            txtBillCity.Text = "";
+            ddlBillState.SelectedIndex = 0;
+            txtBillZip.Text = "";
+        }
         if (!IsPostBack)
         {
             lblTax.Text = shippingInfo[6];
@@ -43,17 +53,54 @@ public partial class CheckoutStepTwo : System.Web.UI.Page
             dlCartSummary.DataSource = thisCart.Items;
             dlCartSummary.DataBind();
             lblSubtotal.Text = string.Format("Item's Subtotal: {0,19:C}", thisCart.GrandTotal);
-            //DisplayPaymentInput(false);
+            DisplayPaymentInput(false);
             PopulateStateDDL();
+            PopulatePymtMethodsDDL();
         }
     }
 
     protected void ChoosePaymentAction(object sender, EventArgs e)
     {
-        System.Diagnostics.Debug.Write("In Choose Payment Action");
-        lblBillingName.Visible = true;
-        lblCardName.Text = "Full name on card";
-        DisplayPaymentInput(true);
+        if (ddlPaymentMethod.SelectedItem.ToString().Equals("Credit Card"))
+        {           
+            lblCardName.Text = "Full name on card: ";
+            lblCardNum.Text = "Card Number: ";
+            lblExpDat.Text = "Card Exp Date: ";
+            lblCardCVV.Text = "Card CVV / CVC: ";
+            DisplayPaymentInput(true);
+            imgPaypal.Visible = false;
+        }
+        if (ddlPaymentMethod.SelectedItem.ToString().Equals("PayPal"))
+        {
+            DisplayPaymentInput(false);
+            imgPaypal.Visible = true;
+        }
+        if (ddlPaymentMethod.SelectedItem.ToString().Equals("WeKea Store Gift Card"))
+        {
+            DisplayPaymentInput(false);
+
+            lblCardNum.Visible = true;
+            lblCardNum.Text = "Gift Card Number: ";
+            txtCardNum.Visible = true;
+        }
+    }
+
+    protected void ClearBilling()
+    {
+        txtBillName.Text = "";
+        txtBillAddOne.Text = "";
+        txtBillAddTwo.Text = "";
+        txtBillCity.Text = "";
+        ddlBillState.SelectedIndex = 0;
+        txtBillZip.Text = "";
+    }
+
+    protected void PopulatePymtMethodsDDL()
+    {
+        ddlPaymentMethod.DataSource = DataAccess.selectQuery("SELECT * FROM PaymentMethods");
+        ddlPaymentMethod.DataTextField = "METHOD_NAME";
+        ddlPaymentMethod.DataValueField = "ID";
+        ddlPaymentMethod.DataBind();
     }
 
     protected void PopulateStateDDL()
@@ -75,7 +122,9 @@ public partial class CheckoutStepTwo : System.Web.UI.Page
 
     protected void DisplayPaymentInput(bool input)
     {
-        lblBillingName.Visible = input;        
+        imgPaypal.Visible = input;
+        lblBillingName.Visible = input; 
+        lblCardName.Visible = input;
         lblCardNum.Visible = input;
         lblCity.Visible = input;
         lblExpDat.Visible = input;
@@ -83,6 +132,14 @@ public partial class CheckoutStepTwo : System.Web.UI.Page
         lblStAddTwo.Visible = input;
         lblState.Visible = input;
         lblZip.Visible = input;
+        lblCardCVV.Visible = input;
+        txtCVV.Visible = input;
+        lblBillingInfo.Visible = input;
+        txtCardName.Visible = input;
+        txtCardNum.Visible = input;
+        txtExpMo.Visible = input;
+        txtExpYr.Visible = input;
+        lblSlash.Visible = input;
         txtBillAddOne.Visible = input;
         txtBillAddTwo.Visible = input;
         txtBillCity.Visible = input;

@@ -76,7 +76,7 @@
             height: 26px;
         }
         .auto-style38 {
-            width: 134px;
+            width: 151px;
             text-align: right;
             height: 29px;
         }
@@ -90,13 +90,14 @@
         .auto-style41 {
             width: 208px;
             height: 29px;
+            text-align: left;
         }
         .auto-style42 {
             height: 29px;
             text-align: left;
         }
         .auto-style43 {
-            width: 134px;
+            width: 151px;
             text-align: right;
         }
         .auto-style45 {
@@ -109,11 +110,11 @@
             margin-left: 40px;
         }
         .auto-style47 {
-            width: 134px;
+            width: 151px;
             height: 26px;
         }
         .auto-style48 {
-            width: 134px;
+            width: 151px;
         }
         .auto-style49 {
             width: 21px;
@@ -133,6 +134,7 @@
         .auto-style53 {
             height: 29px;
             width: 216px;
+            text-align: right;
         }
         .auto-style54 {
             width: 216px;
@@ -211,7 +213,7 @@
                     </tr>
                     <tr style="vertical-align:top;">
                         <td style="vertical-align:top;" colspan="3">
-                            <table style="width:100%; vertical-align:top;">
+                            <table style="width:100%; vertical-align:top;" runat="server">
                                 <tr style="vertical-align:top;">
                                     <td class="auto-style29" style="border-color: #782b42; border-style: solid solid none none; border-width: 3px 2px 0px 0px;" colspan="2">Ship To:</td>
                                     <td class="auto-style33" style="border-color: #782b42; border-style: solid none none none; border-width: 3px;">&nbsp;</td>
@@ -228,34 +230,33 @@
                                             <tr>
                                                 <td class="auto-style38">Payment Method:</td>
                                                 <td class="auto-style41">
-                                        <asp:DropDownList ID="ddlPaymentMethod" OnSelectedtIndexChanged="ChoosePaymentAction" EnableViewState="true" AutoPostBack="true" runat="server" ViewStateMode="Enabled" CausesValidation="True">
-                                            <asp:ListItem disabled="disabled" Index="0" Value="0">Select Payment Method</asp:ListItem>
-                                            <asp:ListItem selected="true" Index="1" Value="1">Credit Card</asp:ListItem>
-                                            <asp:ListItem Value="2" Index="2">PayPal</asp:ListItem>
-                                            <asp:ListItem Value="3" Index="3">WeKea Store Gift Card</asp:ListItem>
-                                        </asp:DropDownList>
+                                                    <asp:DropDownList ID="ddlPaymentMethod" runat="server" OnSelectedIndexChanged="ChoosePaymentAction" AppendDataBoundItems="true" AutoPostBack="True">
+                                                        <asp:ListItem Selected="True" disabled="disabled">--- Select Payment Type ---</asp:ListItem>
+                                                    </asp:DropDownList>
                                                 </td>
                                                 <td class="auto-style50"></td>
                                                 <td class="auto-style53">
-                                                    <asp:Label ID="Label5" runat="server" Text="Billing Information"></asp:Label>
+                                                    <asp:Label ID="lblBillingInfo" runat="server" Text="Billing Information: "></asp:Label>
                                                 </td>
                                                 <td class="auto-style42">
-                                                    <asp:CheckBox ID="cbSameAsBilling" runat="server" OnCheckedChanged="SameAsBilling" AutoPostBack="True" Text=" Same as shipping" />
-                                                </td>
+                                                    &nbsp;</td>
                                             </tr>
                                             <tr>
                                                 <td class="auto-style48">&nbsp;</td>
-                                                <td class="auto-style40">&nbsp;</td>
+                                                <td class="auto-style40">
+                                                    &nbsp;</td>
                                                 <td class="auto-style51">&nbsp;</td>
                                                 <td class="auto-style54">&nbsp;</td>
-                                                <td>&nbsp;</td>
+                                                <td class="text-left">
+                                                    <asp:CheckBox ID="cbSameAsBilling" runat="server" OnCheckedChanged="SameAsBilling"  AutoPostBack="True" Text=" Same as shipping" />
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="auto-style43">
                                                     <asp:Label ID="lblCardName" runat="server" Text="Label" ViewStateMode="Enabled"></asp:Label>
                                                 </td>
                                                 <td class="auto-style45">
-                                                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                                    <asp:TextBox ID="txtCardName" runat="server"></asp:TextBox>
                                                 </td>
                                                 <td class="auto-style51">&nbsp;</td>
                                                 <td class="auto-style55">
@@ -270,7 +271,7 @@
                                                     <asp:Label ID="lblCardNum" runat="server" Text="Label"></asp:Label>
                                                 </td>
                                                 <td class="auto-style46">
-                                                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                                                    <asp:TextBox ID="txtCardNum" runat="server"></asp:TextBox>
                                                 </td>
                                                 <td class="auto-style51">&nbsp;</td>
                                                 <td class="auto-style55">
@@ -285,9 +286,10 @@
                                                     <asp:Label ID="lblExpDat" runat="server" Text="Label"></asp:Label>
                                                 </td>
                                                 <td class="auto-style46">
-                                                    <asp:TextBox ID="TextBox3" runat="server" Width="26px"></asp:TextBox>
-&nbsp;/
-                                                    <asp:TextBox ID="TextBox4" runat="server" Width="26px"></asp:TextBox>
+                                                    <asp:TextBox ID="txtExpMo" runat="server" Width="26px"></asp:TextBox>
+                                                    <asp:Label ID="lblSlash" runat="server" Font-Size="Large" Text="&nbsp;/ "></asp:Label>
+                                                    <asp:TextBox ID="txtExpYr" runat="server" Width="26px"></asp:TextBox>
+                                                    <asp:Image ID="imgPaypal" runat="server" ImageUrl="~/Images/icon-256x256.png" />
                                                 </td>
                                                 <td class="auto-style51">&nbsp;</td>
                                                 <td class="auto-style55">
@@ -309,8 +311,12 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="auto-style43">&nbsp;</td>
-                                                <td class="auto-style46">&nbsp;</td>
+                                                <td class="auto-style43">
+                                                    <asp:Label ID="lblCardCVV" runat="server" Text="Label"></asp:Label>
+                                                </td>
+                                                <td class="auto-style46">
+                                                    <asp:TextBox ID="txtCVV" runat="server" Width="57px"></asp:TextBox>
+                                                </td>
                                                 <td class="auto-style51">&nbsp;</td>
                                                 <td class="auto-style55">
                                                     <asp:Label ID="lblState" runat="server" Text="State:"></asp:Label>
