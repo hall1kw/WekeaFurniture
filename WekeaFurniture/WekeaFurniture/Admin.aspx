@@ -2,8 +2,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server"></asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">        <div class="row">
-            <div class="col-sm-6 table-responsive">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">  
+    <br /><br />
+    <div class="row">
+            <div class=" offset-1 col-sm-4 table-responsive">
                 <asp:GridView ID="GridView1" runat="server" OnPageIndexChanging="GridView1_PagingIndexChanging" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID"  EmptyDataText="There are no data records to display." CellPadding="4" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="SelectEvent">
                     <AlternatingRowStyle BackColor="White" />
                     <Columns>
@@ -148,13 +150,13 @@
 
                         <asp:TemplateField HeaderText="FEATURED">
                             <ItemTemplate>
-                                <asp:Label ID="lblFeatured" runat="server" Text='<%# Bind("FEATURED") %>' ></asp:Label>
+                                <asp:CheckBox ID="cbFeatured" runat="server" Checked='<%# Eval("FEATURED") == DBNull.Value ? false : Eval("FEATURED") %>' onclick="return false;" ></asp:CheckBox>
                             </ItemTemplate>
                             <EditItemTemplate>
-                                <asp:TextBox ID="txtFeatured" runat="server" TextMode="Number" Text='<%# Bind("FEATURED") %>' CssClass="form-control"></asp:TextBox>
+                                <asp:CheckBox ID="cbFeaturedEdit" runat="server" Checked='<%# Eval("FEATURED") == DBNull.Value ? false : Eval("FEATURED") %>' ></asp:CheckBox>
                             </EditItemTemplate>
                             <InsertItemTemplate>
-                                <asp:TextBox ID="txtFeatured" runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                                <asp:CheckBox ID="cbFeaturedEdit" runat="server" ></asp:CheckBox>
                             </InsertItemTemplate>
                         </asp:TemplateField>
 
@@ -178,15 +180,8 @@
                     <RowStyle BackColor="#F7F7DE" />
                 </asp:DetailsView>
             </div>
+            <div class="col-sm-3">
+                <asp:Image ID="ProductImage" runat="server" ImageUrl=<%#  %> />
+            </div>
         </div>
 </asp:Content>
-        
-
-
-
-<%--             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnection %>" 
-    DeleteCommand="DELETE FROM [Products] WHERE [ID] = @ID" 
-    InsertCommand="INSERT INTO [Products] ([NAME], [IMAGE], [PRICE], [DESCRIPTION], [IDCAT], [IDROOM], [FEATURED], [TAXABLE]) VALUES (@NAME, @IMAGE, @PRICE, @DESCRIPTION, @IDCAT, @IDROOM, @FEATURED, @TAXABLE)" 
-    ProviderName="<%$ ConnectionStrings:ProductsConnection.ProviderName %>" 
-    SelectCommand="SELECT [ID], [NAME], [IMAGE], [PRICE], [DESCRIPTION], [IDCAT], [IDROOM], [FEATURED], [TAXABLE] FROM [Products]" 
-    UpdateCommand="UPDATE [Products] SET [NAME] = @NAME, [IMAGE] = @IMAGE, [PRICE] = @PRICE, [DESCRIPTION] = @DESCRIPTION, [IDCAT] = @IDCAT, [IDROOM] = @IDROOM, [FEATURED] = @FEATURED, [TAXABLE] = @TAXABLE WHERE [ID] = @ID"> --%>

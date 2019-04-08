@@ -69,6 +69,7 @@ public partial class Admin : System.Web.UI.Page
         if (((FileUpload)DetailsView1.FindControl("fuImage")).HasFile)
         {
             image = ((FileUpload)DetailsView1.FindControl("fuImage")).FileName.ToString();
+            ((FileUpload)DetailsView1.FindControl("fuImage")).SaveAs((Server.MapPath("Images/ProductImages/") + ((FileUpload)DetailsView1.FindControl("fuImage")).FileName));
         }
         else
         {
@@ -78,7 +79,7 @@ public partial class Admin : System.Web.UI.Page
         string description = ((TextBox)DetailsView1.FindControl("txtDescription")).Text;
         int idcat = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlCat")).SelectedIndex + 1);
         int idroom = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlRoom")).SelectedIndex + 1);
-        int featured = Convert.ToInt32(((TextBox)DetailsView1.FindControl("txtFeatured")).Text);
+        bool featured = Convert.ToBoolean(((CheckBox)DetailsView1.FindControl("cbFeaturedEdit")).Checked);
         bool taxable = Convert.ToBoolean(((CheckBox)DetailsView1.FindControl("cbTaxableEdit")).Checked);
 
         DetailsView1.DataBind();
@@ -132,6 +133,7 @@ public partial class Admin : System.Web.UI.Page
         if (((FileUpload)DetailsView1.FindControl("fuImage")).HasFile)
         {
             image = ((FileUpload)DetailsView1.FindControl("fuImage")).FileName.ToString();
+            ((FileUpload)DetailsView1.FindControl("fuImage")).SaveAs((Server.MapPath("Images/ProductImages/") + ((FileUpload)DetailsView1.FindControl("fuImage")).FileName));
         }
         else
         {
@@ -141,7 +143,7 @@ public partial class Admin : System.Web.UI.Page
         string description = ((TextBox)DetailsView1.FindControl("txtDescription")).Text;
         int idcat = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlCat")).SelectedIndex + 1);
         int idroom = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlRoom")).SelectedIndex + 1);
-        int featured = Convert.ToInt32(((TextBox)DetailsView1.FindControl("txtFeatured")).Text);
+        bool featured = Convert.ToBoolean(((CheckBox)DetailsView1.FindControl("cbFeaturedEdit")).Checked);
         bool taxable = Convert.ToBoolean(((CheckBox)DetailsView1.FindControl("cbTaxableEdit")).Checked);
 
         string query = "UPDATE PRODUCTS SET NAME = @name, IMAGE = @image, PRICE = @price, DESCRIPTION = @description, IDCAT = @idcat, IDROOM = @idroom, FEATURED = @featured, TAXABLE = @taxable WHERE ID = @id";
@@ -163,9 +165,15 @@ public partial class Admin : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@taxable", taxable);
                 try
                 {
+                    string imagePath = Request.MapPath("Images/ProductImages/" + ((Label)DetailsView1.FindControl("lblImage")).Text);
                     cnn.Open();
                     cmd.ExecuteNonQuery();
                     Response.Write("<script language='javascript'>alert('Product updated within Database.')</script>");
+                    if (((Label)DetailsView1.FindControl("lblImage")).Text != "Null")
+                        System.IO.File.Delete(imagePath);
+                    DetailsView1.ChangeMode(DetailsViewMode.ReadOnly);
+                    DetailsView1.DataSource = DataAccess.selectQuery("SELECT * FROM PRODUCTS WHERE ID = " + id);
+                    DetailsView1.DataBind();
                 }
                 catch (Exception er)
                 {
@@ -200,9 +208,12 @@ public partial class Admin : System.Web.UI.Page
                 cmd.CommandText = query;
                 try
                 {
+                    string image = Request.MapPath("Images/ProductImages/" + ((Label)DetailsView1.FindControl("lblImage")).Text);
                     cnn.Open();
                     cmd.ExecuteNonQuery();
                     Response.Write("<script language='javascript'>alert('Product removed from Database.')</script>");
+                    System.IO.File.Delete(image);
+                    DetailsView1.ChangeMode(DetailsViewMode.ReadOnly);
                 }
                 catch (Exception er)
                 {
@@ -241,3 +252,5 @@ public partial class Admin : System.Web.UI.Page
         GridView1.DataBind();
     }
 }
+
+// Deletes images, make sure you add that functionality when you are updating images as well
