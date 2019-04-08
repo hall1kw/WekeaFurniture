@@ -3,7 +3,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
         .auto-style5 {
-            width: 251px;
+            width: 25%;
+        }
+        .auto-style6 {
+            width: 50%;
         }
     </style>
 </asp:Content>
@@ -38,7 +41,7 @@
                 </ItemTemplate>
             </asp:DataList>
             </td>
-            <td>
+            <td class="auto-style6">
                 <asp:DataList ID="dlProductDetail" runat="server">
                     <ItemTemplate>
                         <table style="width:100%;">
@@ -82,12 +85,24 @@
                         <asp:QueryStringParameter DefaultValue="0" Name="PID" QueryStringField="ID" Type="Int32" />
                     </SelectParameters>
                 </asp:SqlDataSource>
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" AllowPaging="True">
+                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" AllowPaging="True" Width="100%">
                     <Columns>
                         <asp:BoundField DataField="RATING" HeaderText="RATING" SortExpression="RATING" />
                         <asp:BoundField DataField="REVIEW" HeaderText="REVIEW" SortExpression="REVIEW" />
                     </Columns>
                 </asp:GridView>
+                <label style="font-size:18pt">Leave a review</label>
+                <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal">
+                    <asp:ListItem>1 star</asp:ListItem>
+                    <asp:ListItem>2 stars</asp:ListItem>
+                    <asp:ListItem>3 stars</asp:ListItem>
+                    <asp:ListItem>4 stars</asp:ListItem>
+                    <asp:ListItem>5 stars</asp:ListItem>
+                </asp:RadioButtonList>
+                <br />
+                <asp:TextBox ID="TextBox1" runat="server" Height="75px" Width="329px" MaxLength="10" Rows="500"></asp:TextBox>
+                <br />
+                <asp:Button ID="Button2" runat="server" Text="Submit Review" OnClick="Button2_Click" />
             </td>
         </tr>
     </table>
