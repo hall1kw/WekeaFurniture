@@ -32,6 +32,13 @@
                     AutoGenerateRows="false" Height="60px" Width="600px" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" 
                     BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical" RowStyle-Width="200px">
                     <Fields>
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:Image ID="ProductImage" runat="server" ImageUrl='<%#"Images/ProductImages/" + Eval("IMAGE") %>' Width="200" Height="200"  />
+                            </ItemTemplate>
+                            <EditItemTemplate></EditItemTemplate>
+                            <InsertItemTemplate></InsertItemTemplate>
+                        </asp:TemplateField>
                         <asp:TemplateField HeaderText="ID">
                             <ItemTemplate>
                                 <asp:Label ID="lblId" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
@@ -40,7 +47,6 @@
                                 <asp:Label ID="lblId" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
                             </EditItemTemplate>
                             <InsertItemTemplate>
-                                <asp:Label ID="lblId" runat="server" ></asp:Label>
                             </InsertItemTemplate>
                         </asp:TemplateField>
                     
@@ -148,6 +154,18 @@
                             </InsertItemTemplate>
                         </asp:TemplateField>
 
+                        <asp:TemplateField HeaderText="INVENTORY">
+                            <ItemTemplate>
+                                <asp:Label ID="lblInventory" runat="server" Text='<%# Bind("INVENTORY") %>'></asp:Label>
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="txtInventory" runat="server" TextMode="Number" Text='<%# Bind("INVENTORY") %>' CssClass="form-control"></asp:TextBox>
+                            </EditItemTemplate>
+                            <InsertItemTemplate>
+                                <asp:TextBox ID="txtInventory" runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+                            </InsertItemTemplate>
+                        </asp:TemplateField>
+
                         <asp:TemplateField HeaderText="FEATURED">
                             <ItemTemplate>
                                 <asp:CheckBox ID="cbFeatured" runat="server" Checked='<%# Eval("FEATURED") == DBNull.Value ? false : Eval("FEATURED") %>' onclick="return false;" ></asp:CheckBox>
@@ -181,7 +199,7 @@
                 </asp:DetailsView>
             </div>
             <div class="col-sm-3">
-                <asp:Image ID="ProductImage" runat="server" ImageUrl=<%#  %> />
+                <asp:Image ID="ProductImage" runat="server" ImageUrl='<%#"Images/ProductImages/" + Eval("IMAGE") %>'  />
             </div>
         </div>
 </asp:Content>
