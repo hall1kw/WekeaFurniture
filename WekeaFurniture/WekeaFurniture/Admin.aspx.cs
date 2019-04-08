@@ -79,11 +79,12 @@ public partial class Admin : System.Web.UI.Page
         string description = ((TextBox)DetailsView1.FindControl("txtDescription")).Text;
         int idcat = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlCat")).SelectedIndex + 1);
         int idroom = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlRoom")).SelectedIndex + 1);
+        int inventory = Convert.ToInt32(((TextBox)DetailsView1.FindControl("txtInventory")).Text);
         bool featured = Convert.ToBoolean(((CheckBox)DetailsView1.FindControl("cbFeaturedEdit")).Checked);
         bool taxable = Convert.ToBoolean(((CheckBox)DetailsView1.FindControl("cbTaxableEdit")).Checked);
 
         DetailsView1.DataBind();
-        string query = "INSERT INTO PRODUCTS (NAME, IMAGE, PRICE, DESCRIPTION, IDCAT, IDROOM, FEATURED, TAXABLE) values (@name, @image, @price, @description, @idcat, @idroom, @featured, @taxable)";
+        string query = "INSERT INTO PRODUCTS (NAME, IMAGE, PRICE, DESCRIPTION, IDCAT, IDROOM, FEATURED, TAXABLE, INVENTORY) values (@name, @image, @price, @description, @idcat, @idroom, @featured, @taxable, @inventory)";
         using (SqlConnection cnn = new SqlConnection(myConnectionString))
         {
             using (SqlCommand cmd = new SqlCommand())
@@ -99,6 +100,7 @@ public partial class Admin : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@idroom", idroom);
                 cmd.Parameters.AddWithValue("@featured", featured);
                 cmd.Parameters.AddWithValue("@taxable", taxable);
+                cmd.Parameters.AddWithValue("@inventory", inventory);
                 try
                 {
                     cnn.Open();
@@ -143,10 +145,11 @@ public partial class Admin : System.Web.UI.Page
         string description = ((TextBox)DetailsView1.FindControl("txtDescription")).Text;
         int idcat = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlCat")).SelectedIndex + 1);
         int idroom = Convert.ToInt32(((DropDownList)DetailsView1.FindControl("ddlRoom")).SelectedIndex + 1);
+        int inventory = Convert.ToInt32(((TextBox)DetailsView1.FindControl("txtInventory")).Text);
         bool featured = Convert.ToBoolean(((CheckBox)DetailsView1.FindControl("cbFeaturedEdit")).Checked);
         bool taxable = Convert.ToBoolean(((CheckBox)DetailsView1.FindControl("cbTaxableEdit")).Checked);
 
-        string query = "UPDATE PRODUCTS SET NAME = @name, IMAGE = @image, PRICE = @price, DESCRIPTION = @description, IDCAT = @idcat, IDROOM = @idroom, FEATURED = @featured, TAXABLE = @taxable WHERE ID = @id";
+        string query = "UPDATE PRODUCTS SET NAME = @name, IMAGE = @image, PRICE = @price, DESCRIPTION = @description, IDCAT = @idcat, IDROOM = @idroom, FEATURED = @featured, TAXABLE = @taxable, INVENTORY = @inventory WHERE ID = @id";
         using (SqlConnection cnn = new SqlConnection(myConnectionString))
         {
             using (SqlCommand cmd = new SqlCommand())
@@ -163,6 +166,7 @@ public partial class Admin : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@idroom", idroom);
                 cmd.Parameters.AddWithValue("@featured", featured);
                 cmd.Parameters.AddWithValue("@taxable", taxable);
+                cmd.Parameters.AddWithValue("@inventory", inventory);
                 try
                 {
                     string imagePath = Request.MapPath("Images/ProductImages/" + ((Label)DetailsView1.FindControl("lblImage")).Text);
