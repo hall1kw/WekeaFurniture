@@ -43,7 +43,53 @@ public partial class CheckoutStepTwo : System.Web.UI.Page
             dlCartSummary.DataSource = thisCart.Items;
             dlCartSummary.DataBind();
             lblSubtotal.Text = string.Format("Item's Subtotal: {0,19:C}", thisCart.GrandTotal);
+            //DisplayPaymentInput(false);
+            PopulateStateDDL();
         }
+    }
+
+    protected void ChoosePaymentAction(object sender, EventArgs e)
+    {
+        System.Diagnostics.Debug.Write("In Choose Payment Action");
+        lblBillingName.Visible = true;
+        lblCardName.Text = "Full name on card";
+        DisplayPaymentInput(true);
+    }
+
+    protected void PopulateStateDDL()
+    {
+        ddlBillState.DataSource = DataAccess.selectQuery("SELECT * FROM SalesTax");
+        ddlBillState.DataTextField = "STATENAME";
+        ddlBillState.DataBind();
+    }
+
+    protected void SameAsBilling(object sender, EventArgs e)
+    {
+        txtBillName.Text = shippingInfo[0];
+        txtBillAddOne.Text = shippingInfo[1];
+        txtBillAddTwo.Text = shippingInfo[2];
+        txtBillCity.Text = shippingInfo[3];
+        ddlBillState.SelectedIndex = (Int32.Parse(shippingInfo[4]) - 1);
+        txtBillZip.Text = shippingInfo[5];
+    }
+
+    protected void DisplayPaymentInput(bool input)
+    {
+        lblBillingName.Visible = input;        
+        lblCardNum.Visible = input;
+        lblCity.Visible = input;
+        lblExpDat.Visible = input;
+        lblStAddOne.Visible = input;
+        lblStAddTwo.Visible = input;
+        lblState.Visible = input;
+        lblZip.Visible = input;
+        txtBillAddOne.Visible = input;
+        txtBillAddTwo.Visible = input;
+        txtBillCity.Visible = input;
+        txtBillName.Visible = input;
+        txtBillZip.Visible = input;
+        ddlBillState.Visible = input;
+        cbSameAsBilling.Visible = input;
     }
 
     protected void PopulateShippingInfo()

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.master" AutoEventWireup="true" CodeFile="CheckoutStepTwo.aspx.cs" Inherits="CheckoutStepTwo" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.master" AutoEventWireup="true" CodeFile="CheckoutStepTwo.aspx.cs" Inherits="CheckoutStepTwo" Async="true"%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
@@ -15,26 +15,16 @@
         .auto-style10 {
             height: 26px;
             margin-left: 80px;
-            width: 462px;
+            width: 16px;
         }
         .auto-style11 {
             margin-left: 40px;
-            width: 462px;
+            width: 16px;
         }
         .auto-style12 {
             height: 26px;
             text-align: right;
-            width: 35px;
-        }
-        .auto-style14 {
-            text-align: right;
-            width: 35px;
-        }
-        .auto-style15 {
-            width: 35px;
-        }
-        .auto-style16 {
-            width: 462px;
+            width: 13px;
         }
         .auto-style17 {
             width: 34px;
@@ -47,7 +37,7 @@
         }
         .auto-style20 {
             margin-left: 40px;
-            width: 462px;
+            width: 16px;
             height: 26px;
         }
         .auto-style25 {
@@ -68,8 +58,87 @@
             width: 86px;
             text-decoration: underline;
         }
-        .auto-style30 {
-            width: 462px;
+        .auto-style31 {
+            text-align: right;
+            width: 16px;
+        }
+        .auto-style32 {
+            width: 16px;
+        }
+        .auto-style33 {
+            width: 13px;
+        }
+        .auto-style34 {
+            text-align: right;
+            width: 13px;
+        }
+        .auto-style35 {
+            height: 26px;
+        }
+        .auto-style38 {
+            width: 134px;
+            text-align: right;
+            height: 29px;
+        }
+        .auto-style39 {
+            width: 208px;
+            height: 26px;
+        }
+        .auto-style40 {
+            width: 208px;
+        }
+        .auto-style41 {
+            width: 208px;
+            height: 29px;
+        }
+        .auto-style42 {
+            height: 29px;
+            text-align: left;
+        }
+        .auto-style43 {
+            width: 134px;
+            text-align: right;
+        }
+        .auto-style45 {
+            width: 208px;
+            text-align: left;
+        }
+        .auto-style46 {
+            width: 208px;
+            text-align: left;
+            margin-left: 40px;
+        }
+        .auto-style47 {
+            width: 134px;
+            height: 26px;
+        }
+        .auto-style48 {
+            width: 134px;
+        }
+        .auto-style49 {
+            width: 21px;
+            height: 26px;
+        }
+        .auto-style50 {
+            width: 21px;
+            height: 29px;
+        }
+        .auto-style51 {
+            width: 21px;
+        }
+        .auto-style52 {
+            height: 26px;
+            width: 216px;
+        }
+        .auto-style53 {
+            height: 29px;
+            width: 216px;
+        }
+        .auto-style54 {
+            width: 216px;
+        }
+        .auto-style55 {
+            width: 216px;
             text-align: right;
         }
     </style>
@@ -140,47 +209,164 @@
                             <h4>Payment Information</h4>
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="3">
-                            <table style="width:100%;">
-                                <tr>
+                    <tr style="vertical-align:top;">
+                        <td style="vertical-align:top;" colspan="3">
+                            <table style="width:100%; vertical-align:top;">
+                                <tr style="vertical-align:top;">
                                     <td class="auto-style29" style="border-color: #782b42; border-style: solid solid none none; border-width: 3px 2px 0px 0px;" colspan="2">Ship To:</td>
-                                    <td class="auto-style15" style="border-color: #782b42; border-style: solid none none none; border-width: 3px;">&nbsp;</td>
-                                    <td style="border-color: #782b42; border-style: solid none none none; border-width: 3px;" class="auto-style16">&nbsp;</td>
+                                    <td class="auto-style33" style="border-color: #782b42; border-style: solid none none none; border-width: 3px;">&nbsp;</td>
+                                    <td style="border-color: #782b42; border-style: solid none none none; border-width: 3px;" class="auto-style32">&nbsp;</td>
                                     <td style="border-color: #782b42; border-style: solid none none none; border-width: 3px;" class="text-center" rowspan="13">
-                                        &nbsp;</td>
+                                        <table class="w-100">
+                                            <tr>
+                                                <td class="auto-style47"></td>
+                                                <td class="auto-style39"></td>
+                                                <td class="auto-style49"></td>
+                                                <td class="auto-style52"></td>
+                                                <td class="auto-style35"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="auto-style38">Payment Method:</td>
+                                                <td class="auto-style41">
+                                        <asp:DropDownList ID="ddlPaymentMethod" OnSelectedtIndexChanged="ChoosePaymentAction" EnableViewState="true" AutoPostBack="true" runat="server" ViewStateMode="Enabled" CausesValidation="True">
+                                            <asp:ListItem disabled="disabled" Index="0" Value="0">Select Payment Method</asp:ListItem>
+                                            <asp:ListItem selected="true" Index="1" Value="1">Credit Card</asp:ListItem>
+                                            <asp:ListItem Value="2" Index="2">PayPal</asp:ListItem>
+                                            <asp:ListItem Value="3" Index="3">WeKea Store Gift Card</asp:ListItem>
+                                        </asp:DropDownList>
+                                                </td>
+                                                <td class="auto-style50"></td>
+                                                <td class="auto-style53">
+                                                    <asp:Label ID="Label5" runat="server" Text="Billing Information"></asp:Label>
+                                                </td>
+                                                <td class="auto-style42">
+                                                    <asp:CheckBox ID="cbSameAsBilling" runat="server" OnCheckedChanged="SameAsBilling" AutoPostBack="True" Text=" Same as shipping" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="auto-style48">&nbsp;</td>
+                                                <td class="auto-style40">&nbsp;</td>
+                                                <td class="auto-style51">&nbsp;</td>
+                                                <td class="auto-style54">&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="auto-style43">
+                                                    <asp:Label ID="lblCardName" runat="server" Text="Label" ViewStateMode="Enabled"></asp:Label>
+                                                </td>
+                                                <td class="auto-style45">
+                                                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                                </td>
+                                                <td class="auto-style51">&nbsp;</td>
+                                                <td class="auto-style55">
+                                                    <asp:Label ID="lblBillingName" runat="server" Text="Name:"></asp:Label>
+                                                </td>
+                                                <td class="text-left">
+                                                    <asp:TextBox ID="txtBillName" runat="server"></asp:TextBox>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="auto-style43">
+                                                    <asp:Label ID="lblCardNum" runat="server" Text="Label"></asp:Label>
+                                                </td>
+                                                <td class="auto-style46">
+                                                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                                                </td>
+                                                <td class="auto-style51">&nbsp;</td>
+                                                <td class="auto-style55">
+                                                    <asp:Label ID="lblStAddOne" runat="server" Text="Street Address Line 1:"></asp:Label>
+                                                </td>
+                                                <td class="text-left">
+                                                    <asp:TextBox ID="txtBillAddOne" runat="server"></asp:TextBox>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="auto-style43">
+                                                    <asp:Label ID="lblExpDat" runat="server" Text="Label"></asp:Label>
+                                                </td>
+                                                <td class="auto-style46">
+                                                    <asp:TextBox ID="TextBox3" runat="server" Width="26px"></asp:TextBox>
+&nbsp;/
+                                                    <asp:TextBox ID="TextBox4" runat="server" Width="26px"></asp:TextBox>
+                                                </td>
+                                                <td class="auto-style51">&nbsp;</td>
+                                                <td class="auto-style55">
+                                                    <asp:Label ID="lblStAddTwo" runat="server" Text="Street Address Line 2:"></asp:Label>
+                                                </td>
+                                                <td class="text-left">
+                                                    <asp:TextBox ID="txtBillAddTwo" runat="server"></asp:TextBox>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="auto-style43">&nbsp;</td>
+                                                <td class="auto-style46">&nbsp;</td>
+                                                <td class="auto-style51">&nbsp;</td>
+                                                <td class="auto-style55">
+                                                    <asp:Label ID="lblCity" runat="server" Text="City:"></asp:Label>
+                                                </td>
+                                                <td class="text-left">
+                                                    <asp:TextBox ID="txtBillCity" runat="server"></asp:TextBox>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="auto-style43">&nbsp;</td>
+                                                <td class="auto-style46">&nbsp;</td>
+                                                <td class="auto-style51">&nbsp;</td>
+                                                <td class="auto-style55">
+                                                    <asp:Label ID="lblState" runat="server" Text="State:"></asp:Label>
+                                                </td>
+                                                <td class="text-left">
+                                                    <asp:DropDownList ID="ddlBillState" runat="server">
+                                                    </asp:DropDownList>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="auto-style43">&nbsp;</td>
+                                                <td class="auto-style46">&nbsp;</td>
+                                                <td class="auto-style51">&nbsp;</td>
+                                                <td class="auto-style55">
+                                                    <asp:Label ID="lblZip" runat="server" Text="Zip:"></asp:Label>
+                                                </td>
+                                                <td class="text-left">
+                                                    <asp:TextBox ID="txtBillZip" runat="server"></asp:TextBox>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="auto-style43">&nbsp;</td>
+                                                <td class="auto-style46">&nbsp;</td>
+                                                <td class="auto-style51">&nbsp;</td>
+                                                <td class="auto-style54">&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                        </table>
+                                        <br />
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="auto-style27">&nbsp;</td>
                                     <td class="auto-style26" style="border-right-style: solid; border-right-width: 2px; border-right-color: #753649">
                                         <asp:Label ID="lblShipName" runat="server" Text="Label"></asp:Label>
                                     </td>
-                                    <td class="auto-style14">&nbsp;</td>
-                                    <td class="auto-style16">
-                                        Payment Method</td>
+                                    <td class="auto-style34">&nbsp;</td>
+                                    <td class="auto-style32">
+                                        &nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td class="auto-style27">&nbsp;</td>
                                     <td class="auto-style26" style="border-right-style: solid; border-right-width: 2px; border-right-color: #753649">
                                         <asp:Label ID="lblShipAddOne" runat="server" Text="Label"></asp:Label>
                                     </td>
-                                    <td class="auto-style14">&nbsp;</td>
-                                    <td class="auto-style30">
-                                        <asp:DropDownList ID="DropDownList1" runat="server">
-                                            <asp:ListItem Selected="True" disabled="disabled" Value="0">Select Payment Method</asp:ListItem>
-                                            <asp:ListItem>Credit Card</asp:ListItem>
-                                            <asp:ListItem>PayPal</asp:ListItem>
-                                            <asp:ListItem>WeKea Store Gift Card</asp:ListItem>
-                                        </asp:DropDownList>
-                                    </td>
+                                    <td class="auto-style34">&nbsp;</td>
+                                    <td class="auto-style31">
+                                        &nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td class="auto-style27">&nbsp;</td>
                                     <td class="auto-style26" style="border-right-style: solid; border-right-width: 2px; border-right-color: #753649">
                                         <asp:Label ID="lblShipAddTwo" runat="server" Text="Label"></asp:Label>
                                     </td>
-                                    <td class="auto-style14">&nbsp;</td>
-                                    <td class="auto-style16">
+                                    <td class="auto-style34">&nbsp;</td>
+                                    <td class="auto-style32">
                                         &nbsp;</td>
                                 </tr>
                                 <tr>
@@ -190,29 +376,27 @@
                                     </td>
                                     <td class="auto-style12">&nbsp;</td>
                                     <td class="auto-style10">
-                                        Card Number:
-                                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-                                    </td>
+                                        &nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td class="auto-style27">&nbsp;</td>
                                     <td class="auto-style26" style="border-right-style: solid; border-right-width: 2px; border-right-color: #753649">
                                         <asp:Button ID="btnChange" runat="server" OnClick="btnChange_Click" Text="Change" />
                                     </td>
-                                    <td class="auto-style14">&nbsp;</td>
-                                    <td class="auto-style16">&nbsp;</td>
+                                    <td class="auto-style34">&nbsp;</td>
+                                    <td class="auto-style32">&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td class="auto-style27">&nbsp;</td>
                                     <td class="auto-style26">&nbsp;</td>
-                                    <td class="auto-style14">&nbsp;</td>
+                                    <td class="auto-style34">&nbsp;</td>
                                     <td class="auto-style11">
                                         &nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td class="auto-style27">&nbsp;</td>
                                     <td class="auto-style7">&nbsp;</td>
-                                    <td class="auto-style14">&nbsp;</td>
+                                    <td class="auto-style34">&nbsp;</td>
                                     <td class="auto-style11">&nbsp;</td>
                                 </tr>
                                 <tr>
@@ -223,27 +407,25 @@
                                 </tr>
                                 <tr>
                                     <td class="auto-style7" colspan="2">&nbsp;</td>
-                                    <td class="auto-style14">&nbsp;</td>
+                                    <td class="auto-style34">&nbsp;</td>
                                     <td class="auto-style11">&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td class="auto-style7" colspan="2">&nbsp;</td>
-                                    <td class="auto-style14">&nbsp;</td>
+                                    <td class="auto-style34">&nbsp;</td>
                                     <td class="auto-style11">
                                         &nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td class="auto-style7" colspan="2">&nbsp;</td>
-                                    <td class="auto-style14">&nbsp;</td>
+                                    <td class="auto-style34">&nbsp;</td>
                                     <td class="auto-style11">&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td class="auto-style7" colspan="2">&nbsp;</td>
-                                    <td class="auto-style14">&nbsp;</td>
+                                    <td class="auto-style34">&nbsp;</td>
                                     <td class="auto-style11">
-                                        <asp:Button ID="btnReset" runat="server" OnClick="Button1_Click" Text="Reset" CommandName="Reset" />
-                                        &nbsp;<asp:Button ID="btnContinue" runat="server" OnClick="Button2_Click" Text="Continue" />
-                                    </td>
+                                        &nbsp;</td>
                                 </tr>
                             </table>
                         </td>
