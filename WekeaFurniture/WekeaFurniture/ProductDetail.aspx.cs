@@ -38,4 +38,27 @@ public partial class ProductDetail : System.Web.UI.Page
         thisCart.Insert(new CartItem(Int32.Parse(id), row["NAME"].ToString(), row["Image"].ToString(), row["DESCRIPTION"].ToString(), Double.Parse(row["PRICE"].ToString()), 1, Int32.Parse(row["INVENTORY"].ToString())));
         Response.Redirect(Request.RawUrl);
     }
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        int stars = RadioButtonList1.SelectedIndex + 1;
+        string review = TextBox1.Text;
+        string user = (string) Session["user"];
+        Boolean validation = false;
+        if(user != "")
+        {
+            string query = "SELECT ";
+        }
+        //validate if a user is logged in and if they have actually ordered this product
+        if(stars != 0 && review != "" && validation)
+        {
+            RadioButtonList1.SelectedIndex = -1;
+            TextBox1.Text = "";
+            string query = "INSERT INTO Reviews (PID, UID, Rating, Review) VALUES ("
+                + id + "," + user + "," + stars + "," + review + ")";
+        } else
+        {
+
+        }
+    }
 }
