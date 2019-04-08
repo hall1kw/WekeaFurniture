@@ -24,11 +24,13 @@
     {
         //log in
         /*
-        String userid = null;
-        String passHash = null;
+        string userid = null;
+        string passHash = null;
         
-        if(Request.Cookies["userid"].Value != null && Request.Cookies["passHash"].Value != null)
+        if(HttpContext.Current.Response.Cookies.AllKeys.Contains("myCookie"))
         {
+            HttpCookie mycookie = Response.Cookies.Get("userInfo");
+            mycookie.Expires = DateTime.Now.AddHours(2.00);
             Random r = new Random();
             int rInt = r.Next(0, 1000);
             string uniqueId = this.Session.SessionID;
@@ -39,7 +41,10 @@
         {
             Session["userLoggedIn"] = false;
         }
+        System.Diagnostics.Debug.WriteLine("User Session: " + Session["userLoggedIn"] + "\n");
+        System.Diagnostics.Debug.WriteLine("User Cookie: " + Request.Cookies["userid"] + "\n");
         */
+        
 
         //if it can verify the user
         //Session["userid"] = userid;
