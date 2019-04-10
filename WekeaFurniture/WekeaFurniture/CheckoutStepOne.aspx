@@ -18,8 +18,8 @@
             border-color: black;
             padding-top: 10px;
             padding-left: 10px;
-            width: 400px;
-            height: 350px;
+            width: 500px;
+            height: 550px;
         }
         .lbl
         {
@@ -69,6 +69,22 @@
         }
         .auto-style19 {
             font-size: xx-small;
+        }
+        .auto-style20 {
+            width: 407px;
+        }
+        .auto-style21 {
+            text-align: center;
+        }
+        .auto-style31 {
+            width: 61px;
+        }
+        .auto-style41 {
+            text-align: center;
+            width: 61px;
+        }
+        .auto-style61 {
+            height: 65px;
         }
     </style>
 </asp:Content>
@@ -225,16 +241,99 @@
                                     <td class="auto-style11">
                                         <asp:Button ID="Button1" runat="server" Text="Fill Form in Popup" />
 
-                                        <cc1:ModalPopupExtender ID="mp1" runat="server" PopupControlID="Panl1" TargetControlID="Button1"
-                                              CancelControlID="Button2" BackgroundCssClass="Background">
+                                        <cc1:ModalPopupExtender ID="mp1" runat="server" PopupControlID="Panl1" TargetControlID="btnContinue"
+                                              CancelControlID="btnCancel" BackgroundCssClass="Background">
                                         </cc1:ModalPopupExtender>
                                         <asp:Panel ID="Panl1" runat="server" CssClass="Popup" align="center" style = "display:none">
-                                               <iframe style=" width: 350px; height: 300px;" id="irm1" src="AddressVerification.aspx" runat="server"></iframe>
-                                               <br/>
-                                        <asp:Button ID="Button2" runat="server" Text="Close" />
+                                               <div>
+                                                    <table class="auto-style20">
+                                                        <tr>
+                                                               <td class="auto-style21" colspan="2" style="font-family: Arial, Helvetica, sans-serif">
+                                                               <h3>Does this look right?</h3>
+                                                               </td>
+                                                        </tr>
+                                                        <tr>
+                                                               <td class="auto-style61" colspan="2" style="font-family: Arial, Helvetica, sans-                                      serif">Original...</td>
+                                                        </tr>
+                                                        <tr>
+                                                               <td class="auto-style31" style="font-family: Arial, Helvetica, sans-serif">&nbsp;</td>
+                                                               <td style="font-family: Arial, Helvetica, sans-serif">
+                                                                    <asp:Label ID="lblNameOrig" runat="server" Text="Label"></asp:Label>
+                                                               </td>
+                                                        </tr>
+                <tr>
+                    <td class="auto-style31" style="font-family: Arial, Helvetica, sans-serif">&nbsp;</td>
+                    <td style="font-family: Arial, Helvetica, sans-serif">
+                        <asp:Label ID="lblAddOneOrig" runat="server" Text="Label"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="auto-style31" style="font-family: Arial, Helvetica, sans-serif">&nbsp;</td>
+                    <td style="font-family: Arial, Helvetica, sans-serif">
+                        <asp:Label ID="lblAddTwoOrig" runat="server" Text="Label"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="auto-style31" style="font-family: Arial, Helvetica, sans-serif">&nbsp;</td>
+                    <td style="font-family: Arial, Helvetica, sans-serif">
+                        <asp:Label ID="lblCityStateOrig" runat="server" Text="Label"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="auto-style31" style="font-family: Arial, Helvetica, sans-serif">&nbsp;</td>
+                    <td style="font-family: Arial, Helvetica, sans-serif">
+                        <asp:Label ID="lblZipOrig" runat="server" Text="Label"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="auto-style61" colspan="2" style="font-family: Arial, Helvetica, sans-serif">USPS Verified...</td>
+                </tr>
+                <tr>
+                    <td class="auto-style41" style="font-family: Arial, Helvetica, sans-serif">&nbsp;</td>
+                    <td style="font-family: Arial, Helvetica, sans-serif">
+                        <asp:Label ID="lblNameNew" runat="server" Text="Label"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="auto-style41" style="font-family: Arial, Helvetica, sans-serif">&nbsp;</td>
+                    <td style="font-family: Arial, Helvetica, sans-serif">
+                        <asp:Label ID="lblAddOneNew" runat="server" Text="Label"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="auto-style41" style="font-family: Arial, Helvetica, sans-serif">&nbsp;</td>
+                    <td style="font-family: Arial, Helvetica, sans-serif">
+                        <asp:Label ID="lblAddTwoNew" runat="server" Text="Label"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="auto-style41" style="font-family: Arial, Helvetica, sans-serif">&nbsp;</td>
+                    <td style="font-family: Arial, Helvetica, sans-serif">
+                        <asp:Label ID="lblCityStateNew" runat="server" Text="Label"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="auto-style41" style="font-family: Arial, Helvetica, sans-serif">&nbsp;</td>
+                    <td style="font-family: Arial, Helvetica, sans-serif">
+                        <asp:Label ID="lblZipNew" runat="server" Text="Label"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="auto-style41" style="font-family: Arial, Helvetica, sans-serif">&nbsp;</td>
+                    <td style="font-family: Arial, Helvetica, sans-serif">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style21" colspan="2" style="font-family: Arial, Helvetica, sans-serif">
+                        <asp:Button ID="btnCancel" runat="server" Text="Nope! Use the original" />
+&nbsp;<asp:Button ID="btnOK" runat="server" Text="Yep! Use the new" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+                                        
                                         </asp:Panel>
                                         <asp:Button ID="btnReset" runat="server" OnClick="Button1_Click" Text="Reset" CommandName="Reset" />
-                                        &nbsp;<asp:Button ID="btnContinue" runat="server" OnClick="Button2_Click" Text="Continue" />
+                                        &nbsp;<asp:Button ID="btnContinue" runat="server" Text="Continue" OnClick="btnContinue_Click" />
                                     </td>
                                 </tr>
                             </table>

@@ -5,12 +5,19 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using SmartyStreets;
+using SmartyStreets.USStreetApi;
 
 public partial class CheckoutNew : System.Web.UI.Page
 {
     protected ShoppingCart thisCart;
     protected string[] shippingInfo;
     protected double tax;
+    protected bool AddressChecked = false;
+    protected string city;
+    protected string state;
+    protected string zip;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["thisCart"] == null)
@@ -121,6 +128,10 @@ public partial class CheckoutNew : System.Web.UI.Page
     }
     protected void Button2_Click(object sender, EventArgs e)
     {
+        if (!AddressChecked)
+        {
+
+        }
         shippingInfo[6] = lblTax.Text.ToString();
         shippingInfo[7] = lblTotal.Text.ToString();
         Response.Redirect("/CheckoutStepTwo.aspx");
@@ -174,5 +185,70 @@ public partial class CheckoutNew : System.Web.UI.Page
             txtZip.Focus();
         }
         
+    }
+
+    protected void btnContinue_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void VerifyAddress()
+    {
+        //var authId = Environment.GetEnvironmentVariable();
+        //var authToken = Environment.GetEnvironmentVariable();
+
+        var client = new ClientBuilder("e38b07fa-c959-cb34-2e18-2751a7a92b6e", "DtZammOdOius2BZC7J3M")
+        //.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
+        .BuildUsStreetApiClient();
+
+        // Documentation for input fields can be found at:
+        // https://smartystreets.com/docs/us-street-api#input-fields
+
+        var lookup = new Lookup
+        {
+            Street = shippingInfo[1],
+            Street2 = "",
+            Secondary = shippingInfo[2],
+            Urbanization = "", // Only applies to Puerto Rico addresses
+            City = shippingInfo[3],
+            State = shippingInfo[8],
+            ZipCode = shippingInfo[5],
+            MaxCandidates = 1,
+            MatchStrategy = Lookup.INVALID // "invalid" is the most permissive match
+        };
+
+        try
+        {
+            client.Send(lookup);
+        }
+        catch (SmartyException ex)
+        {
+            lblNameNew.Text = (ex.Message);
+            lblAddOneNew.Text = (ex.StackTrace);
+        }
+        catch (System.IO.IOException ex)
+        {
+            lblNameNew.Text = "There was an error validating your address";
+        }
+
+        var candidates = lookup.Result;
+
+        if (candidates.Count == 0)
+        {
+            lblNameNew.Text = "The USPS could not verify your address";
+        }
+
+        var firstCandidate = candidates[0];
+
+        lblNameNew.Text = shippingInfo[0];
+        lblAddOneNew.Text = firstCandidate.Components.SecondaryDesignator + " " + firstCandidate.Components.SecondaryNumber;
+        lblAddTwoNew.Text = firstCandidate.Components.PrimaryNumber + " " + firstCandidate.Components.StreetPredirection + " " + firstCandidate.Components.StreetName + " " + firstCandidate.Components.StreetSuffix + " " + firstCandidate.Components.StreetPostdirection;
+
+        lblCityStateNew.Text = firstCandidate.Components.CityName + ", " + firstCandidate.Components.State;
+
+        lblZipNew.Text = firstCandidate.Components.ZipCode + "-" + firstCandidate.Components.Plus4Code;
+        state = firstCandidate.Components.State;
+        city = firstCandidate.Components.CityName;
+        zip = firstCandidate.Components.ZipCode + "-" + firstCandidate.Components.Plus4Code;
     }
 }

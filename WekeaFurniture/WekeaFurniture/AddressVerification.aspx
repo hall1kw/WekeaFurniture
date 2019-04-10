@@ -6,22 +6,7 @@
 <head runat="server">
     <title></title>
     <style type="text/css">
-        .auto-style1 {
-            width: 407px;
-        }
-        .auto-style2 {
-            text-align: center;
-        }
-        .auto-style3 {
-            width: 61px;
-        }
-        .auto-style4 {
-            text-align: center;
-            width: 61px;
-        }
-        .auto-style6 {
-            height: 65px;
-        }
+        
     </style>
 </head>
 <body>
