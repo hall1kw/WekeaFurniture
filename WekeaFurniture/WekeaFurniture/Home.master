@@ -13,6 +13,23 @@
 
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        bool isLoggedIn = false;
+        if (Session["userLoggedIn"] != null)
+        {
+
+            System.Diagnostics.Debug.Write("Session Home Master: " + Session["userLoggedIn"].ToString() + "\n");
+            isLoggedIn = (bool) Session["userLoggedIn"];
+        } else
+        {
+            System.Diagnostics.Debug.Write("DFKLSJFDLKSDFKJDFSJLK:FDSJKPLFDWLKJ\n");
+        }
+        if(isLoggedIn)
+        {
+
+            btnLog.Visible = false;
+        }
+
         ShoppingCart cart = (ShoppingCart) Session["thisCart"];
         if(cart != null)
         {
@@ -82,7 +99,7 @@
     &nbsp;
         </div>
             <div>
-          <a class="btn btn-warning my-2 my-sm-0" href="Login.aspx">Login</a>
+          <asp:Button ID="btnLog" runat="server" class="btn btn-warning my-2 my-sm-0" href="Login.aspx" Text="Login"></asp:Button>
       </div>
   </div>
 </nav>

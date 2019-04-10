@@ -66,7 +66,18 @@ public partial class SignUp : System.Web.UI.Page
             userInfo.Expires = DateTime.Now.AddHours(2);
             Response.Cookies.Add(userInfo);
 
-            HttpContext.Current.Session["userLoggedIn"] = true;
+            if(Session["userLoggedIn"] == null)
+            {
+                Session["userLoggedIn"] = new bool();
+                Session["userLoggedIn"] = true;
+                System.Diagnostics.Debug.Write("New Session SignUp: " + Session["userLoggedIn"].ToString() + "\n");
+            } else
+            {
+                
+                Session["userLoggedIn"] = true;
+                System.Diagnostics.Debug.Write("Session Signup Already made: " + Session["userLoggedIn"].ToString() + "\n");
+            }
+            
 
             Response.Redirect("Home.aspx");
         }

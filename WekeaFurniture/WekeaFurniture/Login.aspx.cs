@@ -61,7 +61,7 @@ public partial class Login : System.Web.UI.Page
             if (HttpContext.Current.Response.Cookies.AllKeys.ToString().Contains("userInfo"))
             {
                 mycookie = Response.Cookies.Get("userInfo");
-                if(mycookie["userid"].ToString() == userid)
+                if(mycookie["userid"].ToString().Equals(userid))
                 {
                     //make sure that the cookie contains the right user's info
                     mycookie.Expires = DateTime.Now.AddHours(2.00);
@@ -77,13 +77,29 @@ public partial class Login : System.Web.UI.Page
                 //Create a cookie containing the user's Information
                 newUserCookie(mycookie, userid, pwd);
             }
-            Response.Redirect("Home.aspx");
+            
 
         } else
         {
             //Create an alert saying the UserName doesn't exist
             errorLabel.Text = "UserName does not exist. Sign Up";
         }
+
+        //Check to see if a session has never been created, or if the Session just ended
+        if (Session["userLoggedIn"] == null)
+        {
+            Session["userLoggedIn"] = new bool();
+            Session["userLoggedIn"] = true;
+            System.Diagnostics.Debug.Write("New Session Login: " + Session["userLoggedIn"].ToString() + "\n");
+        }
+        else
+        {
+
+            Session["userLoggedIn"] = true;
+            System.Diagnostics.Debug.Write("Session Login Already Made: " + Session["userLoggedIn"].ToString() + "\n");
+        }
+
+        Response.Redirect("Home.aspx");
     }
 
     /*
