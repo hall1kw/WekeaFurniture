@@ -1,7 +1,32 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.master" AutoEventWireup="true" CodeFile="CheckoutStepOne.aspx.cs" Inherits="CheckoutNew" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
+        .Background
+        {
+            background-color: Black;
+            filter: alpha(opacity=90);
+            opacity: 0.8;
+        }
+        .Popup
+        {
+            background-color: #FFFFFF;
+            border-width: 3px;
+            border-style: solid;
+            border-color: black;
+            padding-top: 10px;
+            padding-left: 10px;
+            width: 400px;
+            height: 350px;
+        }
+        .lbl
+        {
+            font-size:16px;
+            font-style:italic;
+            font-weight:bold;
+        }
         .auto-style5 {
             width: 1123px;
         }
@@ -48,6 +73,8 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+</asp:ScriptManager>
     <table style="width:100%;">
         <tr>
             <td class="auto-style5" style="width:250px; border-right-style:solid; border-right-width:3px; border-right-color:#782b42">
@@ -196,6 +223,16 @@
                                     <td class="auto-style7">&nbsp;</td>
                                     <td class="auto-style14">&nbsp;</td>
                                     <td class="auto-style11">
+                                        <asp:Button ID="Button1" runat="server" Text="Fill Form in Popup" />
+
+                                        <cc1:ModalPopupExtender ID="mp1" runat="server" PopupControlID="Panl1" TargetControlID="Button1"
+                                              CancelControlID="Button2" BackgroundCssClass="Background">
+                                        </cc1:ModalPopupExtender>
+                                        <asp:Panel ID="Panl1" runat="server" CssClass="Popup" align="center" style = "display:none">
+                                               <iframe style=" width: 350px; height: 300px;" id="irm1" src="AddressVerification.aspx" runat="server"></iframe>
+                                               <br/>
+                                        <asp:Button ID="Button2" runat="server" Text="Close" />
+                                        </asp:Panel>
                                         <asp:Button ID="btnReset" runat="server" OnClick="Button1_Click" Text="Reset" CommandName="Reset" />
                                         &nbsp;<asp:Button ID="btnContinue" runat="server" OnClick="Button2_Click" Text="Continue" />
                                     </td>

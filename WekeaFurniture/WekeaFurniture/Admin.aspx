@@ -181,7 +181,7 @@
                 </asp:DetailsView>
             </div>
             <div class="col-sm-3">
-                <asp:Image ID="ProductImage" runat="server" ImageUrl=<%#  %> />
+                <asp:Image ID="ProductImage" runat="server" ImageUrl='<%#Eval("IMAGE")%>' />
             </div>
         </div>
 </asp:Content>
