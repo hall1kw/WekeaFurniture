@@ -88,14 +88,13 @@ public partial class Login : System.Web.UI.Page
         //Check to see if a session has never been created, or if the Session just ended
         if (Session["userLoggedIn"] == null)
         {
-            Session["userLoggedIn"] = new bool();
-            Session["userLoggedIn"] = true;
+            Session["userLoggedIn"] = userid;
             System.Diagnostics.Debug.Write("New Session Login: " + Session["userLoggedIn"].ToString() + "\n");
         }
         else
         {
 
-            Session["userLoggedIn"] = true;
+            Session["userLoggedIn"] = userid;
             System.Diagnostics.Debug.Write("Session Login Already Made: " + Session["userLoggedIn"].ToString() + "\n");
         }
 

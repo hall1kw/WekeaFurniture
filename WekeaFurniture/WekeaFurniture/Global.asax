@@ -22,16 +22,12 @@
 
     void Session_Start(object sender, EventArgs e)
     {
-        //log in
-        if (HttpContext.Current.Response.Cookies.AllKeys.ToString().Contains("userInfo"))
+        HttpCookie user = Response.Cookies["userInfo"];
+        if (user != null)
         {
-            System.Diagnostics.Debug.WriteLine("Session Global: " + Session["userLoggedIn"].ToString() + "\n");
-            Session["userLoggedIn"] = new bool();
-            Session["userLoggedIn"] = true;
-            System.Diagnostics.Debug.WriteLine("Session Global: " + Session["userLoggedIn"].ToString() + "\n");
-        } else
-        {
-            Session["userLoggedIn"] = false;
+            //System.Diagnostics.Debug.WriteLine("Session Global: " + Session["userLoggedIn"].ToString() + "\n");
+            Session["userLoggedIn"] = user.Value;
+            //System.Diagnostics.Debug.WriteLine("Session Global: " + Session["userLoggedIn"].ToString() + "\n");
         }
         /*
         string userid = null;
