@@ -64,17 +64,16 @@ public partial class SignUp : System.Web.UI.Page
             userInfo["userid"] = userid;
             userInfo["passhash"] = pwd;
             userInfo.Expires = DateTime.Now.AddHours(2);
-            Response.Cookies.Add(userInfo);
+            Request.Cookies.Add(userInfo);
 
             if(Session["userLoggedIn"] == null)
             {
-                Session["userLoggedIn"] = new bool();
-                Session["userLoggedIn"] = true;
+                Session["userLoggedIn"] = userid;
                 System.Diagnostics.Debug.Write("New Session SignUp: " + Session["userLoggedIn"].ToString() + "\n");
             } else
             {
-                
-                Session["userLoggedIn"] = true;
+
+                Session["userLoggedIn"] = userid;
                 System.Diagnostics.Debug.Write("Session Signup Already made: " + Session["userLoggedIn"].ToString() + "\n");
             }
             

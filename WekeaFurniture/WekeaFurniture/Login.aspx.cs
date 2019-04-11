@@ -60,7 +60,7 @@ public partial class Login : System.Web.UI.Page
             //If there's already a cookie containing the user's information
             if (HttpContext.Current.Response.Cookies.AllKeys.ToString().Contains("userInfo"))
             {
-                mycookie = Response.Cookies.Get("userInfo");
+                mycookie = Request.Cookies.Get("userInfo");
                 if(mycookie["userid"].ToString().Equals(userid))
                 {
                     //make sure that the cookie contains the right user's info
@@ -68,7 +68,7 @@ public partial class Login : System.Web.UI.Page
                 } else
                 {
                     //This means that a user logged in with different login info than the cookie
-                    Response.Cookies.Remove("userInfo");
+                    Request.Cookies.Remove("userInfo");
                     newUserCookie(mycookie, userid, pwd);
                 }
                 

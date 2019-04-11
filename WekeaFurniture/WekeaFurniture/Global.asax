@@ -22,7 +22,8 @@
 
     void Session_Start(object sender, EventArgs e)
     {
-        HttpCookie user = Response.Cookies["userInfo"];
+        HttpCookie user = Request.Cookies["userInfo"];
+        System.Diagnostics.Debug.WriteLine("Session Global: \n");
         if (user != null)
         {
             //System.Diagnostics.Debug.WriteLine("Session Global: " + Session["userLoggedIn"].ToString() + "\n");

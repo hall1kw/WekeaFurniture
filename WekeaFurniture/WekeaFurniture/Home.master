@@ -35,7 +35,7 @@
         {
             btnLogout.Visible = false;
             btnLog.Visible = true;
-            System.Diagnostics.Debug.Write("DFKLSJFDLKSDFKJDFSJLK:FDSJKPLFDWLKJ\n");
+            System.Diagnostics.Debug.Write("Session User is null\n");
         }
 
         ShoppingCart cart = (ShoppingCart) Session["thisCart"];
