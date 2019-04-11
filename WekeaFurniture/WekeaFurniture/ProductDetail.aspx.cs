@@ -8,17 +8,24 @@ using System.Data;
 public partial class ProductDetail : System.Web.UI.Page
 {
     static String id;
+    protected static DataTable dt;
+    protected static DataRow row;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
             id = Request.QueryString["ID"];
-            dlProductDetail.DataSource = DataAccess.selectQuery("SELECT * FROM PRODUCTS WHERE ID=" + id);
+            dt = DataAccess.selectQuery("SELECT * FROM PRODUCTS WHERE ID=" + id);
+            row = dt.Rows[0];
+            dlProductDetail.DataSource = dt;
             dlProductDetail.DataBind();
-
+            
             dlDetailFeat.DataSource = DataAccess.selectQuery("SELECT TOP 2 * FROM PRODUCTS WHERE FEATURED = 1 ORDER BY NEWID()");
-            dlDetailFeat.DataBind();
+            dlDetailFeat.DataBind();            
+            lblThankYou.Text = "We've added: " + row["NAME"] + " to your shopping cart!";
         }
+
     }
 
     protected void Button1_Click(object sender, EventArgs e)
@@ -36,7 +43,8 @@ public partial class ProductDetail : System.Web.UI.Page
         DataRow row = dt.Rows[0];
 
         thisCart.Insert(new CartItem(Int32.Parse(id), row["NAME"].ToString(), row["Image"].ToString(), row["DESCRIPTION"].ToString(), Double.Parse(row["PRICE"].ToString()), 1, Int32.Parse(row["INVENTORY"].ToString())));
-        Response.Redirect(Request.RawUrl);
+        
+        mp1.Show();        
     }
 
     protected void Button2_Click(object sender, EventArgs e)
@@ -60,5 +68,12 @@ public partial class ProductDetail : System.Web.UI.Page
         {
 
         }
+    }
+
+    protected void btnCancelControl_Click(object sender, EventArgs e)
+    {
+        System.Diagnostics.Debug.Write("at line 46");
+        Response.Redirect(Request.RawUrl);
+        mp1.Dispose();
     }
 }

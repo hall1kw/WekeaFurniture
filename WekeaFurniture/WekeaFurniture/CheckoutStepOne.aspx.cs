@@ -58,6 +58,10 @@ public partial class CheckoutNew : System.Web.UI.Page
             ddlState.DataBind();
 
             lblSubtotal.Text = string.Format("Item's Subtotal: {0,19:C}", thisCart.GrandTotal);
+            if (shippingInfo[4] != null)
+            {
+                CalcTax(this, EventArgs.Empty);
+            }
         }
     }
 
@@ -125,6 +129,7 @@ public partial class CheckoutNew : System.Web.UI.Page
             lblTotal.Text = string.Format("Grand Total: {0,19:C}", tax + thisCart.GrandTotal);
             shippingInfo[4] = ddlState.SelectedIndex.ToString();
             shippingInfo[8] = ddlState.SelectedItem.ToString();
+            AddressChecked = false;
         }
     }
     protected void Button2_Click(object sender, EventArgs e)
@@ -142,26 +147,31 @@ public partial class CheckoutNew : System.Web.UI.Page
     {
         shippingInfo[0] = "";
         shippingInfo[0] = txtFullName.Text;
+        AddressChecked = false;
     }
     protected void ShipAddLineOneChanged(object sender, EventArgs e)
     {
         shippingInfo[1] = "";
         shippingInfo[1] = txtAddressLn1.Text;
+        AddressChecked = false;
     }
     protected void ShipAddLineTwoChanged(object sender, EventArgs e)
     {
         shippingInfo[2] = "";
         shippingInfo[2] = txtAddressLn2.Text;
+        AddressChecked = false;
     }
     protected void ShipCityChanged(object sender, EventArgs e)
     {
         shippingInfo[3] = "";
         shippingInfo[3] = txtCity.Text;
+        AddressChecked = false;
     }
     protected void ShipZipChanged(object sender, EventArgs e)
     {
         shippingInfo[5] = "";
         shippingInfo[5] = txtZip.Text;
+        AddressChecked = false;
     }
 
     protected void FindFocus()
@@ -203,6 +213,8 @@ public partial class CheckoutNew : System.Web.UI.Page
         // Check to see if Address has been checked, if so, redirect to step two
         if (AddressChecked)
         {
+            shippingInfo[6] = lblTax.Text.ToString();
+            shippingInfo[7] = lblTotal.Text.ToString();
             Response.Redirect("/CheckoutStepTwo.aspx");
         } else
         {
