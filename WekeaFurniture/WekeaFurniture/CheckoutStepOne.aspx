@@ -239,9 +239,8 @@
                                     <td class="auto-style7">&nbsp;</td>
                                     <td class="auto-style14">&nbsp;</td>
                                     <td class="auto-style11">
-                                        <asp:Button ID="Button1" runat="server" Text="Fill Form in Popup" />
 
-                                        <cc1:ModalPopupExtender ID="mp1" runat="server" PopupControlID="Panl1" TargetControlID="btnContinue"
+                                        <cc1:ModalPopupExtender ID="mp1" runat="server" PopupControlID="Panl1" TargetControlID="dummyBtn"
                                               CancelControlID="btnCancel" BackgroundCssClass="Background">
                                         </cc1:ModalPopupExtender>
                                         <asp:Panel ID="Panl1" runat="server" CssClass="Popup" align="center" style = "display:none">
@@ -325,13 +324,14 @@
                 <tr>
                     <td class="auto-style21" colspan="2" style="font-family: Arial, Helvetica, sans-serif">
                         <asp:Button ID="btnCancel" runat="server" Text="Nope! Use the original" />
-&nbsp;<asp:Button ID="btnOK" runat="server" Text="Yep! Use the new" />
+&nbsp;<asp:Button ID="btnOK" runat="server" OnClick="UseNew" Text="Yep! Use the new" />
                     </td>
                 </tr>
             </table>
         </div>
                                         
                                         </asp:Panel>
+                                        <asp:LinkButton ID="dummyBtn" runat="server"></asp:LinkButton>
                                         <asp:Button ID="btnReset" runat="server" OnClick="Button1_Click" Text="Reset" CommandName="Reset" />
                                         &nbsp;<asp:Button ID="btnContinue" runat="server" Text="Continue" OnClick="btnContinue_Click" />
                                     </td>

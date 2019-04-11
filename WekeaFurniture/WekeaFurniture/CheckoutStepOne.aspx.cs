@@ -13,10 +13,10 @@ public partial class CheckoutNew : System.Web.UI.Page
     protected ShoppingCart thisCart;
     protected string[] shippingInfo;
     protected double tax;
-    protected bool AddressChecked = false;
-    protected string city;
-    protected string state;
-    protected string zip;
+    protected static bool AddressChecked;
+    protected static string city;
+    protected static string state;
+    protected static string zip;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -46,6 +46,8 @@ public partial class CheckoutNew : System.Web.UI.Page
         FindFocus();
         if (!IsPostBack)
         {
+            AddressChecked = false;
+            CheckShippingInfo();
             lblTax.Text = "";
             lblTotal.Text = "";
             dlCartSummary.DataSource = thisCart.Items;
@@ -55,7 +57,6 @@ public partial class CheckoutNew : System.Web.UI.Page
             ddlState.DataTextField = "STATENAME";
             ddlState.DataBind();
 
-            CheckShippingInfo();
             lblSubtotal.Text = string.Format("Item's Subtotal: {0,19:C}", thisCart.GrandTotal);
         }
     }
@@ -187,9 +188,44 @@ public partial class CheckoutNew : System.Web.UI.Page
         
     }
 
+    protected void PopulateOriginal()
+    {
+        lblNameOrig.Text = shippingInfo[0];
+        lblAddOneOrig.Text = shippingInfo[1];
+        lblAddTwoOrig.Text = shippingInfo[2];
+        lblCityStateOrig.Text = shippingInfo[3] + ", " + shippingInfo[8];
+        lblZipOrig.Text = shippingInfo[5];
+    }
+
     protected void btnContinue_Click(object sender, EventArgs e)
     {
-
+        // Need to check that shipping info is filled out...
+        // Check to see if Address has been checked, if so, redirect to step two
+        if (AddressChecked)
+        {
+            Response.Redirect("/CheckoutStepTwo.aspx");
+        } else
+        {
+            // Use the textbox data to verify information
+            shippingInfo[0] = txtFullName.Text;
+            shippingInfo[1] = txtAddressLn1.Text;
+            shippingInfo[2] = txtAddressLn2.Text;
+            shippingInfo[3] = txtCity.Text;
+            shippingInfo[8] = ddlState.SelectedItem.ToString();
+            shippingInfo[5] = txtZip.Text;
+            // Call VerifyAddress to get corrected address
+            PopulateOriginal();
+            VerifyAddress();
+            AddressChecked = true;
+            mp1.Show();
+        }
+        // Else...
+        // Apply response from USPS to labels in popup
+        // Set checked bool to true
+        // Call popup
+        // Two buttons - Use Original, Use New
+        // Use Original... Do nothing to data, return to shipping, enable a button for "Save to user account"
+        // Use New... Update data in text fields, enable "Save to user account"
     }
 
     protected void VerifyAddress()
@@ -241,8 +277,8 @@ public partial class CheckoutNew : System.Web.UI.Page
         var firstCandidate = candidates[0];
 
         lblNameNew.Text = shippingInfo[0];
-        lblAddOneNew.Text = firstCandidate.Components.SecondaryDesignator + " " + firstCandidate.Components.SecondaryNumber;
-        lblAddTwoNew.Text = firstCandidate.Components.PrimaryNumber + " " + firstCandidate.Components.StreetPredirection + " " + firstCandidate.Components.StreetName + " " + firstCandidate.Components.StreetSuffix + " " + firstCandidate.Components.StreetPostdirection;
+        lblAddOneNew.Text = firstCandidate.DeliveryLine1;
+        lblAddTwoNew.Text = firstCandidate.DeliveryLine2;
 
         lblCityStateNew.Text = firstCandidate.Components.CityName + ", " + firstCandidate.Components.State;
 
@@ -250,5 +286,25 @@ public partial class CheckoutNew : System.Web.UI.Page
         state = firstCandidate.Components.State;
         city = firstCandidate.Components.CityName;
         zip = firstCandidate.Components.ZipCode + "-" + firstCandidate.Components.Plus4Code;
+    }
+
+    protected void UseNew(object sender, EventArgs e)
+    {
+        shippingInfo[1] = lblAddOneNew.Text;
+        txtAddressLn1.Text = lblAddOneNew.Text;
+        shippingInfo[2] = lblAddTwoNew.Text;
+        txtAddressLn2.Text = lblAddTwoNew.Text;
+        shippingInfo[3] = city;
+        txtCity.Text = city;
+        shippingInfo[8] = state;
+        shippingInfo[5] = zip;
+        txtZip.Text = zip;
+        AddressChecked = true;
+        Session["shippingInfo"] = shippingInfo;
+    }
+
+    protected void UseOrig(object sender, EventArgs e)
+    {
+        AddressChecked = true;
     }
 }
