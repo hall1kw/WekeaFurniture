@@ -255,6 +255,16 @@ public partial class Admin : System.Web.UI.Page
         GridView1.DataSource = DataAccess.selectQuery("SELECT * FROM PRODUCTS");
         GridView1.DataBind();
     }
+
+    protected void ProductButton_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("AdminProducts.aspx");
+    }
+
+    protected void CustomerButton_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("AdminUsers.aspx");
+    }
 }
 
 // Deletes images, make sure you add that functionality when you are updating images as well
