@@ -51,19 +51,26 @@ public partial class ProductDetail : System.Web.UI.Page
     {
         int stars = RadioButtonList1.SelectedIndex + 1;
         string review = TextBox1.Text;
-        string user = (string) Session["user"];
-        Boolean validation = false;
+        string user = "1"; //(string) Session["user"];
+        Boolean validation = true;
         if(user != "")
         {
-            string query = "SELECT ";
+            user = (string) Session["userLoggedIn"];
+            string joinquery = "SELECT Order_Products.ID" +
+                "FROM ((Order_Products " +
+                "INNER JOIN Orders ON Orders.ID = Order_Products.OID) " +
+                "INNER JOIN Users ON Users.ID = Order_Products.UID) " +
+                "WHERE Users.ID = '" + user + "' AND Order_Products.PID = '" + id + "';" ;
         }
+
         //validate if a user is logged in and if they have actually ordered this product
         if(stars != 0 && review != "" && validation)
         {
             RadioButtonList1.SelectedIndex = -1;
             TextBox1.Text = "";
-            string query = "INSERT INTO Reviews (PID, UID, Rating, Review) VALUES ("
-                + id + "," + user + "," + stars + "," + review + ")";
+            string query = "INSERT INTO Reviews (PID, UID, Rating, Review) VALUES ('"
+                + id + "','" + user + "','" + stars + "','" + review + "')";
+            DataAccess.insertQuery(query);
         } else
         {
 
