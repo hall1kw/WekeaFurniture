@@ -5,12 +5,20 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using SmartyStreets;
+using SmartyStreets.USStreetApi;
 
 public partial class CheckoutNew : System.Web.UI.Page
 {
     protected ShoppingCart thisCart;
     protected string[] shippingInfo;
     protected double tax;
+    protected static bool AddressChecked;
+    protected static string city;
+    protected static string state;
+    protected static string zip;
+    protected static double shipping;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["thisCart"] == null)
@@ -39,6 +47,8 @@ public partial class CheckoutNew : System.Web.UI.Page
         FindFocus();
         if (!IsPostBack)
         {
+            AddressChecked = false;
+            CheckShippingInfo();
             lblTax.Text = "";
             lblTotal.Text = "";
             dlCartSummary.DataSource = thisCart.Items;
@@ -48,8 +58,11 @@ public partial class CheckoutNew : System.Web.UI.Page
             ddlState.DataTextField = "STATENAME";
             ddlState.DataBind();
 
-            CheckShippingInfo();
             lblSubtotal.Text = string.Format("Item's Subtotal: {0,19:C}", thisCart.GrandTotal);
+            if (shippingInfo[4] != null)
+            {
+                CalcTax(this, EventArgs.Empty);
+            }
         }
     }
 
@@ -114,13 +127,18 @@ public partial class CheckoutNew : System.Web.UI.Page
             DataTable dt = DataAccess.selectQuery("SELECT TAXRATE FROM SalesTax WHERE STATENAME = '" + ddlState.SelectedItem + "'");
             tax = thisCart.GrandTotal * Double.Parse(dt.Rows[0][0].ToString());
             lblTax.Text = string.Format(ddlState.SelectedItem + " Tax: {0,19:C}", tax);
-            lblTotal.Text = string.Format("Grand Total: {0,19:C}", tax + thisCart.GrandTotal);
+            lblTotal.Text = string.Format("Grand Total: {0,19:C}", tax + thisCart.GrandTotal + shipping);
             shippingInfo[4] = ddlState.SelectedIndex.ToString();
             shippingInfo[8] = ddlState.SelectedItem.ToString();
+            AddressChecked = false;
         }
     }
     protected void Button2_Click(object sender, EventArgs e)
     {
+        if (!AddressChecked)
+        {
+
+        }
         shippingInfo[6] = lblTax.Text.ToString();
         shippingInfo[7] = lblTotal.Text.ToString();
         Response.Redirect("/CheckoutStepTwo.aspx");
@@ -130,26 +148,31 @@ public partial class CheckoutNew : System.Web.UI.Page
     {
         shippingInfo[0] = "";
         shippingInfo[0] = txtFullName.Text;
+        AddressChecked = false;
     }
     protected void ShipAddLineOneChanged(object sender, EventArgs e)
     {
         shippingInfo[1] = "";
         shippingInfo[1] = txtAddressLn1.Text;
+        AddressChecked = false;
     }
     protected void ShipAddLineTwoChanged(object sender, EventArgs e)
     {
         shippingInfo[2] = "";
         shippingInfo[2] = txtAddressLn2.Text;
+        AddressChecked = false;
     }
     protected void ShipCityChanged(object sender, EventArgs e)
     {
         shippingInfo[3] = "";
         shippingInfo[3] = txtCity.Text;
+        AddressChecked = false;
     }
     protected void ShipZipChanged(object sender, EventArgs e)
     {
         shippingInfo[5] = "";
         shippingInfo[5] = txtZip.Text;
+        AddressChecked = false;
     }
 
     protected void FindFocus()
@@ -174,5 +197,148 @@ public partial class CheckoutNew : System.Web.UI.Page
             txtZip.Focus();
         }
         
+    }
+
+    protected void PopulateOriginal()
+    {
+        lblNameOrig.Text = shippingInfo[0];
+        lblAddOneOrig.Text = shippingInfo[1];
+        lblAddTwoOrig.Text = shippingInfo[2];
+        lblCityStateOrig.Text = shippingInfo[3] + ", " + shippingInfo[8];
+        lblZipOrig.Text = shippingInfo[5];
+    }
+
+    protected void btnContinue_Click(object sender, EventArgs e)
+    {
+        // Need to check that shipping info is filled out...
+        // Check to see if Address has been checked, if so, redirect to step two
+        if (AddressChecked)
+        {
+            shippingInfo[6] = lblTax.Text.ToString();
+            shippingInfo[7] = lblTotal.Text.ToString();
+            Response.Redirect("/CheckoutStepTwo.aspx");
+        } else
+        {
+            // Use the textbox data to verify information
+            shippingInfo[0] = txtFullName.Text;
+            shippingInfo[1] = txtAddressLn1.Text;
+            shippingInfo[2] = txtAddressLn2.Text;
+            shippingInfo[3] = txtCity.Text;
+            shippingInfo[8] = ddlState.SelectedItem.ToString();
+            shippingInfo[5] = txtZip.Text;
+            // Call VerifyAddress to get corrected address
+            PopulateOriginal();
+            VerifyAddress();
+            AddressChecked = true;
+            mp1.Show();
+        }
+        // Else...
+        // Apply response from USPS to labels in popup
+        // Set checked bool to true
+        // Call popup
+        // Two buttons - Use Original, Use New
+        // Use Original... Do nothing to data, return to shipping, enable a button for "Save to user account"
+        // Use New... Update data in text fields, enable "Save to user account"
+    }
+
+    protected void VerifyAddress()
+    {
+        //var authId = Environment.GetEnvironmentVariable();
+        //var authToken = Environment.GetEnvironmentVariable();
+
+        var client = new ClientBuilder("e38b07fa-c959-cb34-2e18-2751a7a92b6e", "DtZammOdOius2BZC7J3M")
+        //.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
+        .BuildUsStreetApiClient();
+
+        // Documentation for input fields can be found at:
+        // https://smartystreets.com/docs/us-street-api#input-fields
+
+        var lookup = new Lookup
+        {
+            Street = shippingInfo[1],
+            Street2 = "",
+            Secondary = shippingInfo[2],
+            Urbanization = "", // Only applies to Puerto Rico addresses
+            City = shippingInfo[3],
+            State = shippingInfo[8],
+            ZipCode = shippingInfo[5],
+            MaxCandidates = 1,
+            MatchStrategy = Lookup.INVALID // "invalid" is the most permissive match
+        };
+
+        try
+        {
+            client.Send(lookup);
+        }
+        catch (SmartyException ex)
+        {
+            lblNameNew.Text = (ex.Message);
+            lblAddOneNew.Text = (ex.StackTrace);
+        }
+        catch (System.IO.IOException ex)
+        {
+            lblNameNew.Text = "There was an error validating your address";
+        }
+
+        var candidates = lookup.Result;
+
+        if (candidates.Count == 0)
+        {
+            lblNameNew.Text = "The USPS could not verify your address";
+        }
+
+        var firstCandidate = candidates[0];
+
+        lblNameNew.Text = shippingInfo[0];
+        lblAddOneNew.Text = firstCandidate.DeliveryLine1;
+        lblAddTwoNew.Text = firstCandidate.DeliveryLine2;
+
+        lblCityStateNew.Text = firstCandidate.Components.CityName + ", " + firstCandidate.Components.State;
+
+        lblZipNew.Text = firstCandidate.Components.ZipCode + "-" + firstCandidate.Components.Plus4Code;
+        state = firstCandidate.Components.State;
+        city = firstCandidate.Components.CityName;
+        zip = firstCandidate.Components.ZipCode + "-" + firstCandidate.Components.Plus4Code;
+    }
+
+    protected void UseNew(object sender, EventArgs e)
+    {
+        shippingInfo[1] = lblAddOneNew.Text;
+        txtAddressLn1.Text = lblAddOneNew.Text;
+        shippingInfo[2] = lblAddTwoNew.Text;
+        txtAddressLn2.Text = lblAddTwoNew.Text;
+        shippingInfo[3] = city;
+        txtCity.Text = city;
+        shippingInfo[8] = state;
+        shippingInfo[5] = zip;
+        txtZip.Text = zip;
+        AddressChecked = true;
+        Session["shippingInfo"] = shippingInfo;
+    }
+
+    protected void UseOrig(object sender, EventArgs e)
+    {
+        AddressChecked = true;
+    }
+
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlShipping.SelectedValue.ToString().Equals("50"))
+        {
+            lblShipping.Text = "Shipping Cost: $50.00";
+            shipping = 50.00;
+            if (ddlState.SelectedIndex != 0)
+            {
+                CalcTax(this, EventArgs.Empty);
+            }
+        } else
+        {
+            lblShipping.Text = "Shipping Cost: FREE";
+            shipping = 0;
+            if (ddlState.SelectedIndex != 0)
+            {
+                CalcTax(this, EventArgs.Empty);
+            }
+        }
     }
 }

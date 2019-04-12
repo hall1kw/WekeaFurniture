@@ -1,16 +1,45 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.master" AutoEventWireup="true" CodeFile="ProductDetail.aspx.cs" Inherits="ProductDetail" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
+        .Background
+        {
+            background-color: Black;
+            filter: alpha(opacity=90);
+            opacity: 0.8;
+        }
+        .Popup
+        {
+            background-color: #782b42;
+            border-width: 3px;
+            border-style: solid;
+            border-color: black;
+            padding-top: 10px;
+            padding-left: 10px;
+            width: 400px;
+            height: 150px;            
+        }
+        .lbl
+        {
+            font-size:16px;
+            font-style:italic;
+            font-weight:bold;
+        }
         .auto-style5 {
             width: 25%;
         }
         .auto-style6 {
             width: 50%;
         }
+        .auto-style7 {
+            text-align: center;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <table style="width:100%;">
         <tr>
             <td class="auto-style5" style="width:250px; border-right-style:solid; border-right-width:3px; border-right-color:#782b42">
@@ -100,11 +129,67 @@
                     <asp:ListItem>5 stars</asp:ListItem>
                 </asp:RadioButtonList>
                 <br />
-                <asp:TextBox ID="TextBox1" runat="server" Height="75px" Width="329px" MaxLength="10" Rows="500"></asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" Height="75px" Width="329px" MaxLength="1024" Rows="500"></asp:TextBox>
                 <br />
                 <asp:Button ID="Button2" runat="server" Text="Submit Review" OnClick="Button2_Click" />
             </td>
         </tr>
     </table>
+    
+    <asp:LinkButton ID="dummyBtn" runat="server"></asp:LinkButton>
+    <cc1:ModalPopupExtender ID="mp1" runat="server" PopupControlID="ProdAdded" TargetControlID="dummyBtn" BackgroundCssClass="Background">
+                                        </cc1:ModalPopupExtender>
+    <asp:Panel ID="ProdAdded" runat="server" CssClass="Popup" align="center" style = "display:none">
+        <div>
+            <table style="width:100%;">
+            <tr>
+                <td>&nbsp;</td>
+                <td><asp:Label ID="lblThankYou" runat="server" ForeColor="#FFCC00"></asp:Label></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td style="width:300px">
+                    
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td class="auto-style7">
+                    <asp:Button ID="btnCancelControl" OnClick="btnCancelControl_Click" runat="server" Text="OK, Cool!" />
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        </div>
+    </asp:Panel>
+    <cc1:ModalPopupExtender ID="ModalPopupExtender1" runat="server" PopupControlID="Panel1" TargetControlID="dummyBtn" BackgroundCssClass="Background">
+                                        </cc1:ModalPopupExtender>
+    <asp:Panel ID="Panel1" runat="server" CssClass="Popup" align="center" style = "display:none">
+        <div>
+            <table style="width:100%;">
+            <tr>
+                <td>&nbsp;</td>
+                <td><asp:Label ID="lblOutOfStock" runat="server" ForeColor="#FFCC00"></asp:Label></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td style="width:300px">
+                    
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td class="auto-style7">
+                    <asp:Button ID="Button3" OnClick="btnCancelControl_Click" runat="server" Text="OK" />
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        </div>
+    </asp:Panel>
 </asp:Content>
 

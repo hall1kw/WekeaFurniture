@@ -143,6 +143,10 @@
             width: 216px;
             text-align: right;
         }
+        .auto-style56 {
+            height: 40px;
+            width: 236px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -152,7 +156,7 @@
             <div class="text-center">
                 <h3>Shopping Cart</h3>
                 <h3>
-                    <asp:DataList ID="dlCartSummary" runat="server">
+                    <asp:DataList ID="dlCartSummary" runat="server" Width="236px">
                         <ItemTemplate>
                             <table style="width:100%;">
                                 <tr>
@@ -182,13 +186,27 @@
                         </ItemTemplate>
                     </asp:DataList>
                     <div class="text-right">
+                                                        <table style="width:236px;">
+                                                            <tr>
+                                                                <td class="auto-style56">
                                                         <asp:Label ID="lblSubtotal" runat="server" Text="Label" Font-Size="Large"></asp:Label>
-                                                    <br />
-                        <span class="auto-style19">&nbsp;</span><br />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="auto-style56">
                                                         <asp:Label ID="lblTax" runat="server" Text="Label" Font-Size="Large"></asp:Label>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="auto-style56">
+                                                        <asp:Label ID="lblTotal" runat="server" Text="Label" Font-Size="Large"></asp:Label>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
                                                     <br />
                         <span class="auto-style19">&nbsp;</span><br />
-                                                        <asp:Label ID="lblTotal" runat="server" Text="Label" Font-Size="Large"></asp:Label>
+                                                    <br />
+                        <span class="auto-style19">&nbsp;</span><br />
                     <br />
                     </div>
                 </h3>

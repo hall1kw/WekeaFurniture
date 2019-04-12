@@ -34,6 +34,8 @@ public partial class Login : System.Web.UI.Page
     protected void btnLogin_Click(object sender, EventArgs e)
     {
         string pwd = "";
+        string userid = "";
+        
 
         //Validates/hashes the input
         if(Validation.ValidEmail(email.Text))
@@ -43,6 +45,7 @@ public partial class Login : System.Web.UI.Page
         else
         {
             //Alert user saying email isn't valid
+            Response.Write("<script>alert('Email Not Valid')</script>");
             Response.Redirect("https://wekeafurniture20190329101320.azurewebsites.net/Login.aspx", true);
         }
 
@@ -50,17 +53,16 @@ public partial class Login : System.Web.UI.Page
         DataTable dt = DataAccess.selectQuery(query);
         System.Diagnostics.Debug.WriteLine("DT Count: " + dt.Rows.Count + "\n");
 
-        string userid = dt.Rows[0][0].ToString();
-        pwd = dt.Rows[0][4].ToString();
-
         //if there is one user in the database
         if (dt.Rows.Count == 1)
         {
+            userid = dt.Rows[0][0].ToString();
+            pwd = dt.Rows[0][4].ToString();
             HttpCookie mycookie = null;
             //If there's already a cookie containing the user's information
             if (HttpContext.Current.Response.Cookies.AllKeys.ToString().Contains("userInfo"))
             {
-                mycookie = Response.Cookies.Get("userInfo");
+                mycookie = Request.Cookies.Get("userInfo");
                 if(mycookie["userid"].ToString().Equals(userid))
                 {
                     //make sure that the cookie contains the right user's info
@@ -68,7 +70,7 @@ public partial class Login : System.Web.UI.Page
                 } else
                 {
                     //This means that a user logged in with different login info than the cookie
-                    Response.Cookies.Remove("userInfo");
+                    Request.Cookies.Remove("userInfo");
                     newUserCookie(mycookie, userid, pwd);
                 }
                 
@@ -88,14 +90,13 @@ public partial class Login : System.Web.UI.Page
         //Check to see if a session has never been created, or if the Session just ended
         if (Session["userLoggedIn"] == null)
         {
-            Session["userLoggedIn"] = new bool();
-            Session["userLoggedIn"] = true;
+            Session["userLoggedIn"] = userid;
             System.Diagnostics.Debug.Write("New Session Login: " + Session["userLoggedIn"].ToString() + "\n");
         }
         else
         {
 
-            Session["userLoggedIn"] = true;
+            Session["userLoggedIn"] = userid;
             System.Diagnostics.Debug.Write("Session Login Already Made: " + Session["userLoggedIn"].ToString() + "\n");
         }
 
