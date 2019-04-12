@@ -24,27 +24,35 @@ public partial class ProductDetail : System.Web.UI.Page
             dlDetailFeat.DataSource = DataAccess.selectQuery("SELECT TOP 2 * FROM PRODUCTS WHERE FEATURED = 1 ORDER BY NEWID()");
             dlDetailFeat.DataBind();            
             lblThankYou.Text = "We've added: " + row["NAME"] + " to your shopping cart!";
+            lblOutOfStock.Text = "We're sorry, " + row["NAME"] + " is out of stock.";
         }
 
     }
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        ShoppingCart thisCart = (ShoppingCart)Session["thisCart"];
-        if (thisCart == null)
-        {
-            thisCart = new ShoppingCart();
-            Session["thisCart"] = thisCart;
-        }
         CartItem item = new CartItem();
 
         DataTable dt = DataAccess.selectQuery("SELECT * FROM PRODUCTS WHERE ID =" + id);
 
         DataRow row = dt.Rows[0];
 
-        thisCart.Insert(new CartItem(Int32.Parse(id), row["NAME"].ToString(), row["Image"].ToString(), row["DESCRIPTION"].ToString(), Double.Parse(row["PRICE"].ToString()), 1, Int32.Parse(row["INVENTORY"].ToString())));
-        
-        mp1.Show();        
+        if (Int32.Parse(row["INVENTORY"].ToString()) != 0)
+        {
+            ShoppingCart thisCart = (ShoppingCart)Session["thisCart"];
+            if (thisCart == null)
+            {
+                thisCart = new ShoppingCart();
+                Session["thisCart"] = thisCart;
+            }
+
+            thisCart.Insert(new CartItem(Int32.Parse(id), row["NAME"].ToString(), row["Image"].ToString(), row["DESCRIPTION"].ToString(), Double.Parse(row["PRICE"].ToString()), 1, Int32.Parse(row["INVENTORY"].ToString())));
+
+            mp1.Show();
+        } else
+        {
+            ModalPopupExtender1.Show();
+        }
     }
 
     protected void Button2_Click(object sender, EventArgs e)
