@@ -33,10 +33,13 @@ public partial class SignUp : System.Web.UI.Page
         //Check to see if email and password combination is taken already
         string query = "SELECT ID from Users WHERE EMAIL='" + email.Text + "';";
         DataTable userinfo = DataAccess.selectQuery(query);
+        System.Diagnostics.Debug.Write("Before If\n");
 
         //If taken, alert them to choose a different password. If not, continue
         if (userinfo.Rows.Count == 1)
         {
+            System.Diagnostics.Debug.Write("Rows Count is 1\n");
+            Response.Write("<script>alert('You already have an account')</script>");
             //Alert for different password
         } else
         {
@@ -49,6 +52,8 @@ public partial class SignUp : System.Web.UI.Page
             else
             {
                 //Create alert that says "Email not valid"
+                Response.Write("<script>alert('Email Not Valid')</script>");
+                Response.Redirect("https://wekeafurniture20190329101320.azurewebsites.net/SignUp.aspx", true);
             }
             query = "INSERT INTO Users (email, first_name, last_name, pass_hash) VALUES('" + email.Text + "', '" +
                 first_name.Text + "', '" + last_name.Text + "', '" + pwd + "');";
@@ -59,12 +64,20 @@ public partial class SignUp : System.Web.UI.Page
 
             String userid = userinfo.Rows[0][0].ToString();
 
+            System.Diagnostics.Debug.Write("Before Insert\n");
+
+            //Insert user's shipping information
+            query = "INSERT INTO Shipping_Info (uid, ship_to_name, address_one, city, state, zip, phone) VALUES('" +
+                userid + "', '" + first_name.Text + " " + last_name.Text + "', '" + address.Text + "', '" + city.Text
+                 + "', '" + state.Text + "', '" + zip.Text + "', '" + phone.Text + "');";
+            DataAccess.selectQuery(query);
+            System.Diagnostics.Debug.Write("HERELKFSJFLJ\n");
 
             HttpCookie userInfo = new HttpCookie("userInfo");
             userInfo["userid"] = userid;
             userInfo["passhash"] = pwd;
             userInfo.Expires = DateTime.Now.AddHours(2);
-            Request.Cookies.Add(userInfo);
+            Response.Cookies.Add(userInfo);
 
             if(Session["userLoggedIn"] == null)
             {

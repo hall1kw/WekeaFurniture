@@ -51,6 +51,27 @@
             <td class="labelCol">Password</td>
             <td class="inputCol"><asp:TextBox id="pw" name="pw" runat="server" TextMode="Password" pattern=".{5,}" required title="5 characters minimum"/></td> 
           </tr>
+        <tr class ="trow">
+            <td class="labelCol">Address</td>
+            <td class="inputCol"><asp:TextBox id="address" runat="server" required/></td> 
+          </tr>
+        <tr class ="trow">
+            <td class="labelCol">City</td>
+            <td class="inputCol"><asp:TextBox id="city" runat="server" required/></td> 
+          </tr>
+        <tr class ="trow">
+            <td class="labelCol">State</td>
+            <td class="inputCol"><asp:TextBox id="state" runat="server" required/></td> 
+          </tr>
+        <tr class ="trow">
+            <td class="labelCol">Zip Code</td>
+            <td class="inputCol"><asp:TextBox id="zip" runat="server" required/></td> 
+          </tr>
+
+          <tr class ="trow">
+            <td class="labelCol">Phone Number</td>
+            <td class="inputCol"><asp:TextBox id="phone" runat="server" required/></td> 
+          </tr>
 
            
         </table>
