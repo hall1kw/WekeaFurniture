@@ -12,14 +12,14 @@
         }
         .Popup
         {
-            background-color: #FFFFFF;
+            background-color: #782b42;
             border-width: 3px;
             border-style: solid;
             border-color: black;
             padding-top: 10px;
             padding-left: 10px;
             width: 400px;
-            height: 150px;
+            height: 150px;            
         }
         .lbl
         {
@@ -144,7 +144,7 @@
             <table style="width:100%;">
             <tr>
                 <td>&nbsp;</td>
-                <td><asp:Label ID="lblThankYou" runat="server"></asp:Label></td>
+                <td><asp:Label ID="lblThankYou" runat="server" ForeColor="#FFCC00"></asp:Label></td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
@@ -171,7 +171,7 @@
             <table style="width:100%;">
             <tr>
                 <td>&nbsp;</td>
-                <td><asp:Label ID="lblOutOfStock" runat="server"></asp:Label></td>
+                <td><asp:Label ID="lblOutOfStock" runat="server" ForeColor="#FFCC00"></asp:Label></td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
