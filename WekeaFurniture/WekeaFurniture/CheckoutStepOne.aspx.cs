@@ -17,6 +17,7 @@ public partial class CheckoutNew : System.Web.UI.Page
     protected static string city;
     protected static string state;
     protected static string zip;
+    protected static double shipping;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -126,7 +127,7 @@ public partial class CheckoutNew : System.Web.UI.Page
             DataTable dt = DataAccess.selectQuery("SELECT TAXRATE FROM SalesTax WHERE STATENAME = '" + ddlState.SelectedItem + "'");
             tax = thisCart.GrandTotal * Double.Parse(dt.Rows[0][0].ToString());
             lblTax.Text = string.Format(ddlState.SelectedItem + " Tax: {0,19:C}", tax);
-            lblTotal.Text = string.Format("Grand Total: {0,19:C}", tax + thisCart.GrandTotal);
+            lblTotal.Text = string.Format("Grand Total: {0,19:C}", tax + thisCart.GrandTotal + shipping);
             shippingInfo[4] = ddlState.SelectedIndex.ToString();
             shippingInfo[8] = ddlState.SelectedItem.ToString();
             AddressChecked = false;
@@ -318,5 +319,26 @@ public partial class CheckoutNew : System.Web.UI.Page
     protected void UseOrig(object sender, EventArgs e)
     {
         AddressChecked = true;
+    }
+
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlShipping.SelectedValue.ToString().Equals("50"))
+        {
+            lblShipping.Text = "Shipping Cost: $50.00";
+            shipping = 50.00;
+            if (ddlState.SelectedIndex != 0)
+            {
+                CalcTax(this, EventArgs.Empty);
+            }
+        } else
+        {
+            lblShipping.Text = "Shipping Cost: FREE";
+            shipping = 0;
+            if (ddlState.SelectedIndex != 0)
+            {
+                CalcTax(this, EventArgs.Empty);
+            }
+        }
     }
 }
