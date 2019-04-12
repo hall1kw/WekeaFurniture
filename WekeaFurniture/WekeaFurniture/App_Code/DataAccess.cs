@@ -24,5 +24,13 @@ public static class DataAccess
         cnn.Close();
         return dt;
     }
+
+    public static void insertQuery(string query)
+    {
+        SqlConnection cnn = new SqlConnection(myConnectionString);
+        cnn.Open();
+        SqlCommand cmd = new SqlCommand(query, cnn);
+        cmd.ExecuteNonQuery();
+    }
 }
 
