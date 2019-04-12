@@ -134,16 +134,22 @@
                                                             <tr>
                                                                 <td class="auto-style62">
                                                         <asp:Label ID="lblSubtotal" runat="server" Text="Label" Font-Size="Large"></asp:Label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="auto-style62">
+                                                                    <br />
                                                         <asp:Label ID="lblTax" runat="server" Text="Label" Font-Size="Large"></asp:Label>
+                                                                    <br />
+                                                                    <asp:Label ID="lblShipping" runat="server" Font-Size="Large"></asp:Label>
+                                                                    <br />
+                                                        <asp:Label ID="lblTotal" runat="server" Text="Label" Font-Size="Large"></asp:Label>
+                                                                    <br />
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="auto-style62">
-                                                        <asp:Label ID="lblTotal" runat="server" Text="Label" Font-Size="Large"></asp:Label>
+                                                                    &nbsp;</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="auto-style62">
+                                                                    <br />
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -177,11 +183,30 @@
                         <td colspan="3">
                             <table style="width:100%;">
                                 <tr>
+                                    <td style="border-color: #782b42; border-style: solid none none none; border-width: 3px;" colspan="2">Shipping Method:</td>
+                                    <td style="border-color: #782b42; border-style: solid none none none; border-width: 3px;" class="auto-style16">&nbsp;</td>
+                                    <td style="border-color: #782b42; border-style: solid none none none; border-width: 3px;" class="text-center" rowspan="16">
+                                        &nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="auto-style7" style="border-style: none; border-right-color: #782b42; border-bottom-color: #782b42; border-left-color: #782b42;">&nbsp;</td>
+                                    <td style="border-style: none; border-right-color: #782b42; border-bottom-color: #782b42; border-left-color: #782b42;" colspan="2">
+                                        <asp:DropDownList ID="ddlShipping" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="true">
+                                            <asp:ListItem>--- Please Select Shipping Method ---</asp:ListItem>
+                                            <asp:ListItem Value="0">Free Standard Shipping</asp:ListItem>
+                                            <asp:ListItem Value="50">Express Shipping - add $50</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="auto-style7" style="border-style: none; ">&nbsp;</td>
+                                    <td class="auto-style15" style="border-style: none; ">&nbsp;</td>
+                                    <td style="border-style: none; " class="auto-style16">&nbsp;</td>
+                                </tr>
+                                <tr>
                                     <td class="auto-style7" style="border-color: #782b42; border-style: solid none none none; border-width: 3px;">Ship To:</td>
                                     <td class="auto-style15" style="border-color: #782b42; border-style: solid none none none; border-width: 3px;">&nbsp;</td>
                                     <td style="border-color: #782b42; border-style: solid none none none; border-width: 3px;" class="auto-style16">&nbsp;</td>
-                                    <td style="border-color: #782b42; border-style: solid none none none; border-width: 3px;" class="text-center" rowspan="13">
-                                        &nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td class="auto-style7">&nbsp;</td>
