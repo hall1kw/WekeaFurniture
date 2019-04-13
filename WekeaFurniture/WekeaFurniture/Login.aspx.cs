@@ -41,7 +41,7 @@ public partial class Login : System.Web.UI.Page
         if(!Validation.ValidEmail(email.Text))
         {
             //Alert user saying email isn't valid
-            System.Diagnostics.Debug.Write("not a valid email");
+            
             Response.Write("<script>alert('Email Not Valid');</script>");
             //Response.Redirect("/Login.aspx", true);
         }
@@ -49,7 +49,7 @@ public partial class Login : System.Web.UI.Page
 
         string query = "SELECT * FROM Users WHERE email='" + email.Text + "';";
         DataTable dt = DataAccess.selectQuery(query);
-        System.Diagnostics.Debug.WriteLine("DT Count: " + dt.Rows.Count + "\n");
+        
 
         //if there is one user in the database
         if (dt.Rows.Count == 1)
@@ -59,16 +59,13 @@ public partial class Login : System.Web.UI.Page
             string DBpwd = userRow["PASS_HASH"].ToString();
             string DBpwdSalt = userRow["PASS_SALT"].ToString();
             string returnedHash = Validation.VerifyPwdHashWithSalt(pw.Text, userRow["PASS_SALT"].ToString());
-            System.Diagnostics.Debug.WriteLine(DBpwd);
-            System.Diagnostics.Debug.WriteLine(userRow["PASS_SALT"].ToString());
-            System.Diagnostics.Debug.WriteLine(Validation.VerifyPwdHashWithSalt(pw.Text, userRow["PASS_SALT"].ToString()));
+            
             if (DBpwd.Equals(returnedHash))
             {                
                 HttpCookie mycookie = null;
                 //If there's already a cookie containing the user's information
                 if (HttpContext.Current.Response.Cookies.AllKeys.ToString().Contains("userInfo"))
-                {
-                    System.Diagnostics.Debug.WriteLine("cookie found");
+                {                    
                     mycookie = Request.Cookies.Get("userInfo");
                     if (mycookie["userid"].ToString().Equals(userid))
                     {
@@ -76,18 +73,14 @@ public partial class Login : System.Web.UI.Page
                         mycookie.Expires = DateTime.Now.AddHours(2.00);
                     }
                     else
-                    {
-                        
+                    {                        
                         //This means that a user logged in with different login info than the cookie
                         Request.Cookies.Remove("userInfo");
                         newUserCookie(mycookie, userid, pwd);
-                    }
-                    
-                    
+                    }                   
                 }
                 else
-                {
-                    System.Diagnostics.Debug.WriteLine("cookie not found");
+                {                    
                     //Create a cookie containing the user's Information
                     newUserCookie(mycookie, userid, pwd);
                     //Response.Redirect("Home.aspx");
@@ -96,32 +89,23 @@ public partial class Login : System.Web.UI.Page
                 //Create the session
                 if (Session["userLoggedIn"] == null)
                 {
-                    Session["userLoggedIn"] = userid;
-                    System.Diagnostics.Debug.Write("New Session Login: " + Session["userLoggedIn"].ToString() + "\n");
+                    Session["userLoggedIn"] = userid;                    
                 }
                 else
                 {
-
-                    Session["userLoggedIn"] = userid;
-                    System.Diagnostics.Debug.Write("Session Login Already Made: " + Session["userLoggedIn"].ToString() + "\n");
+                    Session["userLoggedIn"] = userid;                    
                 }
             } else
-            {
-                
-                Response.Write("<script language='javascript'>alert('Your password is not valid');</script>");
-                
+            {                
+                Response.Write("<script language='javascript'>alert('Your password is not valid');</script>");                
             }
 
         } else
         {
             //Create an alert saying the UserName doesn't exist
-            Response.Write("<script language='javascript'>alert('Your email is not valid');</script>");
-            
+            Response.Write("<script language='javascript'>alert('There is a problem with your login credentials');</script>");            
         }
         Response.Redirect("Home.aspx");
-
-
-
     }
 
     /*
