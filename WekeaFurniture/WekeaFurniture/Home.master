@@ -26,17 +26,6 @@
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["userLoggedIn"] != null)
-        {
-            System.Diagnostics.Debug.Write("Session Home Master: " + Session["userLoggedIn"].ToString() + "\n");
-            btnLog.Visible = false;
-            btnLogout.Visible = true;
-        } else
-        {
-            btnLogout.Visible = false;
-            btnLog.Visible = true;
-            System.Diagnostics.Debug.Write("Session User is null\n");
-        }
 
         ShoppingCart cart = (ShoppingCart) Session["thisCart"];
         if(cart != null)
@@ -46,24 +35,21 @@
         if (Session["userLoggedIn"] == null)
         {
             Label1.Text = "";
+            btnLogout.Visible = false;
+            btnLog.Visible = true;
+            System.Diagnostics.Debug.Write("Session User is null\n");
         }
         else
         {
-
-            string[] emailOne = Session["userLoggedIn"].ToString().Split('=');
-            string emailFinal = "";
-            if (emailOne.Length > 1)
-            {
-                string[] emailTwo = emailOne[1].Split('&');
-                emailFinal = emailTwo[0];
-            } else
-            {
-                emailFinal = emailOne[0];
-            }
-            string query = "SELECT * FROM Users WHERE email='" + emailFinal + "';";
+            System.Diagnostics.Debug.Write("Session Home Master: " + Session["userLoggedIn"].ToString() + "\n");
+            btnLog.Visible = false;
+            btnLogout.Visible = true;
+            
+            string query = "SELECT * FROM Users WHERE ID='" + Session["userLoggedIn"].ToString() + "';";
             System.Data.DataTable dt = DataAccess.selectQuery(query);
             System.Data.DataRow row = dt.Rows[0];
             Label1.Text = " Hi " + row["FIRST_NAME"] + "!";
+            
         }
     }
 </script>
