@@ -89,27 +89,30 @@ public partial class Login : System.Web.UI.Page
                         Session["userLoggedIn"] = userid;
                         System.Diagnostics.Debug.Write("Session Login Already Made: " + Session["userLoggedIn"].ToString() + "\n");
                     }
+                    Response.Redirect("Home.aspx");
                 }
                 else
                 {
                     //Create a cookie containing the user's Information
                     newUserCookie(mycookie, userid, pwd);
+                    Response.Redirect("Home.aspx");
                 }
             } else
             {
-                Response.Write("<script language='javascript'>alert('Your password is wrong moron!');</script>");
+                
+                Response.Write("<script language='javascript'>alert('Your password is wrong!');</script>");
+                
             }
 
         } else
         {
             //Create an alert saying the UserName doesn't exist
-            errorLabel.Text = "UserName does not exist. Sign Up";
+            Response.Write("<script language='javascript'>alert('Your email is wrong!');</script>");
+            
         }
-
-        //Check to see if a session has never been created, or if the Session just ended
         
 
-        Response.Redirect("Home.aspx");
+        
     }
 
     /*

@@ -61,8 +61,8 @@ public partial class SignUp : System.Web.UI.Page
 
             query = "SELECT ID from Users WHERE EMAIL='" + email.Text + "' AND PASS_HASH='" + pwd + "';";
             userinfo = DataAccess.selectQuery(query);
-
-            String userid = userinfo.Rows[0][0].ToString();
+            DataRow userRow = userinfo.Rows[0];
+            String userid = userRow["ID"].ToString();
 
             System.Diagnostics.Debug.Write("Before Insert\n");
 
@@ -71,7 +71,7 @@ public partial class SignUp : System.Web.UI.Page
                 userid + "', '" + first_name.Text + " " + last_name.Text + "', '" + address.Text + "', '" + city.Text
                  + "', '" + state.Text + "', '" + zip.Text + "', '" + phone.Text + "');";
             DataAccess.selectQuery(query);
-            System.Diagnostics.Debug.Write("HERELKFSJFLJ\n");
+            
 
             HttpCookie userInfo = new HttpCookie("userInfo");
             userInfo["userid"] = userid;
