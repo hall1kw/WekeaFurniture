@@ -39,7 +39,7 @@ public partial class SignUp : System.Web.UI.Page
         if (userinfo.Rows.Count == 1)
         {
             System.Diagnostics.Debug.Write("Rows Count is 1\n");
-            Response.Write("<script>alert('You already have an account')</script>");
+            Response.Write("<script language='javascript'>alert('You already have an account');</script>");
             //Alert for different password
         } else
         {
@@ -52,8 +52,7 @@ public partial class SignUp : System.Web.UI.Page
             else
             {
                 //Create alert that says "Email not valid"
-                Response.Write("<script>alert('Email Not Valid')</script>");
-                Response.Redirect("https://wekeafurniture20190329101320.azurewebsites.net/SignUp.aspx", true);
+                Response.Write("<script language='javascript'>alert('Email not valid');</script>");
             }
             query = "INSERT INTO Users (email, first_name, last_name, pass_hash) VALUES('" + email.Text + "', '" +
                 first_name.Text + "', '" + last_name.Text + "', '" + pwd + "');";

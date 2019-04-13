@@ -78,17 +78,7 @@ public partial class Login : System.Web.UI.Page
                         Request.Cookies.Remove("userInfo");
                         newUserCookie(mycookie, userid, pwd);
                     }
-                    if (Session["userLoggedIn"] == null)
-                    {
-                        Session["userLoggedIn"] = userid;
-                        System.Diagnostics.Debug.Write("New Session Login: " + Session["userLoggedIn"].ToString() + "\n");
-                    }
-                    else
-                    {
-
-                        Session["userLoggedIn"] = userid;
-                        System.Diagnostics.Debug.Write("Session Login Already Made: " + Session["userLoggedIn"].ToString() + "\n");
-                    }
+                    
                     Response.Redirect("Home.aspx");
                 }
                 else
@@ -97,17 +87,30 @@ public partial class Login : System.Web.UI.Page
                     newUserCookie(mycookie, userid, pwd);
                     Response.Redirect("Home.aspx");
                 }
+
+                //Create the session
+                if (Session["userLoggedIn"] == null)
+                {
+                    Session["userLoggedIn"] = userid;
+                    System.Diagnostics.Debug.Write("New Session Login: " + Session["userLoggedIn"].ToString() + "\n");
+                }
+                else
+                {
+
+                    Session["userLoggedIn"] = userid;
+                    System.Diagnostics.Debug.Write("Session Login Already Made: " + Session["userLoggedIn"].ToString() + "\n");
+                }
             } else
             {
                 
-                Response.Write("<script language='javascript'>alert('Your password is wrong!');</script>");
+                Response.Write("<script language='javascript'>alert('Your password is not valid');</script>");
                 
             }
 
         } else
         {
             //Create an alert saying the UserName doesn't exist
-            Response.Write("<script language='javascript'>alert('Your email is wrong!');</script>");
+            Response.Write("<script language='javascript'>alert('Your email is not valid');</script>");
             
         }
         
