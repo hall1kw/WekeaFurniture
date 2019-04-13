@@ -45,8 +45,9 @@ public partial class Login : System.Web.UI.Page
         else
         {
             //Alert user saying email isn't valid
-            Response.Write("<script>alert('Email Not Valid')</script>");
-            Response.Redirect("https://wekeafurniture20190329101320.azurewebsites.net/Login.aspx", true);
+            System.Diagnostics.Debug.Write("not a valid email");
+            Response.Write("<script>alert('Email Not Valid');</script>");
+            //Response.Redirect("/Login.aspx", true);
         }
 
         string query = "SELECT * FROM Users WHERE email='" + email.Text + "';";
@@ -56,30 +57,48 @@ public partial class Login : System.Web.UI.Page
         //if there is one user in the database
         if (dt.Rows.Count == 1)
         {
-            userid = dt.Rows[0][0].ToString();
-            pwd = dt.Rows[0][4].ToString();
-            HttpCookie mycookie = null;
-            //If there's already a cookie containing the user's information
-            if (HttpContext.Current.Response.Cookies.AllKeys.ToString().Contains("userInfo"))
+            DataRow userRow = dt.Rows[0];
+            userid = userRow["EMAIL"].ToString();
+            string DBpwd = userRow["PASS_HASH"].ToString();
+            if (pwd.Equals(DBpwd))
             {
-                mycookie = Request.Cookies.Get("userInfo");
-                if(mycookie["userid"].ToString().Equals(userid))
+                HttpCookie mycookie = null;
+                //If there's already a cookie containing the user's information
+                if (HttpContext.Current.Response.Cookies.AllKeys.ToString().Contains("userInfo"))
                 {
-                    //make sure that the cookie contains the right user's info
-                    mycookie.Expires = DateTime.Now.AddHours(2.00);
-                } else
+                    mycookie = Request.Cookies.Get("userInfo");
+                    if (mycookie["userid"].ToString().Equals(userid))
+                    {
+                        //make sure that the cookie contains the right user's info
+                        mycookie.Expires = DateTime.Now.AddHours(2.00);
+                    }
+                    else
+                    {
+                        //This means that a user logged in with different login info than the cookie
+                        Request.Cookies.Remove("userInfo");
+                        newUserCookie(mycookie, userid, pwd);
+                    }
+                    if (Session["userLoggedIn"] == null)
+                    {
+                        Session["userLoggedIn"] = userid;
+                        System.Diagnostics.Debug.Write("New Session Login: " + Session["userLoggedIn"].ToString() + "\n");
+                    }
+                    else
+                    {
+
+                        Session["userLoggedIn"] = userid;
+                        System.Diagnostics.Debug.Write("Session Login Already Made: " + Session["userLoggedIn"].ToString() + "\n");
+                    }
+                }
+                else
                 {
-                    //This means that a user logged in with different login info than the cookie
-                    Request.Cookies.Remove("userInfo");
+                    //Create a cookie containing the user's Information
                     newUserCookie(mycookie, userid, pwd);
                 }
-                
             } else
             {
-                //Create a cookie containing the user's Information
-                newUserCookie(mycookie, userid, pwd);
+                Response.Write("<script language='javascript'>alert('Your password is wrong moron!');</script>");
             }
-            
 
         } else
         {
@@ -88,17 +107,7 @@ public partial class Login : System.Web.UI.Page
         }
 
         //Check to see if a session has never been created, or if the Session just ended
-        if (Session["userLoggedIn"] == null)
-        {
-            Session["userLoggedIn"] = userid;
-            System.Diagnostics.Debug.Write("New Session Login: " + Session["userLoggedIn"].ToString() + "\n");
-        }
-        else
-        {
-
-            Session["userLoggedIn"] = userid;
-            System.Diagnostics.Debug.Write("Session Login Already Made: " + Session["userLoggedIn"].ToString() + "\n");
-        }
+        
 
         Response.Redirect("Home.aspx");
     }
