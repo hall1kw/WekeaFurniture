@@ -43,6 +43,28 @@
         {
             lblCart.Text = cart.getSize().ToString();
         }
+        if (Session["userLoggedIn"] == null)
+        {
+            Label1.Text = "";
+        }
+        else
+        {
+
+            string[] emailOne = Session["userLoggedIn"].ToString().Split('=');
+            string emailFinal = "";
+            if (emailOne.Length > 1)
+            {
+                string[] emailTwo = emailOne[1].Split('&');
+                emailFinal = emailTwo[0];
+            } else
+            {
+                emailFinal = emailOne[0];
+            }
+            string query = "SELECT * FROM Users WHERE email='" + emailFinal + "';";
+            System.Data.DataTable dt = DataAccess.selectQuery(query);
+            System.Data.DataRow row = dt.Rows[0];
+            Label1.Text = " Hi " + row["FIRST_NAME"] + "!";
+        }
     }
 </script>
 
@@ -75,6 +97,17 @@
             text-align: center;
             background-color: #74253D;
             color: #FFC107;
+        }
+        .auto-style5 {
+            text-align: left;
+            background-color: #74253D;
+            color: #FFC107;
+        }
+        .auto-style6 {
+            text-align: left;
+            background-color: #74253D;
+            color: #FFC107;
+            width: 3%;
         }
     </style>
 </head>
@@ -118,13 +151,26 @@
         <br />
     <table style="width:100%;">
         <tr class="auto-style2">
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Kitchen" style="color:#ffc82e;">Kitchen</a></td>
+            <td class="auto-style6">
+                &nbsp;</td>
+            <td style="width:33%;" class="auto-style5">
+                <strong>
+                <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                </strong>
+            </td>
+            <td style="width:33%;" class="auto-style4">&nbsp;</td>
+            <td style="width:23%;" class="auto-style4">&nbsp;</td>
+            <td style="width:10%;" class="auto-style4">
+                <a href="Cart.aspx">
+                    &nbsp;</a></td>
+        </tr>
+        <tr class="auto-style2">
+            <td style="width:33%;" class="auto-style4" colspan="2"><a href="SearchResults.aspx?Rm=Kitchen" style="color:#ffc82e;">Kitchen</a></td>
             <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=LivingRoom" style="color:#ffc82e;">Living Room</a></td>
             <td style="width:23%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Bedroom" style="color:#ffc82e;">Bedroom</a></td>
             <td style="width:10%;" class="auto-style4">
                 <a href="Cart.aspx">
-                    <img alt="Shopping Cart" src="Images/cartIcon.png" />
-                    <asp:Label ID="lblCart" runat="server" style="color:#ffc82e;" Text=""></asp:Label>
+                    <img alt="Shopping Cart" src="Images/cartIcon.png" /><asp:Label ID="lblCart" runat="server" style="color:#ffc82e;" Text=""></asp:Label>
                     
                 </a>
             </td>
