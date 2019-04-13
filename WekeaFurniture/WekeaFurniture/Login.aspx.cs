@@ -63,14 +63,12 @@ public partial class Login : System.Web.UI.Page
             System.Diagnostics.Debug.WriteLine(userRow["PASS_SALT"].ToString());
             System.Diagnostics.Debug.WriteLine(Validation.VerifyPwdHashWithSalt(pw.Text, userRow["PASS_SALT"].ToString()));
             if (DBpwd.Equals(returnedHash))
-            {
-                System.Diagnostics.Debug.WriteLine(DBpwd);
-                System.Diagnostics.Debug.WriteLine(returnedHash);
-                System.Diagnostics.Debug.WriteLine(DBpwdSalt);
+            {                
                 HttpCookie mycookie = null;
                 //If there's already a cookie containing the user's information
                 if (HttpContext.Current.Response.Cookies.AllKeys.ToString().Contains("userInfo"))
                 {
+                    System.Diagnostics.Debug.WriteLine("cookie found");
                     mycookie = Request.Cookies.Get("userInfo");
                     if (mycookie["userid"].ToString().Equals(userid))
                     {
@@ -79,18 +77,20 @@ public partial class Login : System.Web.UI.Page
                     }
                     else
                     {
+                        
                         //This means that a user logged in with different login info than the cookie
                         Request.Cookies.Remove("userInfo");
                         newUserCookie(mycookie, userid, pwd);
                     }
                     
-                    Response.Redirect("Home.aspx");
+                    
                 }
                 else
                 {
+                    System.Diagnostics.Debug.WriteLine("cookie not found");
                     //Create a cookie containing the user's Information
                     newUserCookie(mycookie, userid, pwd);
-                    Response.Redirect("Home.aspx");
+                    //Response.Redirect("Home.aspx");
                 }
 
                 //Create the session
@@ -118,9 +118,10 @@ public partial class Login : System.Web.UI.Page
             Response.Write("<script language='javascript'>alert('Your email is not valid');</script>");
             
         }
-        
+        Response.Redirect("Home.aspx");
 
-        
+
+
     }
 
     /*
