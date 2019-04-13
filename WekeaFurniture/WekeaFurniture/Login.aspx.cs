@@ -55,7 +55,7 @@ public partial class Login : System.Web.UI.Page
         if (dt.Rows.Count == 1)
         {
             DataRow userRow = dt.Rows[0];
-            userid = userRow["ID"].ToString();
+            userid = userRow["EMAIL"].ToString();
             string DBpwd = userRow["PASS_HASH"].ToString();
             string DBpwdSalt = userRow["PASS_SALT"].ToString();
             string returnedHash = Validation.VerifyPwdHashWithSalt(pw.Text, userRow["PASS_SALT"].ToString());
@@ -76,13 +76,13 @@ public partial class Login : System.Web.UI.Page
                     {                        
                         //This means that a user logged in with different login info than the cookie
                         Request.Cookies.Remove("userInfo");
-                        newUserCookie(mycookie, userid, DBpwd);
+                        newUserCookie(mycookie, userid, pwd);
                     }                   
                 }
                 else
                 {                    
                     //Create a cookie containing the user's Information
-                    newUserCookie(mycookie, userid, DBpwd);
+                    newUserCookie(mycookie, userid, pwd);
                     //Response.Redirect("Home.aspx");
                 }
 
@@ -95,7 +95,6 @@ public partial class Login : System.Web.UI.Page
                 {
                     Session["userLoggedIn"] = userid;                    
                 }
-                Response.Redirect("Home.aspx");
             } else
             {                
                 Response.Write("<script language='javascript'>alert('Your password is not valid');</script>");                
@@ -106,7 +105,7 @@ public partial class Login : System.Web.UI.Page
             //Create an alert saying the UserName doesn't exist
             Response.Write("<script language='javascript'>alert('There is a problem with your login credentials');</script>");            
         }
-        
+        Response.Redirect("Home.aspx");
     }
 
     /*

@@ -76,7 +76,7 @@ public partial class SignUp : System.Web.UI.Page
 
             HttpCookie userInfo = new HttpCookie("userInfo");
             userInfo["userid"] = userid;
-            userInfo["passhash"] = pwdHashAndSalt[0];
+            userInfo["passhash"] = pwd;
             userInfo.Expires = DateTime.Now.AddHours(2);
             Response.Cookies.Add(userInfo);
 

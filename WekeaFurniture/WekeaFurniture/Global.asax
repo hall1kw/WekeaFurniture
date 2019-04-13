@@ -27,8 +27,8 @@
         if (user != null)
         {
             //System.Diagnostics.Debug.WriteLine("Session Global: " + Session["userLoggedIn"].ToString() + "\n");
-            Session["userLoggedIn"] = user["userid"].ToString();
-            System.Diagnostics.Debug.WriteLine("Session Global: " + Session["userLoggedIn"].ToString() + "\n");
+            Session["userLoggedIn"] = user.Value;
+            //System.Diagnostics.Debug.WriteLine("Session Global: " + Session["userLoggedIn"].ToString() + "\n");
         }
 
         //load the cart
