@@ -43,22 +43,24 @@ public partial class SignUp : System.Web.UI.Page
             //Alert for different password
         } else
         {
+            string[] pwdHashAndSalt = new string[2];
             string pwd = "";
 
             if (Validation.ValidEmail(email.Text))
             {
-                pwd = Validation.PassHash(pw.Text);
+                pwdHashAndSalt = Validation.PassHash(pw.Text);
+                //pwd = Validation.PassHash(pw.Text);
             }
             else
             {
                 //Create alert that says "Email not valid"
                 Response.Write("<script language='javascript'>alert('Email not valid');</script>");
             }
-            query = "INSERT INTO Users (email, first_name, last_name, pass_hash) VALUES('" + email.Text + "', '" +
-                first_name.Text + "', '" + last_name.Text + "', '" + pwd + "');";
+            query = "INSERT INTO Users (email, first_name, last_name, pass_hash, pass_salt) VALUES('" + email.Text + "', '" +
+                first_name.Text + "', '" + last_name.Text + "', '" + pwdHashAndSalt[0] + "', '" + pwdHashAndSalt[1] + "');";
             DataAccess.selectQuery(query);
 
-            query = "SELECT ID from Users WHERE EMAIL='" + email.Text + "' AND PASS_HASH='" + pwd + "';";
+            query = "SELECT ID from Users WHERE EMAIL='" + email.Text + "'";
             userinfo = DataAccess.selectQuery(query);
             DataRow userRow = userinfo.Rows[0];
             String userid = userRow["ID"].ToString();

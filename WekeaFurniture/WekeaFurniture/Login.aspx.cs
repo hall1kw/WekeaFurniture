@@ -38,17 +38,14 @@ public partial class Login : System.Web.UI.Page
         
 
         //Validates/hashes the input
-        if(Validation.ValidEmail(email.Text))
-        {
-            pwd = Validation.PassHash(pw.Text);
-        }
-        else
+        if(!Validation.ValidEmail(email.Text))
         {
             //Alert user saying email isn't valid
             System.Diagnostics.Debug.Write("not a valid email");
             Response.Write("<script>alert('Email Not Valid');</script>");
             //Response.Redirect("/Login.aspx", true);
         }
+        
 
         string query = "SELECT * FROM Users WHERE email='" + email.Text + "';";
         DataTable dt = DataAccess.selectQuery(query);
@@ -60,8 +57,16 @@ public partial class Login : System.Web.UI.Page
             DataRow userRow = dt.Rows[0];
             userid = userRow["EMAIL"].ToString();
             string DBpwd = userRow["PASS_HASH"].ToString();
-            if (pwd.Equals(DBpwd))
+            string DBpwdSalt = userRow["PASS_SALT"].ToString();
+            string returnedHash = Validation.VerifyPwdHashWithSalt(pw.Text, userRow["PASS_SALT"].ToString());
+            System.Diagnostics.Debug.WriteLine(DBpwd);
+            System.Diagnostics.Debug.WriteLine(userRow["PASS_SALT"].ToString());
+            System.Diagnostics.Debug.WriteLine(Validation.VerifyPwdHashWithSalt(pw.Text, userRow["PASS_SALT"].ToString()));
+            if (DBpwd.Equals(returnedHash))
             {
+                System.Diagnostics.Debug.WriteLine(DBpwd);
+                System.Diagnostics.Debug.WriteLine(returnedHash);
+                System.Diagnostics.Debug.WriteLine(DBpwdSalt);
                 HttpCookie mycookie = null;
                 //If there's already a cookie containing the user's information
                 if (HttpContext.Current.Response.Cookies.AllKeys.ToString().Contains("userInfo"))
