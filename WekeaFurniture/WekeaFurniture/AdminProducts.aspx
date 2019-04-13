@@ -207,8 +207,6 @@
                     <RowStyle BackColor="#F7F7DE" />
                 </asp:DetailsView>
             </div>
-            <div class="col-sm-3">
-                <asp:Image ID="ProductImage" runat="server" ImageUrl='<%#"Images/ProductImages/" + Eval("IMAGE") %>'  />
-            </div>
         </div>
+    <br />
 </asp:Content>

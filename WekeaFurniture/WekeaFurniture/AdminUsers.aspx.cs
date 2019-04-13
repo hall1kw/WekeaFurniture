@@ -71,6 +71,7 @@ public partial class AdminUsers : System.Web.UI.Page
             LinkButtonPaymentInfo.Visible = true;
             LinkButtonReviews.Visible = true;
             LinkButtonOrders.Visible = true;
+            LinkButtonDelete.Visible = true;
         }
     }
 
@@ -100,6 +101,44 @@ public partial class AdminUsers : System.Web.UI.Page
         GridViewOrders.DataSource = DataAccess.selectQuery("Select * from Orders where UID=" + id);
         GridViewOrders.DataBind();
         MultiView1.ActiveViewIndex = 3;
+    }
+
+    protected void LinkButtonDelete_Click(object sender, EventArgs e)
+    {
+        string sqlUser = "Delete from Users where ID=" + id;
+        string sqlShippingInfo = "Delete from Shipping_Info where UID=" + id;
+        string sqlPaymentInfo = "Delete from Payment_Info where UID=" + id;
+        string sqlReviews = "Delete from Reviews where UID=" + id;
+        string sqlOrders = "Delete from Orders where UID=" + id;
+        string[] cmdStrings = { sqlOrders, sqlReviews, sqlPaymentInfo, sqlShippingInfo, sqlUser };
+        
+        SqlConnection conn = new SqlConnection(myConnectionString);
+        conn.Open();
+        SqlTransaction trans = conn.BeginTransaction();
+        try
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                SqlCommand cmd = new SqlCommand(cmdStrings[i], conn, trans);
+                cmd.ExecuteNonQuery();
+            }
+            trans.Commit();
+        }
+        catch (Exception ex)
+        {
+            trans.Rollback();
+            System.Diagnostics.Debug.WriteLine(ex.Message);
+        }
+        finally
+        {
+            Response.Redirect("AdminUsers.aspx");
+        }
+    }
+
+    protected void GridView1_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        string UserId = GridView1.SelectedRow.Cells[1].ToString();
+        System.Diagnostics.Debug.WriteLine(UserId);
     }
 
     protected string Hide_Card(string card)

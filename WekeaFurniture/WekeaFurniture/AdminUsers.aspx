@@ -16,7 +16,7 @@
     <br />
     <div class="row">
         <div class="offset-1 col-sm-4 table-responsive">
-            <asp:GridView ID="GridView1" runat="server" OnPageIndexChanging="GridView1_PagingIndexChanging" AllowPaging="True" 
+            <asp:GridView ID="GridView1" runat="server" OnRowDeleting="GridView1_OnRowDeleting" OnPageIndexChanging="GridView1_PagingIndexChanging" AllowPaging="True" 
                 AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID"  EmptyDataText="There are no data records to display." 
                 CellPadding="4" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="SelectEvent">
                 <AlternatingRowStyle BackColor="White" />
@@ -45,6 +45,8 @@
             <asp:Button ID="LinkButtonPaymentInfo" Text="Payment Info" Visible="false" runat="server" OnClick="LinkButtonPaymentInfo_Click"></asp:Button>
             <asp:Button ID="LinkButtonReviews" Text="Reviews" Visible="false" runat="server" OnClick="LinkButtonReviews_Click"></asp:Button>
             <asp:Button ID="LinkButtonOrders" Text="Orders" Visible="false" runat="server" OnClick="LinkButtonOrders_Click"></asp:Button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Button ID="LinkButtonDelete" Text="Delete User" Visible="false" runat="server" CssClass="text-danger" OnClick="LinkButtonDelete_Click" />
             <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
                 <asp:View ID="View1" runat="server">
                     <asp:GridView ID="GridViewShipping" runat="server" OnPageIndexChanging="GridViewShipping_PagingIndexChanging" AllowPaging="true"
@@ -151,5 +153,6 @@
             </asp:MultiView>
         </div>
     </div>
+    <br />
 </asp:Content>
 
