@@ -67,18 +67,18 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="width:250px; border-bottom-style:solid; border-bottom-width:3px; border-bottom-color:#782b42" class="text-right">$<asp:Label ID="Label2" runat="server" Text='<%# Eval("PRICE")  %>'></asp:Label>
+                            <td style="width:250px; border-bottom-style:solid; border-bottom-width:3px; border-bottom-color:#782b42" class="text-right"><asp:Label ID="Label2" runat="server" Text='<%# String.Format("{0:C}",Eval("PRICE")) %>'></asp:Label>
                             </td>
                         </tr>
                     </table>
                 </ItemTemplate>
             </asp:DataList>
             </td>
-            <td class="auto-style6">
+            <td class="auto-style6" style="vertical-align:top;">
                 <asp:DataList ID="dlProductDetail" runat="server" BackColor="White" ForeColor="Black">
                     <ItemTemplate>
                         <table style="width:100%;">
-                            <tr>
+                            <tr style="vertical-align:top;">
                                 <td colspan="2">
                                     <h2>
                                         <asp:Label ID="Label1" runat="server" Text='<%# Eval("NAME") %>' ForeColor="#74253D"></asp:Label>
@@ -86,20 +86,20 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <asp:Image ID="Image2" runat="server" style="width:500px; height:500px;" ImageUrl='<%# "Images/ProductImages/" + Eval("IMAGE") %>' />
+                                <td colspan="2"  style="height:400px;" class="text-center">
+                                    <asp:Image ID="Image2" runat="server" style="max-width:500px; max-height:400px;" ImageUrl='<%# "Images/ProductImages/" + Eval("IMAGE") %>' />
                                 </td>
                             </tr>
                             <tr>
-                                <td style="border-top-style:solid; border-top-color:#772b43; border-top-width:3px;" colspan="2">
-                                    <asp:Label ID="Label3"  runat="server" Text='<%# Eval("DESCRIPTION") %>' style="margin-left:-2px; margin-right:-4px; margin-bottom:-1px;" Width="504px" BackColor="#74253D" BorderColor="#74253D" BorderStyle="Solid" BorderWidth="1px" ForeColor="#FFCC00"></asp:Label>
+                                <td  colspan="2">
+                                    <asp:Label ID="Label3"  runat="server" Text='<%# Eval("DESCRIPTION") %>' style="margin-left:-2px; margin-right:-3px; margin-bottom:-1px;" Width="502px" BackColor="#74253D" BorderColor="#74253D" BorderStyle="Solid" BorderWidth="1px" ForeColor="#FFCC00"></asp:Label>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="auto-style8" colspan="2" style="background-color: #74253D; color: #FFCC00; margin-left:-2px; margin-bottom:-1px; ">$<asp:Label ID="Label2" runat="server" Text='<%# Eval("PRICE") %>'></asp:Label>
+                                <td class="auto-style8" colspan="2"><asp:Label ID="Label2" style="margin-left:-2px; margin-right:-3px; margin-bottom:-1px; margin-top:-1px;" Width="502px" BackColor="#74253D" BorderColor="#74253D" BorderStyle="Solid" BorderWidth="1px" ForeColor="#FFCC00" runat="server" Text='<%# String.Format("{0:C}",Eval("PRICE")) %>'></asp:Label>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr style="width:502px; margin-left:-1px;">
                                 <td class="text-left" style="background-color: #74253D; color: #FFCC00">
                                     Currently in stock:
                                     <asp:Label ID="Label4" runat="server" Text='<%# Eval("INVENTORY") %>'></asp:Label>
