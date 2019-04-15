@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Net.Mail;
 
 public partial class Confirmation : System.Web.UI.Page
 {
@@ -34,7 +35,7 @@ public partial class Confirmation : System.Web.UI.Page
         {
             shippingInfo = (string[])Session["shippingInfo"];
             PopulateShippingInfo();
-
+            EmailConfirmation();
         }
 
         if (!IsPostBack)
@@ -49,6 +50,29 @@ public partial class Confirmation : System.Web.UI.Page
             UpdateStock();
 
             Session["thisCart"] = null;
+        }
+    }
+
+    protected void EmailConfirmation()
+    {
+        SmtpClient client = new SmtpClient();
+        //client.UseDefaultCredentials = true;
+        string from = "wekeafurniture@gmail.com";
+
+        //TODO: Write SQL query for the current shipping info email address
+        string to = "wekeafurniture@gmail.com";
+
+        MailMessage mail = new MailMessage(from, to);
+        mail.Subject = "Test";
+        mail.Body = "This is a test of the public service announcement. This is only a test.";
+
+        try
+        {
+            client.Send(mail);
+        }
+        catch (System.Exception)
+        {
+            Response.Write("<script>alert('Email could not be sent, please retry at a later time.')</script>");
         }
     }
 
