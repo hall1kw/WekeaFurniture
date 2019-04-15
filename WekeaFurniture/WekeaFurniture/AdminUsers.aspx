@@ -16,7 +16,7 @@
     <br />
     <div class="row">
         <div class="offset-1 col-sm-4 table-responsive">
-            <asp:GridView ID="GridView1" runat="server" OnRowDeleting="GridView1_OnRowDeleting" OnPageIndexChanging="GridView1_PagingIndexChanging" AllowPaging="True" 
+            <asp:GridView ID="GridView1" runat="server" OnPageIndexChanging="GridView1_PagingIndexChanging" AllowPaging="True" 
                 AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID"  EmptyDataText="There are no data records to display." 
                 CellPadding="4" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="SelectEvent">
                 <AlternatingRowStyle BackColor="White" />
@@ -50,10 +50,11 @@
             <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
                 <asp:View ID="View1" runat="server">
                     <asp:GridView ID="GridViewShipping" runat="server" OnPageIndexChanging="GridViewShipping_PagingIndexChanging" AllowPaging="true"
-                        AllowSorting="true" AutoGenerateColumns="false" DataKeyNames="ID" EmptyDataText="Not Available"
-                        CellPadding="4" ForeColor="#333333" GridLines="None" >
+                        AllowSorting="true" AutoGenerateColumns="false" DataKeyNames="ID" EmptyDataText="Shipping Info Not Available"
+                        CellPadding="4" ForeColor="#333333" GridLines="None" OnRowDeleting="GridViewShipping_OnRowDeleting">
                         <AlternatingRowStyle BackColor="White" />
                         <Columns>
+                            <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="true" SortExpression="ID" />
                             <asp:BoundField DataField="SHIP_TO_NAME" HeaderText="Name" ReadOnly="true" SortExpression="SHIP_TO_NAME" />
                             <asp:BoundField DataField="ADDRESS_ONE" HeaderText="Address 1" ReadOnly="true" SortExpression="ADDRESS_ONE" />
                             <asp:BoundField DataField="ADDRESS_TWO" HeaderText="Address 2" ReadOnly="true" SortExpression="ADDRESS_TWO" />
@@ -76,8 +77,8 @@
                 </asp:View>
                 <asp:View ID="View2" runat="server">
                     <asp:GridView ID="GridViewPaymentInfo" runat="server" OnPageIndexChanging="GridViewPaymentInfo_PagingIndexChanging" AllowPaging="true"
-                        AllowSorting="true" AutoGenerateColumns="false" DataKeyNames="ID" EmptyDataText="Not Available"
-                        CellPadding="4" ForeColor="#333333" GridLines="None" >
+                        AllowSorting="true" AutoGenerateColumns="false" DataKeyNames="ID" EmptyDataText="Payment Info Not Available"
+                        CellPadding="4" ForeColor="#333333" GridLines="None" OnRowDeleting="GridViewPaymentInfo_OnRowDeleting" >
                         <AlternatingRowStyle BackColor="White" />
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Payment ID" ReadOnly="true" SortExpression="ID" />
@@ -89,7 +90,6 @@
                             </asp:TemplateField>
                             <asp:BoundField DataField="EXP_MO" HeaderText="Exp. Month" ReadOnly="true" SortExpression="EXP_MO" />
                             <asp:BoundField DataField="EXP_YR" HeaderText="Exp. Year" ReadOnly="true" SortExpression="EXP_YR" />
-                            <asp:CommandField ShowSelectButton="true"/>
                             <asp:CommandField ShowDeleteButton="true" />
                         </Columns>
                         <FooterStyle BackColor="#FFC107" Font-Bold="True" ForeColor="White" />
@@ -105,8 +105,8 @@
                 </asp:View>
                 <asp:View ID="View3" runat="server">
                     <asp:GridView ID="GridViewReviews" runat="server" OnPageIndexChanging="GridViewReviews_PagingIndexChanging" AllowPaging="true"
-                        AllowSorting="true" AutoGenerateColumns="false" DataKeyNames="ID" EmptyDataText="Not Available"
-                        CellPadding="4" ForeColor="#333333" GridLines="None" >
+                        AllowSorting="true" AutoGenerateColumns="false" DataKeyNames="ID" EmptyDataText="Reviews Not Available"
+                        CellPadding="4" ForeColor="#333333" GridLines="None" OnRowDeleting="GridViewReviews_OnRowDeleting" >
                         <AlternatingRowStyle BackColor="White" />
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Review ID" ReadOnly="true" SortExpression="ID" />
@@ -128,8 +128,8 @@
                 </asp:View>
                 <asp:View ID="View4" runat="server">
                     <asp:GridView ID="GridViewOrders" runat="server" OnPageIndexChanging="GridViewOrders_PagingIndexChanging" AllowPaging="true"
-                        AllowSorting="true" AutoGenerateColumns="false" DataKeyNames="ID" EmptyDataText="Not Available"
-                        CellPadding="4" ForeColor="#333333" GridLines="None" >
+                        AllowSorting="true" AutoGenerateColumns="false" DataKeyNames="ID" EmptyDataText="Orders Not Available"
+                        CellPadding="4" ForeColor="#333333" GridLines="None" OnRowDeleting="GridViewOrders_OnRowDeleting" >
                         <AlternatingRowStyle BackColor="White" />
                         <Columns>
                             <asp:BoundField DataField="ID" HeaderText="Order ID" ReadOnly="true" SortExpression="ID" />
