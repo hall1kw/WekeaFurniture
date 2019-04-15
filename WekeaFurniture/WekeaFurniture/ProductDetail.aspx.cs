@@ -46,9 +46,17 @@ public partial class ProductDetail : System.Web.UI.Page
                 Session["thisCart"] = thisCart;
             }
 
-            thisCart.Insert(new CartItem(Int32.Parse(id), row["NAME"].ToString(), row["Image"].ToString(), row["DESCRIPTION"].ToString(), Double.Parse(row["PRICE"].ToString()), 1, Int32.Parse(row["INVENTORY"].ToString())));
+            int itemIndex = thisCart.ItemIndexOf(Int32.Parse(id));
+            if (itemIndex >= 0 && thisCart.Items[itemIndex].Quantity >= thisCart.Items[itemIndex].Inventory)
+            {
+                ModalPopupExtender2.Show();
+            }
+            else
+            {
+                thisCart.Insert(new CartItem(Int32.Parse(id), row["NAME"].ToString(), row["Image"].ToString(), row["DESCRIPTION"].ToString(), Double.Parse(row["PRICE"].ToString()), 1, Int32.Parse(row["INVENTORY"].ToString())));
 
-            mp1.Show();
+                mp1.Show();
+            }
         } else
         {
             ModalPopupExtender1.Show();

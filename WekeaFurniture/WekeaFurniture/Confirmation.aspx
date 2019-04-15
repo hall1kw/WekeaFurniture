@@ -11,6 +11,10 @@
     <h2 style="margin: auto; width: 50%;">Order Confirmation</h2>
     <br />
 
+    <div style="margin: auto; width: 50%; padding: 5px; font-weight: bold; color: red;">
+        <asp:Label ID="BackOrderWarning" runat="server" Text="" Font-Size="Large"></asp:Label>
+    </div>
+
     <div id="ConfirmationMessage" style="margin: auto; width: 50%;">
         <h3>Hello,</h3>
         <p>Thank you for your order. We have sent out a confirmation letter to your given email address, and will begin the shipping process. Thank you for your order!</p>

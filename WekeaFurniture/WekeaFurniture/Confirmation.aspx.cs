@@ -45,13 +45,42 @@ public partial class Confirmation : System.Web.UI.Page
             dlCartSummary.DataBind();
             lblSubtotal.Text = string.Format("Item's Subtotal: {0,19:C}", thisCart.GrandTotal);
 
+            BackOrderMessage();
+            UpdateStock();
+
             Session["thisCart"] = null;
         }
     }
 
-    protected void UpdateItemStock()
+    protected void BackOrderMessage()
     {
+        String BackOrderMessage = "";
+        foreach (CartItem item in thisCart.Items)
+        {
+            if (item.Quantity > item.Inventory)
+            {
+                int BackOrder = item.Quantity - item.Inventory;
+                BackOrderMessage += "The product: " + item.Name + " only has " + item.Inventory + " in stock. The remaining " + item.Name + "(s) will be back ordered. We are sorry for the inconvenience.\n";
+            }
+        }
+        BackOrderWarning.Text = BackOrderMessage;
+    }
 
+    protected void UpdateStock()
+    {
+        foreach (CartItem item in thisCart.Items)
+        {
+            if (item.Quantity > item.Inventory)
+            {
+                int inventory = 0;
+                DataAccess.selectQuery("UPDATE Products SET INVENTORY=" + inventory + " WHERE ID=" + item.ID);
+            }
+            else
+            {
+                int inventory = item.Inventory - item.Quantity;
+                DataAccess.selectQuery("UPDATE Products SET INVENTORY=" + inventory + " WHERE ID=" + item.ID);
+            }
+        }
     }
 
     protected void PopulateShippingInfo()
