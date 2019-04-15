@@ -25,6 +25,7 @@ public partial class ProductDetail : System.Web.UI.Page
             dlDetailFeat.DataBind();            
             lblThankYou.Text = "We've added: " + row["NAME"] + " to your shopping cart!";
             lblOutOfStock.Text = "We're sorry, " + row["NAME"] + " is out of stock.";
+            lblAllInCart.Text = "All available " + row["NAME"] + " have been added to your cart.";
         }
 
     }
