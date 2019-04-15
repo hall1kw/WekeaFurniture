@@ -39,30 +39,31 @@ public partial class SignUp : System.Web.UI.Page
         if (userinfo.Rows.Count == 1)
         {
             System.Diagnostics.Debug.Write("Rows Count is 1\n");
-            Response.Write("<script>alert('You already have an account')</script>");
+            Response.Write("<script language='javascript'>alert('You already have an account');</script>");
             //Alert for different password
         } else
         {
+            string[] pwdHashAndSalt = new string[2];
             string pwd = "";
 
             if (Validation.ValidEmail(email.Text))
             {
-                pwd = Validation.PassHash(pw.Text);
+                pwdHashAndSalt = Validation.PassHash(pw.Text);
+                //pwd = Validation.PassHash(pw.Text);
             }
             else
             {
                 //Create alert that says "Email not valid"
-                Response.Write("<script>alert('Email Not Valid')</script>");
-                Response.Redirect("https://wekeafurniture20190329101320.azurewebsites.net/SignUp.aspx", true);
+                Response.Write("<script language='javascript'>alert('Email not valid');</script>");
             }
-            query = "INSERT INTO Users (email, first_name, last_name, pass_hash) VALUES('" + email.Text + "', '" +
-                first_name.Text + "', '" + last_name.Text + "', '" + pwd + "');";
+            query = "INSERT INTO Users (email, first_name, last_name, pass_hash, pass_salt) VALUES('" + email.Text + "', '" +
+                first_name.Text + "', '" + last_name.Text + "', '" + pwdHashAndSalt[0] + "', '" + pwdHashAndSalt[1] + "');";
             DataAccess.selectQuery(query);
 
-            query = "SELECT ID from Users WHERE EMAIL='" + email.Text + "' AND PASS_HASH='" + pwd + "';";
+            query = "SELECT ID from Users WHERE EMAIL='" + email.Text + "'";
             userinfo = DataAccess.selectQuery(query);
-
-            String userid = userinfo.Rows[0][0].ToString();
+            DataRow userRow = userinfo.Rows[0];
+            String userid = userRow["ID"].ToString();
 
             System.Diagnostics.Debug.Write("Before Insert\n");
 
@@ -71,11 +72,11 @@ public partial class SignUp : System.Web.UI.Page
                 userid + "', '" + first_name.Text + " " + last_name.Text + "', '" + address.Text + "', '" + city.Text
                  + "', '" + state.Text + "', '" + zip.Text + "', '" + phone.Text + "');";
             DataAccess.selectQuery(query);
-            System.Diagnostics.Debug.Write("HERELKFSJFLJ\n");
+            
 
             HttpCookie userInfo = new HttpCookie("userInfo");
             userInfo["userid"] = userid;
-            userInfo["passhash"] = pwd;
+            userInfo["passhash"] = pwdHashAndSalt[0];
             userInfo.Expires = DateTime.Now.AddHours(2);
             Response.Cookies.Add(userInfo);
 

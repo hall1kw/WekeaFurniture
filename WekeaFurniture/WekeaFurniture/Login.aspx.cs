@@ -38,69 +38,75 @@ public partial class Login : System.Web.UI.Page
         
 
         //Validates/hashes the input
-        if(Validation.ValidEmail(email.Text))
-        {
-            pwd = Validation.PassHash(pw.Text);
-        }
-        else
+        if(!Validation.ValidEmail(email.Text))
         {
             //Alert user saying email isn't valid
-            Response.Write("<script>alert('Email Not Valid')</script>");
-            Response.Redirect("https://wekeafurniture20190329101320.azurewebsites.net/Login.aspx", true);
+            
+            Response.Write("<script>alert('Email Not Valid');</script>");
+            //Response.Redirect("/Login.aspx", true);
         }
+        
 
         string query = "SELECT * FROM Users WHERE email='" + email.Text + "';";
         DataTable dt = DataAccess.selectQuery(query);
-        System.Diagnostics.Debug.WriteLine("DT Count: " + dt.Rows.Count + "\n");
+        
 
         //if there is one user in the database
         if (dt.Rows.Count == 1)
         {
-            userid = dt.Rows[0][0].ToString();
-            pwd = dt.Rows[0][4].ToString();
-            HttpCookie mycookie = null;
-            //If there's already a cookie containing the user's information
-            if (HttpContext.Current.Response.Cookies.AllKeys.ToString().Contains("userInfo"))
-            {
-                mycookie = Request.Cookies.Get("userInfo");
-                if(mycookie["userid"].ToString().Equals(userid))
-                {
-                    //make sure that the cookie contains the right user's info
-                    mycookie.Expires = DateTime.Now.AddHours(2.00);
-                } else
-                {
-                    //This means that a user logged in with different login info than the cookie
-                    Request.Cookies.Remove("userInfo");
-                    newUserCookie(mycookie, userid, pwd);
-                }
-                
-            } else
-            {
-                //Create a cookie containing the user's Information
-                newUserCookie(mycookie, userid, pwd);
-            }
+            DataRow userRow = dt.Rows[0];
+            userid = userRow["ID"].ToString();
+            string DBpwd = userRow["PASS_HASH"].ToString();
+            string DBpwdSalt = userRow["PASS_SALT"].ToString();
+            string returnedHash = Validation.VerifyPwdHashWithSalt(pw.Text, userRow["PASS_SALT"].ToString());
             
+            if (DBpwd.Equals(returnedHash))
+            {                
+                HttpCookie mycookie = null;
+                //If there's already a cookie containing the user's information
+                if (HttpContext.Current.Response.Cookies.AllKeys.ToString().Contains("userInfo"))
+                {                    
+                    mycookie = Request.Cookies.Get("userInfo");
+                    if (mycookie["userid"].ToString().Equals(userid))
+                    {
+                        //make sure that the cookie contains the right user's info
+                        mycookie.Expires = DateTime.Now.AddHours(2.00);
+                    }
+                    else
+                    {                        
+                        //This means that a user logged in with different login info than the cookie
+                        Request.Cookies.Remove("userInfo");
+                        newUserCookie(mycookie, userid, DBpwd);
+                    }                   
+                }
+                else
+                {                    
+                    //Create a cookie containing the user's Information
+                    newUserCookie(mycookie, userid, DBpwd);
+                    //Response.Redirect("Home.aspx");
+                }
+
+                //Create the session
+                if (Session["userLoggedIn"] == null)
+                {
+                    Session["userLoggedIn"] = userid;                    
+                }
+                else
+                {
+                    Session["userLoggedIn"] = userid;                    
+                }
+                Response.Redirect("Home.aspx");
+            } else
+            {                
+                Response.Write("<script language='javascript'>alert('Your password is not valid');</script>");                
+            }
 
         } else
         {
             //Create an alert saying the UserName doesn't exist
-            errorLabel.Text = "UserName does not exist. Sign Up";
+            Response.Write("<script language='javascript'>alert('There is a problem with your login credentials');</script>");            
         }
-
-        //Check to see if a session has never been created, or if the Session just ended
-        if (Session["userLoggedIn"] == null)
-        {
-            Session["userLoggedIn"] = userid;
-            System.Diagnostics.Debug.Write("New Session Login: " + Session["userLoggedIn"].ToString() + "\n");
-        }
-        else
-        {
-
-            Session["userLoggedIn"] = userid;
-            System.Diagnostics.Debug.Write("Session Login Already Made: " + Session["userLoggedIn"].ToString() + "\n");
-        }
-
-        Response.Redirect("Home.aspx");
+        
     }
 
     /*

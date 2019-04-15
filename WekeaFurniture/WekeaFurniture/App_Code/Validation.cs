@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
+using System.Text;
 
 /// <summary>
 /// Summary description for Validate
@@ -56,7 +57,7 @@ public static class Validation
         }
     }
 
-    public static string PassHash(string pwd)
+    public static string[] PassHash(string pwd)
     {
         byte[] salt = new byte[128 / 8];
         using (var rng = RandomNumberGenerator.Create())
@@ -72,6 +73,24 @@ public static class Validation
             iterationCount: 10000,
             numBytesRequested: 256 / 8));
 
+        string[] pwdHashSalt = new string[2];
+        pwdHashSalt[0] = hashed;
+        pwdHashSalt[1] = Convert.ToBase64String(salt);
+        return pwdHashSalt;
+    }
+
+    public static string VerifyPwdHashWithSalt(string passwordToVal, string pwdSalt)
+    {
+        
+
+        // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+        string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: passwordToVal,
+            salt: Convert.FromBase64String(pwdSalt),
+            prf: KeyDerivationPrf.HMACSHA1,
+            iterationCount: 10000,
+            numBytesRequested: 256 / 8));
+                
         return hashed;
     }
 }

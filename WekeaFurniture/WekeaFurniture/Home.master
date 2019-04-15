@@ -16,6 +16,10 @@
         Response.Redirect("Login.aspx");
     }
 
+    protected void btnCreateAcct_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("SignUp.aspx");
+    }
     protected void btnLogout_Click(object sender, EventArgs e)
     {
         Session["userLoggedIn"] = null;
@@ -26,22 +30,32 @@
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["userLoggedIn"] != null)
-        {
-            System.Diagnostics.Debug.Write("Session Home Master: " + Session["userLoggedIn"].ToString() + "\n");
-            btnLog.Visible = false;
-            btnLogout.Visible = true;
-        } else
-        {
-            btnLogout.Visible = false;
-            btnLog.Visible = true;
-            System.Diagnostics.Debug.Write("Session User is null\n");
-        }
 
         ShoppingCart cart = (ShoppingCart) Session["thisCart"];
         if(cart != null)
         {
             lblCart.Text = cart.getSize().ToString();
+        }
+        if (Session["userLoggedIn"] == null)
+        {
+            Label1.Text = "";
+            btnLogout.Visible = false;
+            btnLog.Visible = true;
+            btnCreateAcct.Visible = true;
+            System.Diagnostics.Debug.Write("Session User is null\n");
+        }
+        else
+        {
+            System.Diagnostics.Debug.Write("Session Home Master: " + Session["userLoggedIn"].ToString() + "\n");
+            btnLog.Visible = false;
+            btnLogout.Visible = true;
+            btnCreateAcct.Visible = false;
+            
+            string query = "SELECT * FROM Users WHERE ID='" + Session["userLoggedIn"].ToString() + "';";
+            System.Data.DataTable dt = DataAccess.selectQuery(query);
+            System.Data.DataRow row = dt.Rows[0];
+            Label1.Text = " Hi " + row["FIRST_NAME"] + "!";
+            
         }
     }
 </script>
@@ -76,6 +90,17 @@
             background-color: #74253D;
             color: #FFC107;
         }
+        .auto-style5 {
+            text-align: left;
+            background-color: #74253D;
+            color: #FFC107;
+        }
+        .auto-style6 {
+            text-align: left;
+            background-color: #74253D;
+            color: #FFC107;
+            width: 3%;
+        }
     </style>
 </head>
 <body>
@@ -109,6 +134,7 @@
             <div>
           <asp:Button ID="btnLog" runat="server" class="btn btn-warning my-2 my-sm-0" OnClick="btnLogin_Click" Text="Login"></asp:Button>
           <asp:Button ID="btnLogout" runat="server" class="btn btn-warning my-2 my-sm-0" OnClick="btnLogout_Click" Text="Logout"></asp:Button>
+          <asp:Button ID="btnCreateAcct" runat="server" class="btn btn-warning my-2 my-sm-0" OnClick="btnCreateAcct_Click" Text="Create Account"></asp:Button>
       </div>
   </div>
 </nav>
@@ -118,13 +144,26 @@
         <br />
     <table style="width:100%;">
         <tr class="auto-style2">
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Kitchen" style="color:#ffc82e;">Kitchen</a></td>
+            <td class="auto-style6">
+                &nbsp;</td>
+            <td style="width:33%;" class="auto-style5">
+                <strong>
+                <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                </strong>
+            </td>
+            <td style="width:33%;" class="auto-style4">&nbsp;</td>
+            <td style="width:23%;" class="auto-style4">&nbsp;</td>
+            <td style="width:10%;" class="auto-style4">
+                <a href="Cart.aspx">
+                    &nbsp;</a></td>
+        </tr>
+        <tr class="auto-style2">
+            <td style="width:33%;" class="auto-style4" colspan="2"><a href="SearchResults.aspx?Rm=Kitchen" style="color:#ffc82e;">Kitchenn</a></td>
             <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=LivingRoom" style="color:#ffc82e;">Living Room</a></td>
             <td style="width:23%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Bedroom" style="color:#ffc82e;">Bedroom</a></td>
             <td style="width:10%;" class="auto-style4">
                 <a href="Cart.aspx">
-                    <img alt="Shopping Cart" src="Images/cartIcon.png" />
-                    <asp:Label ID="lblCart" runat="server" style="color:#ffc82e;" Text=""></asp:Label>
+                    <img alt="Shopping Cart" src="Images/cartIcon.png" /><asp:Label ID="lblCart" runat="server" style="color:#ffc82e;" Text=""></asp:Label>
                     
                 </a>
             </td>
