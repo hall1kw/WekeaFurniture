@@ -62,6 +62,9 @@ public partial class AdminUsers : System.Web.UI.Page
         {
             id = GridView1.SelectedRow.Cells[1].Text.ToString();
             UpdateGridViewShipping();
+            UpdateGridViewPayment();
+            UpdateGridViewReviews();
+            UpdateGridViewOrders();
             MultiView1.ActiveViewIndex = 0;
             LinkButtonShipping.Visible = true;
             LinkButtonPaymentInfo.Visible = true;
@@ -71,27 +74,79 @@ public partial class AdminUsers : System.Web.UI.Page
         }
     }
 
+    protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+    {
+        GridView1.EditIndex = e.NewEditIndex;
+        UpdateGridView();
+        GridView1.SelectedIndex = e.NewEditIndex;
+        MultiView1.ActiveViewIndex = -1;
+        LinkButtonShipping.Visible = false;
+        LinkButtonPaymentInfo.Visible = false;
+        LinkButtonReviews.Visible = false;
+        LinkButtonOrders.Visible = false;
+        LinkButtonDelete.Visible = false;
+    }
+
+    protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    {
+        string perm = ((DropDownList)GridView1.SelectedRow.FindControl("ddlPermission")).SelectedIndex.ToString();
+        string userId = GridView1.SelectedRow.Cells[1].Text.ToString();
+        string sql = "Update Users set PERMISSION=@permission where ID=@id";
+        using (SqlConnection cnn = new SqlConnection(myConnectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = cnn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = sql;
+                cmd.Parameters.AddWithValue("@id", userId);
+                cmd.Parameters.AddWithValue("@permission", perm);
+                try
+                {
+                    cnn.Open();
+                    cmd.ExecuteNonQuery();
+                    Response.Write("<script language='javascript'>alert('User updated within Database.')</script>");
+                }
+                catch (Exception ex)
+                {
+                    Response.Write("<script language='javascript'>alert('Error has occured.')</script>");
+                }
+                finally
+                {
+                    GridView1.EditIndex = -1;
+                    UpdateGridView();
+                    GridView1.SelectedIndex = -1;
+                    MultiView1.ActiveViewIndex = -1;
+                }
+            }
+        }
+    }
+
+    protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+    {
+        GridView1.EditIndex = -1;
+        UpdateGridView();
+        GridView1.SelectedIndex = -1;
+        MultiView1.ActiveViewIndex = -1;
+    }
+
     protected void LinkButtonShipping_Click(object sender, EventArgs e)
     {
-        UpdateGridViewShipping();
         MultiView1.ActiveViewIndex = 0;
     }
 
     protected void LinkButtonPaymentInfo_Click(object sender, EventArgs e)
     {
-        UpdateGridViewPayment();
         MultiView1.ActiveViewIndex = 1;
     }
 
     protected void LinkButtonReviews_Click(object sender, EventArgs e)
     {
-        UpdateGridViewReviews();
         MultiView1.ActiveViewIndex = 2;
     }
 
     protected void LinkButtonOrders_Click(object sender, EventArgs e)
     {
-        UpdateGridViewOrders();
         MultiView1.ActiveViewIndex = 3;
     }
 

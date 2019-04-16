@@ -39,6 +39,9 @@ public partial class Admin : System.Web.UI.Page
             string id = GridView1.SelectedRow.Cells[1].Text.ToString();
             DetailsView1.DataSource = DataAccess.selectQuery("SELECT * FROM PRODUCTS WHERE ID = " + id);
             DetailsView1.DataBind();
+            DataTable dt = DataAccess.selectQuery("Select AVG(RATING) from Reviews where PID=" + ((Label)DetailsView1.FindControl("lblId")).Text.ToString());
+            DataRow dr = dt.Rows[0]; 
+            ((Label)DetailsView1.FindControl("lblRating")).Text = dr[0].ToString();
         }
     }
 

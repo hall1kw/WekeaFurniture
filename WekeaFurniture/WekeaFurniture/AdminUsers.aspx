@@ -15,18 +15,59 @@
     </div>
     <br />
     <div class="row">
-        <div class="offset-1 col-sm-4 table-responsive">
+        <div class="offset-1 col-sm-5 table-responsive">
             <asp:GridView ID="GridView1" runat="server" OnPageIndexChanging="GridView1_PagingIndexChanging" AllowPaging="True" 
                 AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID"  EmptyDataText="There are no data records to display." 
-                CellPadding="4" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="SelectEvent">
+                CellPadding="4" ForeColor="#333333" GridLines="None" OnRowUpdating="GridView1_RowUpdating" OnSelectedIndexChanged="SelectEvent" 
+                OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowEditing="GridView1_RowEditing">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:CommandField ShowSelectButton="true" />
                     <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="true" SortExpression="ID" />
-                    <asp:BoundField DataField="FIRST_NAME" HeaderText="First Name" SortExpression="FIRST_NAME" />
-                    <asp:BoundField DataField="LAST_NAME" HeaderText="Last Name" SortExpression="LAST_NAME" />
-                    <asp:BoundField DataField="EMAIL" HeaderText="Email" SortExpression="EMAIL" />
-                    <asp:BoundField DataField="PERMISSION" HeaderText="Permission" SortExpression="PERMISSION" />
+                    <asp:TemplateField HeaderText="First Name">
+                        <ItemTemplate>
+                            <asp:Label ID="lblFName" runat="server" Text='<%# Bind("FIRST_NAME")%>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:Label ID="lblFName" runat="server" Text='<%# Bind("FIRST_NAME")%>'></asp:Label>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Last Name">
+                        <ItemTemplate>
+                            <asp:Label ID="lblLName" runat="server" Text='<%# Bind("LAST_NAME")%>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:Label ID="lblLName" runat="server" Text='<%# Bind("LAST_NAME")%>'></asp:Label>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Email">
+                        <ItemTemplate>
+                            <asp:Label ID="lblEmail" runat="server" Text='<%# Bind("EMAIL")%>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:Label ID="lblEmail" runat="server" Text='<%# Bind("EMAIL")%>'></asp:Label>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Permission">
+                        <ItemTemplate>
+                            <asp:Label ID="lblPermission" runat="server" Text='<%# Bind("PERMISSION") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddlPermission" runat="server">
+                                <asp:ListItem Text="0"></asp:ListItem>
+                                <asp:ListItem Text="1"></asp:ListItem>
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Action">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="btnEdit" runat="server" CommandName="Edit" Text="Edit" />
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:LinkButton ID="btnUpdate" runat="server" CommandName="Update" Text="Update" />
+                            <asp:LinkButton ID="btnCancel" runat="server" CommandName="Cancel" Text="Cancel" />
+                        </EditItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
                 <FooterStyle BackColor="#FFC107" Font-Bold="True" ForeColor="White" />
                 <HeaderStyle BackColor="#74253D" Font-Bold="True" ForeColor="White" />
@@ -39,7 +80,7 @@
                 <SortedDescendingHeaderStyle BackColor="#820000" />
             </asp:GridView>
         </div>
-        <div class="col-sm-7 table-responsive">
+        <div class="col-sm-6 table-responsive">
 
             <asp:Button ID="LinkButtonShipping" Text="Shipping Info" Visible="false" runat="server" OnClick="LinkButtonShipping_Click"></asp:Button>
             <asp:Button ID="LinkButtonPaymentInfo" Text="Payment Info" Visible="false" runat="server" OnClick="LinkButtonPaymentInfo_Click"></asp:Button>

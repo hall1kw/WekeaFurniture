@@ -198,6 +198,12 @@
                                 <asp:CheckBox ID="cbTaxableEdit" runat="server" ></asp:CheckBox>
                             </InsertItemTemplate>
                         </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="RATING">
+                            <ItemTemplate>
+                                <asp:Label ID="lblRating" runat="server" Text="No Rating"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Fields>
                     <AlternatingRowStyle BackColor="White" />
                     <EditRowStyle BackColor="Maroon" Font-Bold="True" ForeColor="White" />
