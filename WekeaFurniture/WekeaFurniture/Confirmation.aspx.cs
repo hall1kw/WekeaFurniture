@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Net.Mail;
 
 public partial class Confirmation : System.Web.UI.Page
 {
@@ -34,7 +35,7 @@ public partial class Confirmation : System.Web.UI.Page
         {
             shippingInfo = (string[])Session["shippingInfo"];
             PopulateShippingInfo();
-
+            EmailConfirmation();
         }
 
         if (!IsPostBack)
@@ -45,13 +46,65 @@ public partial class Confirmation : System.Web.UI.Page
             dlCartSummary.DataBind();
             lblSubtotal.Text = string.Format("Item's Subtotal: {0,19:C}", thisCart.GrandTotal);
 
+            BackOrderMessage();
+            UpdateStock();
+
             Session["thisCart"] = null;
         }
     }
 
-    protected void UpdateItemStock()
+    protected void EmailConfirmation()
     {
+        SmtpClient client = new SmtpClient();
+        //client.UseDefaultCredentials = true;
+        string from = "wekeafurniture@gmail.com";
 
+        //TODO: Write SQL query for the current shipping info email address
+        string to = "wekeafurniture@gmail.com";
+
+        MailMessage mail = new MailMessage(from, to);
+        mail.Subject = "Test";
+        mail.Body = "This is a test of the public service announcement. This is only a test.";
+
+        try
+        {
+            client.Send(mail);
+        }
+        catch (System.Exception)
+        {
+            Response.Write("<script>alert('Email could not be sent, please retry at a later time.')</script>");
+        }
+    }
+
+    protected void BackOrderMessage()
+    {
+        String BackOrderMessage = "";
+        foreach (CartItem item in thisCart.Items)
+        {
+            if (item.Quantity > item.Inventory)
+            {
+                int BackOrder = item.Quantity - item.Inventory;
+                BackOrderMessage += "The product: " + item.Name + " only has " + item.Inventory + " in stock. The remaining " + item.Name + "(s) will be back ordered. We are sorry for the inconvenience.\n";
+            }
+        }
+        BackOrderWarning.Text = BackOrderMessage;
+    }
+
+    protected void UpdateStock()
+    {
+        foreach (CartItem item in thisCart.Items)
+        {
+            if (item.Quantity > item.Inventory)
+            {
+                int inventory = 0;
+                DataAccess.selectQuery("UPDATE Products SET INVENTORY=" + inventory + " WHERE ID=" + item.ID);
+            }
+            else
+            {
+                int inventory = item.Inventory - item.Quantity;
+                DataAccess.selectQuery("UPDATE Products SET INVENTORY=" + inventory + " WHERE ID=" + item.ID);
+            }
+        }
     }
 
     protected void PopulateShippingInfo()

@@ -16,7 +16,7 @@ public class ShoppingCart
         Items = new List<CartItem>();
     }
 
-    private int ItemIndexOf(int ID)
+    public int ItemIndexOf(int ID)
     {
         foreach (CartItem item in Items)
         {

@@ -25,6 +25,7 @@ public partial class ProductDetail : System.Web.UI.Page
             dlDetailFeat.DataBind();            
             lblThankYou.Text = "We've added: " + row["NAME"] + " to your shopping cart!";
             lblOutOfStock.Text = "We're sorry, " + row["NAME"] + " is out of stock.";
+            lblAllInCart.Text = "All available " + row["NAME"] + " have been added to your cart.";
         }
 
     }
@@ -46,9 +47,17 @@ public partial class ProductDetail : System.Web.UI.Page
                 Session["thisCart"] = thisCart;
             }
 
-            thisCart.Insert(new CartItem(Int32.Parse(id), row["NAME"].ToString(), row["Image"].ToString(), row["DESCRIPTION"].ToString(), Double.Parse(row["PRICE"].ToString()), 1, Int32.Parse(row["INVENTORY"].ToString())));
+            int itemIndex = thisCart.ItemIndexOf(Int32.Parse(id));
+            if (itemIndex >= 0 && thisCart.Items[itemIndex].Quantity >= thisCart.Items[itemIndex].Inventory)
+            {
+                ModalPopupExtender2.Show();
+            }
+            else
+            {
+                thisCart.Insert(new CartItem(Int32.Parse(id), row["NAME"].ToString(), row["Image"].ToString(), row["DESCRIPTION"].ToString(), Double.Parse(row["PRICE"].ToString()), 1, Int32.Parse(row["INVENTORY"].ToString())));
 
-            mp1.Show();
+                mp1.Show();
+            }
         } else
         {
             ModalPopupExtender1.Show();
@@ -59,19 +68,25 @@ public partial class ProductDetail : System.Web.UI.Page
     {
         int stars = RadioButtonList1.SelectedIndex + 1;
         string review = TextBox1.Text;
-        string user = "1"; //(string) Session["user"];
-        Boolean validation = true;
-        if(user != "")
+        string user = (string) Session["userLoggedIn"];
+        Boolean validation = false;
+
+        //checks that the user has purchased the product
+        if (user != "")
         {
-            user = (string) Session["userLoggedIn"];
-            string joinquery = "SELECT Order_Products.ID" +
-                "FROM ((Order_Products " +
-                "INNER JOIN Orders ON Orders.ID = Order_Products.OID) " +
-                "INNER JOIN Users ON Users.ID = Order_Products.UID) " +
-                "WHERE Users.ID = '" + user + "' AND Order_Products.PID = '" + id + "';" ;
+            string joinquery = "SELECT Orders.UID " +
+                "FROM Orders " +
+                "INNER JOIN Order_Products " +
+                "ON Orders.ID = Order_Products.OID " +
+                "WHERE Orders.UID ='" + user + "' AND " +
+                "Order_Products.PID = '" + id + "';";
+            DataTable dt = DataAccess.selectQuery(joinquery);
+
+            if (dt.Rows.Count > 0)
+                validation = true;
         }
 
-        //validate if a user is logged in and if they have actually ordered this product
+        //inserts the review into the database, if the review is valid
         if(stars != 0 && review != "" && validation)
         {
             RadioButtonList1.SelectedIndex = -1;
@@ -81,7 +96,8 @@ public partial class ProductDetail : System.Web.UI.Page
             DataAccess.insertQuery(query);
         } else
         {
-
+            RadioButtonList1.SelectedIndex = -1;
+            TextBox1.Text = "Review not submitted";
         }
     }
 

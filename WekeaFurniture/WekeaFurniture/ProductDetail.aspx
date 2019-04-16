@@ -195,5 +195,33 @@
         </table>
         </div>
     </asp:Panel>
+
+    <cc1:ModalPopupExtender ID="ModalPopupExtender2" runat="server" PopupControlID="Panel2" TargetControlID="dummyBtn" BackgroundCssClass="Background">
+                                        </cc1:ModalPopupExtender>
+    <asp:Panel ID="Panel2" runat="server" CssClass="Popup" align="center" style = "display:none">
+        <div>
+            <table style="width:100%;">
+            <tr>
+                <td>&nbsp;</td>
+                <td><asp:Label ID="lblAllInCart" runat="server" ForeColor="#FFCC00"></asp:Label></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td style="width:300px">
+                    
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td class="auto-style7">
+                    <asp:Button ID="Button4" OnClick="btnCancelControl_Click" runat="server" Text="OK" />
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        </div>
+    </asp:Panel>
 </asp:Content>
 
