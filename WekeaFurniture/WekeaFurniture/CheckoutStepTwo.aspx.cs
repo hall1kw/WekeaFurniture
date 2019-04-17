@@ -50,6 +50,7 @@ public partial class CheckoutStepTwo : System.Web.UI.Page
         {
             lblTax.Text = shippingInfo[6];
             lblTotal.Text = shippingInfo[7];
+            lblShipping.Text = shippingInfo[9];
             dlCartSummary.DataSource = thisCart.Items;
             dlCartSummary.DataBind();
             lblSubtotal.Text = string.Format("Item's Subtotal: {0,19:C}", thisCart.GrandTotal);
