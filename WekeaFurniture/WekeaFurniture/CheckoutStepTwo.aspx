@@ -154,8 +154,8 @@
         <tr>
             <td class="auto-style5" style="width:250px; border-right-style:solid; border-right-width:3px; border-right-color:#782b42">
             <div class="text-center">
-                <h3>Shopping Cart</h3>
-                <h3>
+                <h3 style="background-color: #FFFFFF; color: #74253D">Shopping Cart</h3>
+                <h3 style="background-color: #FFFFFF; color: #74253D">
                     <asp:DataList ID="dlCartSummary" runat="server" Width="236px">
                         <ItemTemplate>
                             <table style="width:100%;">
@@ -190,17 +190,21 @@
                                                             <tr>
                                                                 <td class="auto-style56">
                                                         <asp:Label ID="lblSubtotal" runat="server" Text="Label" Font-Size="Large"></asp:Label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="auto-style56">
+                                                                    <br />
                                                         <asp:Label ID="lblTax" runat="server" Text="Label" Font-Size="Large"></asp:Label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="auto-style56">
+                                                                    <br />
+                                                        <asp:Label ID="lblShipping" runat="server" Text="Label" Font-Size="Large"></asp:Label>
+                                                                    <br />
                                                         <asp:Label ID="lblTotal" runat="server" Text="Label" Font-Size="Large"></asp:Label>
                                                                 </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="auto-style56">
+                                                                    &nbsp;</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="auto-style56">
+                                                                    &nbsp;</td>
                                                             </tr>
                                                         </table>
                                                     <br />
