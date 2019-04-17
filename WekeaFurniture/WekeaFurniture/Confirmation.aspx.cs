@@ -81,10 +81,11 @@ public partial class Confirmation : System.Web.UI.Page
         String BackOrderMessage = "";
         foreach (CartItem item in thisCart.Items)
         {
-            if (item.Quantity > item.Inventory)
+            int itemInventory = Int32.Parse(DataAccess.selectQuery("SELECT INVENTORY FROM PRODUCTS WHERE ID =" + item.ID).Rows[0]["INVENTORY"].ToString());
+            if (item.Quantity > itemInventory)
             {
-                int BackOrder = item.Quantity - item.Inventory;
-                BackOrderMessage += "The product: " + item.Name + " only has " + item.Inventory + " in stock. The remaining " + item.Name + "(s) will be back ordered. We are sorry for the inconvenience.\n";
+                int BackOrder = item.Quantity - itemInventory;
+                BackOrderMessage += "The product: " + item.Name + " only has " + itemInventory + " in stock. The remaining " + item.Name + "(s) will be back ordered. We are sorry for the inconvenience.\n";
             }
         }
         BackOrderWarning.Text = BackOrderMessage;
@@ -94,14 +95,15 @@ public partial class Confirmation : System.Web.UI.Page
     {
         foreach (CartItem item in thisCart.Items)
         {
-            if (item.Quantity > item.Inventory)
+            int itemInventory = Int32.Parse(DataAccess.selectQuery("SELECT INVENTORY FROM PRODUCTS WHERE ID =" + item.ID).Rows[0]["INVENTORY"].ToString());
+            if (item.Quantity > itemInventory)
             {
                 int inventory = 0;
                 DataAccess.selectQuery("UPDATE Products SET INVENTORY=" + inventory + " WHERE ID=" + item.ID);
             }
             else
             {
-                int inventory = item.Inventory - item.Quantity;
+                int inventory = itemInventory - item.Quantity;
                 DataAccess.selectQuery("UPDATE Products SET INVENTORY=" + inventory + " WHERE ID=" + item.ID);
             }
         }
