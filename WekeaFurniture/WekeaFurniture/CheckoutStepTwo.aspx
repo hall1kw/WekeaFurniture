@@ -363,6 +363,7 @@
                                                 <td>&nbsp;</td>
                                             </tr>
                                         </table>
+                                        <asp:Button ID="btnConfirmOrder" runat="server" OnClick="btnConfirmOrder_Click" Text="Order" />
                                         <br />
                                     </td>
                                 </tr>

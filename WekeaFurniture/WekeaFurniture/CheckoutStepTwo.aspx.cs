@@ -157,26 +157,13 @@ public partial class CheckoutStepTwo : System.Web.UI.Page
         lblShipCity.Text = shippingInfo[3] + ", " + shippingInfo[8] + " " + shippingInfo[5];       
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        
-    }
-    
-    protected void Button2_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    
-
-    protected void FindFocus()
-    {
-        
-
-    }
-
     protected void btnChange_Click(object sender, EventArgs e)
     {
         Response.Redirect("/CheckoutStepOne.aspx");
+    }
+
+    protected void btnConfirmOrder_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("/Confirmation.aspx");
     }
 }
