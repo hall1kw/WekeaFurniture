@@ -50,6 +50,7 @@ public partial class CheckoutStepTwo : System.Web.UI.Page
         {
             lblTax.Text = shippingInfo[6];
             lblTotal.Text = shippingInfo[7];
+            lblShipping.Text = shippingInfo[9];
             dlCartSummary.DataSource = thisCart.Items;
             dlCartSummary.DataBind();
             lblSubtotal.Text = string.Format("Item's Subtotal: {0,19:C}", thisCart.GrandTotal);
@@ -157,26 +158,13 @@ public partial class CheckoutStepTwo : System.Web.UI.Page
         lblShipCity.Text = shippingInfo[3] + ", " + shippingInfo[8] + " " + shippingInfo[5];       
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        
-    }
-    
-    protected void Button2_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    
-
-    protected void FindFocus()
-    {
-        
-
-    }
-
     protected void btnChange_Click(object sender, EventArgs e)
     {
         Response.Redirect("/CheckoutStepOne.aspx");
+    }
+
+    protected void btnConfirmOrder_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("/Confirmation.aspx");
     }
 }

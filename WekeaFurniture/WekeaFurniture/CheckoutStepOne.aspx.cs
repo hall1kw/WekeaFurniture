@@ -37,7 +37,7 @@ public partial class CheckoutNew : System.Web.UI.Page
         }
         if (Session["shippingInfo"] == null)
         {
-            Session["shippingInfo"] = new string[9];
+            Session["shippingInfo"] = new string[10];
             shippingInfo = (string[]) Session["shippingInfo"];
         }
         else
@@ -111,7 +111,7 @@ public partial class CheckoutNew : System.Web.UI.Page
         ddlState.SelectedIndex = 0;
         lblTax.Text = "";
         lblTotal.Text = "";
-        Session["shippingInfo"] = new string[9];
+        Session["shippingInfo"] = new string[10];
     }
     protected void CalcTax(object sender, EventArgs e)
     {
@@ -212,25 +212,34 @@ public partial class CheckoutNew : System.Web.UI.Page
     {
         // Need to check that shipping info is filled out...
         // Check to see if Address has been checked, if so, redirect to step two
-        if (AddressChecked)
+        if (ddlShipping.SelectedItem.ToString().Equals("--- Please Select Shipping Method ---"))
         {
-            shippingInfo[6] = lblTax.Text.ToString();
-            shippingInfo[7] = lblTotal.Text.ToString();
-            Response.Redirect("/CheckoutStepTwo.aspx");
-        } else
+            lblErrorMessage.Text = "Please choose a shipping method";
+            mpError.Show();
+        }
+        else
         {
-            // Use the textbox data to verify information
-            shippingInfo[0] = txtFullName.Text;
-            shippingInfo[1] = txtAddressLn1.Text;
-            shippingInfo[2] = txtAddressLn2.Text;
-            shippingInfo[3] = txtCity.Text;
-            shippingInfo[8] = ddlState.SelectedItem.ToString();
-            shippingInfo[5] = txtZip.Text;
-            // Call VerifyAddress to get corrected address
-            PopulateOriginal();
-            VerifyAddress();
-            AddressChecked = true;
-            mp1.Show();
+            if (AddressChecked)
+            {
+                shippingInfo[6] = lblTax.Text.ToString();
+                shippingInfo[7] = lblTotal.Text.ToString();
+                Response.Redirect("/CheckoutStepTwo.aspx");
+            }
+            else
+            {
+                // Use the textbox data to verify information
+                shippingInfo[0] = txtFullName.Text;
+                shippingInfo[1] = txtAddressLn1.Text;
+                shippingInfo[2] = txtAddressLn2.Text;
+                shippingInfo[3] = txtCity.Text;
+                shippingInfo[8] = ddlState.SelectedItem.ToString();
+                shippingInfo[5] = txtZip.Text;
+                // Call VerifyAddress to get corrected address
+                PopulateOriginal();
+                VerifyAddress();
+                AddressChecked = true;
+                mp1.Show();
+            }
         }
         // Else...
         // Apply response from USPS to labels in popup
@@ -331,6 +340,7 @@ public partial class CheckoutNew : System.Web.UI.Page
             {
                 CalcTax(this, EventArgs.Empty);
             }
+            shippingInfo[9] = "Shipping Cost: $50.00";
         } else
         {
             lblShipping.Text = "Shipping Cost: FREE";
@@ -339,6 +349,13 @@ public partial class CheckoutNew : System.Web.UI.Page
             {
                 CalcTax(this, EventArgs.Empty);
             }
+            shippingInfo[9] = "Shipping Cost: FREE";
         }
+    }
+
+    protected void btnCancelControl_Click(object sender, EventArgs e)
+    {
+        mpError.Dispose();
+        ddlShipping.Focus();
     }
 }

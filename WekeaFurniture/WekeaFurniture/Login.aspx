@@ -49,6 +49,7 @@
         </table>
         <br />
         <asp:Button id="btn_SignUp" class="btn btn-warning my-2 my-sm-0" runat="server" OnClick="btnLogin_Click" Text="Login"/>
+        <asp:Button id="btn_forgotPassword" class="btn btn-warning my-2 my-sm-0" runat="server" Text="Forgot Password" OnClick="btn_forgotPassword_Click"/>
 
     </form>
     <p>or</p>

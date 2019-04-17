@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Net;
 using System.Net.Mail;
 
 public partial class Confirmation : System.Web.UI.Page
@@ -56,13 +57,11 @@ public partial class Confirmation : System.Web.UI.Page
     protected void EmailConfirmation()
     {
         SmtpClient client = new SmtpClient();
-        //client.UseDefaultCredentials = true;
-        string from = "wekeafurniture@gmail.com";
+        client.Credentials = CredentialCache.DefaultNetworkCredentials;
 
         //TODO: Write SQL query for the current shipping info email address
-        string to = "contact.mjrowland@gmail.com";
 
-        MailMessage mail = new MailMessage(from, to);
+        MailMessage mail = new MailMessage("wekeafurniture@gmail.com", "contact.mjrowland@gmail.com"); 
         mail.Subject = "Test";
         mail.Body = "This is a test of the public service announcement. This is only a test.";
 
@@ -81,10 +80,11 @@ public partial class Confirmation : System.Web.UI.Page
         String BackOrderMessage = "";
         foreach (CartItem item in thisCart.Items)
         {
-            if (item.Quantity > item.Inventory)
+            int itemInventory = Int32.Parse(DataAccess.selectQuery("SELECT INVENTORY FROM PRODUCTS WHERE ID =" + item.ID).Rows[0]["INVENTORY"].ToString());
+            if (item.Quantity > itemInventory)
             {
-                int BackOrder = item.Quantity - item.Inventory;
-                BackOrderMessage += "The product: " + item.Name + " only has " + item.Inventory + " in stock. The remaining " + item.Name + "(s) will be back ordered. We are sorry for the inconvenience.\n";
+                int BackOrder = item.Quantity - itemInventory;
+                BackOrderMessage += "The product: " + item.Name + " only has " + itemInventory + " in stock. The remaining " + item.Name + "(s) will be back ordered. We are sorry for the inconvenience.\n";
             }
         }
         BackOrderWarning.Text = BackOrderMessage;
@@ -94,14 +94,15 @@ public partial class Confirmation : System.Web.UI.Page
     {
         foreach (CartItem item in thisCart.Items)
         {
-            if (item.Quantity > item.Inventory)
+            int itemInventory = Int32.Parse(DataAccess.selectQuery("SELECT INVENTORY FROM PRODUCTS WHERE ID =" + item.ID).Rows[0]["INVENTORY"].ToString());
+            if (item.Quantity > itemInventory)
             {
                 int inventory = 0;
                 DataAccess.selectQuery("UPDATE Products SET INVENTORY=" + inventory + " WHERE ID=" + item.ID);
             }
             else
             {
-                int inventory = item.Inventory - item.Quantity;
+                int inventory = itemInventory - item.Quantity;
                 DataAccess.selectQuery("UPDATE Products SET INVENTORY=" + inventory + " WHERE ID=" + item.ID);
             }
         }

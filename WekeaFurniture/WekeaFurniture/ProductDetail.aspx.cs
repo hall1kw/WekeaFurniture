@@ -48,7 +48,8 @@ public partial class ProductDetail : System.Web.UI.Page
             }
 
             int itemIndex = thisCart.ItemIndexOf(Int32.Parse(id));
-            if (itemIndex >= 0 && thisCart.Items[itemIndex].Quantity >= thisCart.Items[itemIndex].Inventory)
+            int itemInventory = Int32.Parse(DataAccess.selectQuery("SELECT INVENTORY FROM PRODUCTS WHERE ID =" + id).Rows[0]["INVENTORY"].ToString());
+            if (itemIndex >= 0 && thisCart.Items[itemIndex].Quantity >= itemInventory)
             {
                 ModalPopupExtender2.Show();
             }

@@ -50,12 +50,19 @@
             btnLog.Visible = false;
             btnLogout.Visible = true;
             btnCreateAcct.Visible = false;
-            
+
             string query = "SELECT * FROM Users WHERE ID='" + Session["userLoggedIn"].ToString() + "';";
             System.Data.DataTable dt = DataAccess.selectQuery(query);
             System.Data.DataRow row = dt.Rows[0];
             Label1.Text = " Hi " + row["FIRST_NAME"] + "!";
-            
+            if (row["PERMISSION"].ToString().Equals("1"))
+            {
+                lblStoreMgr.Visible = true;
+            } else
+            {
+                lblStoreMgr.Visible = false;
+            }
+
         }
     }
 </script>
@@ -117,8 +124,7 @@
                     <a class="nav-link" href="/Home.aspx">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/AdminProducts.aspx">Store Admin</a>
-                </li>
+                    &nbsp;</li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/Search.aspx">Shop our store</a>
                 </li>
@@ -153,13 +159,12 @@
             </td>
             <td style="width:33%;" class="auto-style4">&nbsp;</td>
             <td style="width:23%;" class="auto-style4">&nbsp;</td>
-            <td style="width:10%;" class="auto-style4">
-                <a href="Cart.aspx">
-                    &nbsp;</a></td>
+            <td style="width:10%;" class="auto-style5">
+                <a href="AdminProducts.aspx"><asp:Label ID="lblStoreMgr" runat="server" Text="Store Admin" Font-Bold="True" ForeColor="#FFC107" Visible="False"></asp:Label></a>
+            </td>
         </tr>
         <tr class="auto-style2">
-            <td style="width:33%;" class="auto-style4" colspan="2"><a href="SearchResults.aspx?Rm=Kitchen" style="color:#ffc82e;">Kitchenn</a></td>
-            <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=LivingRoom" style="color:#ffc82e;">Living Room</a></td>
+            <td style="width:33%;" class="auto-style4" colspan="2"><a href="SearchResults.aspx?Rm=Kitchen" style="color:#ffc82e;">Kitchenn      <td style="width:33%;" class="auto-style4"><a href="SearchResults.aspx?Rm=LivingRoom" style="color:#ffc82e;">Living Room</a></td>
             <td style="width:23%;" class="auto-style4"><a href="SearchResults.aspx?Rm=Bedroom" style="color:#ffc82e;">Bedroom</a></td>
             <td style="width:10%;" class="auto-style4">
                 <a href="Cart.aspx">

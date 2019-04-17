@@ -10,6 +10,17 @@
             filter: alpha(opacity=90);
             opacity: 0.8;
         }
+        .PopupError
+        {
+            background-color: #782b42;
+            border-width: 3px;
+            border-style: solid;
+            border-color: black;
+            padding-top: 10px;
+            padding-left: 10px;
+            width: 400px;
+            height: 150px;            
+        }
         .Popup
         {
             background-color: #FFFFFF;
@@ -98,8 +109,8 @@
         <tr>
             <td class="auto-style5" style="width:250px; border-right-style:solid; border-right-width:3px; border-right-color:#782b42">
             <div class="text-center">
-                <h3>Shopping Cart</h3>
-                <h3>
+                <h3 style="background-color: #FFFFFF; color: #753649">Shopping Cart</h3>
+                <h3 style="background-color: #FFFFFF; color: #753649">
                     <asp:DataList ID="dlCartSummary" runat="server" Width="236px">
                         <ItemTemplate>
                             <table style="width:100%;">
@@ -385,5 +396,32 @@
             </td>
         </tr>
     </table>
+    <cc1:ModalPopupExtender ID="mpError" runat="server" PopupControlID="pnlChooseShipping" TargetControlID="dummyBtn" BackgroundCssClass="Background">
+                                        </cc1:ModalPopupExtender>
+    <asp:Panel ID="pnlChooseShipping" runat="server" CssClass="PopupError" align="center" style = "display:none">
+        <div>
+            <table style="width:100%;">
+            <tr>
+                <td>&nbsp;</td>
+                <td><asp:Label ID="lblErrorMessage" runat="server" ForeColor="#FFCC00"></asp:Label></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td style="width:300px">
+                    
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td class="auto-style7">
+                    <asp:Button ID="Button4" OnClick="btnCancelControl_Click" runat="server" Text="OK" />
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        </div>
+    </asp:Panel>
 
     </asp:Content>
