@@ -40,6 +40,23 @@
             text-align: right;
             height: 26px;
         }
+        .auto-style9 {
+            width: 15%;
+        }
+        .auto-style10 {
+            width: 70%;
+        }
+        .auto-style11 {
+            width: 70px;
+            height: 215px;
+        }
+        .auto-style12 {
+            width: 468px;
+            height: 215px;
+        }
+        .auto-style13 {
+            height: 215px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -113,29 +130,50 @@
                 </asp:DataList>
             </td>
             <td>
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnection %>" SelectCommand="SELECT [RATING], [REVIEW] FROM [Reviews] WHERE ([PID] = @PID)">
-                    <SelectParameters>
-                        <asp:QueryStringParameter DefaultValue="0" Name="PID" QueryStringField="ID" Type="Int32" />
-                    </SelectParameters>
-                </asp:SqlDataSource>
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" AllowPaging="True" Width="100%">
-                    <Columns>
-                        <asp:BoundField DataField="RATING" HeaderText="RATING" SortExpression="RATING" />
-                        <asp:BoundField DataField="REVIEW" HeaderText="REVIEW" SortExpression="REVIEW" />
-                    </Columns>
-                </asp:GridView>
-                <label style="font-size:18pt">Leave a review</label>
-                <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal">
-                    <asp:ListItem>1 star</asp:ListItem>
-                    <asp:ListItem>2 stars</asp:ListItem>
-                    <asp:ListItem>3 stars</asp:ListItem>
-                    <asp:ListItem>4 stars</asp:ListItem>
-                    <asp:ListItem>5 stars</asp:ListItem>
-                </asp:RadioButtonList>
-                <br />
-                <asp:TextBox ID="TextBox1" runat="server" Height="75px" Width="329px" MaxLength="1024" Rows="500"></asp:TextBox>
-                <br />
-                <asp:Button ID="Button2" runat="server" Text="Submit Review" OnClick="Button2_Click" />
+                <table style="width: 100%;">
+                    <tr>
+                        <td class="auto-style9">&nbsp;</td>
+                        <td class="auto-style10">
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnection %>" SelectCommand="SELECT [RATING], [REVIEW] FROM [Reviews] WHERE ([PID] = @PID)">
+                            <SelectParameters>
+                                <asp:QueryStringParameter DefaultValue="0" Name="PID" QueryStringField="ID" Type="Int32" />
+                            </SelectParameters>
+                            </asp:SqlDataSource>
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" AllowPaging="True" Width="100%" BorderColor="White">
+                                <Columns>
+                                    <asp:BoundField DataField="RATING" HeaderText="RATING" SortExpression="RATING" />
+                                    <asp:BoundField DataField="REVIEW" HeaderText="REVIEW" SortExpression="REVIEW" />
+                                </Columns>
+                            </asp:GridView>
+                        </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style11"></td>
+                        <td class="auto-style12">
+
+                        </td>
+                        <td class="auto-style13"></td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style9">&nbsp;</td>
+                        <td class="auto-style10">
+                            <label style="font-size:18pt">Leave a review</label>
+                            <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal">
+                                <asp:ListItem>1 star</asp:ListItem>
+                                <asp:ListItem>2 stars</asp:ListItem>
+                                <asp:ListItem>3 stars</asp:ListItem>
+                                <asp:ListItem>4 stars</asp:ListItem>
+                                <asp:ListItem>5 stars</asp:ListItem>
+                            </asp:RadioButtonList>
+                            <br />
+                            <asp:TextBox ID="TextBox1" runat="server" Height="75px" Width="329px" MaxLength="1024" Rows="500"></asp:TextBox>
+                            <br />
+                            <asp:Button ID="Button2" runat="server" Text="Submit Review" OnClick="Button2_Click" />
+                        </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>
