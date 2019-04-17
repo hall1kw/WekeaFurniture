@@ -128,4 +128,9 @@ public partial class Login : System.Web.UI.Page
         mycookie.Expires = DateTime.Now.AddHours(2.00);
         Response.Cookies.Add(mycookie);
     }
+
+    protected void btn_forgotPassword_Click(object sender, EventArgs e)
+    {
+
+    }
 }

@@ -60,7 +60,7 @@ public partial class Confirmation : System.Web.UI.Page
         string from = "wekeafurniture@gmail.com";
 
         //TODO: Write SQL query for the current shipping info email address
-        string to = "wekeafurniture@gmail.com";
+        string to = "contact.mjrowland@gmail.com";
 
         MailMessage mail = new MailMessage(from, to);
         mail.Subject = "Test";
