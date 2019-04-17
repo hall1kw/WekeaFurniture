@@ -56,7 +56,7 @@ public partial class Confirmation : System.Web.UI.Page
     protected void EmailConfirmation()
     {
         SmtpClient client = new SmtpClient();
-        //client.UseDefaultCredentials = true;
+        client.UseDefaultCredentials = true;
         string from = "wekeafurniture@gmail.com";
 
         //TODO: Write SQL query for the current shipping info email address
