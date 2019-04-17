@@ -59,6 +59,8 @@ public partial class Confirmation : System.Web.UI.Page
         client.UseDefaultCredentials = true;
         string from = "wekeafurniture@gmail.com";
 
+        //client.Credentials.GetCredential("smtp.gmail.com", 465, "ssl");
+
         //TODO: Write SQL query for the current shipping info email address
         string to = "contact.mjrowland@gmail.com";
 
