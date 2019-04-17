@@ -22,6 +22,21 @@ public partial class AdminUsers : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            if (!string.IsNullOrEmpty(Session["userLoggedIn"] as string))
+            {
+                DataTable dt = DataAccess.selectQuery("Select Permission from Users where ID=" + Session["userLoggedIn"]);
+                DataRow dr = dt.Rows[0];
+                if (!dr[0].ToString().Equals("1")) // If current Session User is authorized to enter
+                {
+                    Response.Redirect("Home.aspx");
+                }
+            }
+            else
+            {
+                Response.Redirect("Login.aspx");
+            }
+
+            // Update GridView if authenticated
             UpdateGridView();
         }
     }
@@ -70,7 +85,6 @@ public partial class AdminUsers : System.Web.UI.Page
             LinkButtonPaymentInfo.Visible = true;
             LinkButtonReviews.Visible = true;
             LinkButtonOrders.Visible = true;
-            LinkButtonDelete.Visible = true;
         }
     }
 
@@ -84,7 +98,6 @@ public partial class AdminUsers : System.Web.UI.Page
         LinkButtonPaymentInfo.Visible = false;
         LinkButtonReviews.Visible = false;
         LinkButtonOrders.Visible = false;
-        LinkButtonDelete.Visible = false;
     }
 
     protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -150,13 +163,14 @@ public partial class AdminUsers : System.Web.UI.Page
         MultiView1.ActiveViewIndex = 3;
     }
 
-    protected void LinkButtonDelete_Click(object sender, EventArgs e)
+    protected void GridView1_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        string sqlUser = "Delete from Users where ID=" + id;
-        string sqlShippingInfo = "Delete from Shipping_Info where UID=" + id;
-        string sqlPaymentInfo = "Delete from Payment_Info where UID=" + id;
-        string sqlReviews = "Delete from Reviews where UID=" + id;
-        string sqlOrders = "Delete from Orders where UID=" + id;
+        string userId = GridView1.Rows[e.RowIndex].Cells[1].Text.ToString();
+        string sqlUser = "Delete from Users where ID=" + userId;
+        string sqlShippingInfo = "Delete from Shipping_Info where UID=" + userId;
+        string sqlPaymentInfo = "Delete from Payment_Info where UID=" + userId;
+        string sqlReviews = "Delete from Reviews where UID=" + userId;
+        string sqlOrders = "Delete from Orders where UID=" + userId;
         string[] cmdStrings = { sqlOrders, sqlReviews, sqlPaymentInfo, sqlShippingInfo, sqlUser };
         
         SqlConnection conn = new SqlConnection(myConnectionString);

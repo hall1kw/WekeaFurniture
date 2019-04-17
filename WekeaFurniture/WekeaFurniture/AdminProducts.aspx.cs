@@ -21,6 +21,22 @@ public partial class Admin : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            if (!string.IsNullOrEmpty(Session["userLoggedIn"] as string))
+            {
+                DataTable dt = DataAccess.selectQuery("Select Permission from Users where ID=" + Session["userLoggedIn"]);
+                DataRow dr = dt.Rows[0];
+                if (!dr[0].ToString().Equals("1")) // If current Session User is authorized to enter
+                {
+                    Response.Redirect("Home.aspx");
+                }
+            }
+            else
+            {
+                Response.Redirect("Login.aspx");          
+            }
+            
+           
+            // Update GridView if authenticated
             UpdateGridView();
         }
     }
@@ -269,5 +285,3 @@ public partial class Admin : System.Web.UI.Page
         Response.Redirect("AdminUsers.aspx");
     }
 }
-
-// Deletes images, make sure you add that functionality when you are updating images as well
