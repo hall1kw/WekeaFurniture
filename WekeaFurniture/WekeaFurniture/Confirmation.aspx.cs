@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Net;
 using System.Net.Mail;
 
 public partial class Confirmation : System.Web.UI.Page
@@ -57,10 +56,6 @@ public partial class Confirmation : System.Web.UI.Page
     protected void EmailConfirmation()
     {
         SmtpClient client = new SmtpClient();
-        client.Credentials = CredentialCache.DefaultNetworkCredentials;
-
-        //TODO: Write SQL query for the current shipping info email address
-
         MailMessage mail = new MailMessage("wekeafurniture@gmail.com", "contact.mjrowland@gmail.com"); 
         mail.Subject = "Test";
         mail.Body = "This is a test of the public service announcement. This is only a test.";
