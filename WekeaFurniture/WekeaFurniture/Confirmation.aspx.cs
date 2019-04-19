@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Net;
 using System.Net.Mail;
+using System.Diagnostics;
 
 public partial class Confirmation : System.Web.UI.Page
 {
@@ -49,6 +49,7 @@ public partial class Confirmation : System.Web.UI.Page
 
             BackOrderMessage();
             UpdateStock();
+            SaveOrder();
 
             Session["thisCart"] = null;
         }
@@ -57,10 +58,6 @@ public partial class Confirmation : System.Web.UI.Page
     protected void EmailConfirmation()
     {
         SmtpClient client = new SmtpClient();
-        client.Credentials = CredentialCache.DefaultNetworkCredentials;
-
-        //TODO: Write SQL query for the current shipping info email address
-
         MailMessage mail = new MailMessage("wekeafurniture@gmail.com", "contact.mjrowland@gmail.com"); 
         mail.Subject = "Test";
         mail.Body = "This is a test of the public service announcement. This is only a test.";
@@ -106,6 +103,28 @@ public partial class Confirmation : System.Web.UI.Page
                 DataAccess.selectQuery("UPDATE Products SET INVENTORY=" + inventory + " WHERE ID=" + item.ID);
             }
         }
+    }
+
+    protected void SaveOrder()
+    {
+        string user = (string) Session["userLoggedIn"];
+        if (string.IsNullOrEmpty(user))
+        {
+            user = "1";
+        }
+
+
+        //save shipping info
+        string addShippingQuery = "INSERT INTO Shipping_Info (UID,SHIP_TO_NAME,ADDRESS_ONE,ADDRESS_TWO,CITY,STATE,ZIP,PHONE) " +
+            "OUTPUT Inserted.ID " +
+            "VALUES ('" + user + "','" + shippingInfo[0] + "','" + shippingInfo[1] + "','" + shippingInfo[1] +
+            "','" + shippingInfo[3] + "','" + shippingInfo[4] + "','" + shippingInfo[5] + "','" + shippingInfo[6] + "');";
+        int order = DataAccess.InsertGetKeyQuery(addShippingQuery);
+        Debug.WriteLine(order.ToString());
+        //save payment info
+
+        string addOrderQuery = "INSERT INTO Orders (UID,PYMT_INFO,ORDER_DATE,AMMT,SHIP_INFO,FULFILLED)" +
+            "VALUES ('" + user + "','" + " ";
     }
 
     protected void PopulateShippingInfo()
