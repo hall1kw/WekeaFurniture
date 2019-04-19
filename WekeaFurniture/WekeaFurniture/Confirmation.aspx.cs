@@ -136,11 +136,20 @@ public partial class Confirmation : System.Web.UI.Page
         + paymentInfo[3] + "','" + paymentInfo[4] + "','" + paymentInfo[5] + "');";
         DataAccess.insertQuery(addPaymentQuery);
 
-        
+        getKey = "SELECT ID FROM Payment_Info WHERE UID='" + user + "' and NAME_ON_CARD='" + paymentInfo[0] + "' and CARD_NUM='" 
+        + paymentInfo[1] + "' and EXP_MO='" + paymentInfo[2] + "' and EXP_YR='"
+        + paymentInfo[3] + "' and GIFT_CARD='" + paymentInfo[4] + "' and CVV='" + paymentInfo[5] + "';";
+        DataTable dt2 = DataAccess.selectQuery(getKey);
+        string paymentKey = dt2.Rows[0]["ID"].ToString();
 
-        //add to order
-        string addOrderQuery = "INSERT INTO Orders (UID,PYMT_INFO,ORDER_DATE,AMMT,SHIP_INFO,FULFILLED)" +
-            "VALUES ('" + user + "','" + " ";
+
+
+        string total = shippingInfo[7].Substring(26);
+        string addOrderQuery = "INSERT INTO Orders (UID,PYMT_INFO,ORDER_DATE,AMMT,SHIP_INFO,FULLFILLED)" +
+            "VALUES ('" + user + "','" + paymentKey + "','" + date + "','" + total
+            + "','" + orderKey + "','0');";
+
+        DataAccess.insertQuery(addOrderQuery);
 
         //add to order products
     }
