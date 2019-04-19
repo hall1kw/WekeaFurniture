@@ -174,6 +174,32 @@ public partial class AdminOrders : System.Web.UI.Page
         return dr[0].ToString() + ",<br />" + dr[1].ToString() + ",<br />" + dr[2].ToString() + " " + dr[3].ToString();
     }
 
+    protected string getProducts()
+    {
+        string products = ""; int i = 1;
+        DataTable dt = DataAccess.selectQuery("Select op.PID, p.NAME from Order_Products op, Products p where op.OID=" + id + " and p.ID=op.PID");
+        foreach (DataRow dr in dt.AsEnumerable())
+        {
+            products += "[Product " + i + "]: " + dr[0].ToString() + " | " + dr[1].ToString() + "<br />";
+            i++;
+        }
+
+        return products;
+    }
+
+    protected string getQuantity()
+    {
+        string quantities = ""; int i = 1;
+        DataTable dt = DataAccess.selectQuery("Select QTY from Order_Products where OID=" + id);
+        foreach (DataRow dr in dt.AsEnumerable())
+        {
+            quantities += "[Product " + i + "]: " + dr[0].ToString() +  "<br />";
+            i++;
+        }
+
+        return quantities;
+    }
+
     protected void ProductButton_Click(object sender, EventArgs e)
     {
         Response.Redirect("AdminProducts.aspx");
