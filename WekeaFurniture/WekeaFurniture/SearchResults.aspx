@@ -14,8 +14,8 @@
                 <ItemTemplate>
                     <table style="width:100%;">
                         <tr>
-                            <td class="text-center">
-                                <asp:Image ID="Image2" runat="server" style="width:200px; height:200px;" ImageUrl='<%# "/Images/ProductImages/" + Eval("IMAGE") %>' />
+                            <td class="text-center" style="height:200px;">
+                                <asp:Image ID="Image2" runat="server" style="max-width:200px; max-height:200px;" ImageUrl='<%# "/Images/ProductImages/" + Eval("IMAGE") %>' />
                             </td>
                         </tr>
                         <tr>
@@ -35,14 +35,25 @@
             </td>
             <td>    <asp:DataList ID="dlSearchResults" runat="server" RepeatColumns="5" RepeatDirection="Horizontal" BorderColor="#753649" BorderStyle="Solid" BorderWidth="3px" HorizontalAlign="Center">
         <ItemTemplate>
-            <div class="text-left" style="width:220px; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; margin-left: 10px;">
-                <a href="<%# "ProductDetail.aspx?ID="+Eval("ID") %>"><asp:Image ID="Image2" runat="server" Height="200px" ImageUrl='<%# "Images/ProductImages/" + Eval("IMAGE") %>' width="200px" /></a>
+            <div class="text-left" style="width:200px; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; margin-left: 10px;">
                 <br />
-                <asp:HyperLink ID="Label1" runat="server" NavigateUrl='<%# "ProductDetail.aspx?ID="+Eval("ID") %>' Text='<%# Eval("NAME") %>'></asp:HyperLink>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="height:200px;"><a href='<%# "ProductDetail.aspx?ID="+Eval("ID") %>'>
+                            <asp:Image ID="Image2" runat="server" ImageUrl='<%# "Images/ProductImages/" + Eval("IMAGE") %>' style="max-height:200px; max-width:200px;" />
+                            </a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:HyperLink ID="Label1" runat="server" NavigateUrl='<%# "ProductDetail.aspx?ID="+Eval("ID") %>' Text='<%# Eval("NAME") %>'></asp:HyperLink>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">$<asp:Label ID="Label2" runat="server" Text='<%# Eval("PRICE") %>'></asp:Label>
+                        </td>
+                    </tr>
+                </table>
                 <br />
-                <div style="text-align: right">
-                    $<asp:Label ID="Label2" runat="server" Text='<%# Eval("PRICE") %>'></asp:Label>
-                </div>
                 
             </div>
         </ItemTemplate>
