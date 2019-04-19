@@ -12,10 +12,14 @@
         <div class="col-sm-2">
             <asp:Button ID="CustomerButton" runat="server" CssClass="form-control" OnClick="CustomerButton_Click" Text="Users"/>
         </div>
+        <div class="col-sm-2">
+            <asp:Button ID="OrderButton" runat="server" CssClass="form-control" Text="Orders" OnClick="OrderButton_Click" />
+        </div>
     </div>
     <br />
     <div class="row">
         <div class="offset-1 col-sm-5 table-responsive">
+            <h2>Users</h2>
             <asp:GridView ID="GridView1" runat="server" OnPageIndexChanging="GridView1_PagingIndexChanging" AllowPaging="True" 
                 AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID"  EmptyDataText="There are no data records to display." 
                 CellPadding="4" ForeColor="#333333" GridLines="None" OnRowUpdating="GridView1_RowUpdating" OnSelectedIndexChanged="SelectEvent" 

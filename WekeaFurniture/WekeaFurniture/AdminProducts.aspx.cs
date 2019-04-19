@@ -284,4 +284,9 @@ public partial class Admin : System.Web.UI.Page
     {
         Response.Redirect("AdminUsers.aspx");
     }
+
+    protected void OrderButton_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("AdminOrders.aspx");
+    }
 }
