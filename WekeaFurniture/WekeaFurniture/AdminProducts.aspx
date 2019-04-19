@@ -21,7 +21,11 @@
                         <asp:CommandField ShowSelectButton="True" />
                         <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
                         <asp:BoundField DataField="NAME" HeaderText="NAME" SortExpression="NAME" />
-                        <asp:BoundField DataField="PRICE" HeaderText="PRICE" SortExpression="PRICE" />
+                        <asp:TemplateField HeaderText="PRICE">
+                            <ItemTemplate>
+                                <asp:Label ID="Label2" runat="server" Text='<%# String.Format("{0:C}",Eval("PRICE")) %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                     <FooterStyle BackColor="#FFC107" Font-Bold="True" ForeColor="White" />
                     <HeaderStyle BackColor="#74253D" Font-Bold="True" ForeColor="White" />
