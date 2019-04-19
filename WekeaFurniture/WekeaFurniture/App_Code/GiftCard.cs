@@ -32,7 +32,7 @@ public class GiftCard
         DataRow row = dt.Rows[0];
         double gcBal = Double.Parse(row["Balance"].ToString());
         double newBal = gcBal + amount;
-        string query = "UDPATE GiftCards SET Balance = " + newBal + " WHERE GCnum = '" + cardNum + "';");
+        string query = "UDPATE GiftCards SET Balance = " + newBal + " WHERE GCnum = '" + cardNum + "';";
         DataAccess.selectQuery(query);
         DataTable dtNew = DataAccess.selectQuery("SELECT * FROM GiftCards WHERE GCnum = '" + cardNum + "';");
         DataRow rowNew = dt.Rows[0];
