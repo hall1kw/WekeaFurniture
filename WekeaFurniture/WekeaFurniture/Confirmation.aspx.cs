@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net.Mail;
+using System.Data;
 using System.Diagnostics;
 
 public partial class Confirmation : System.Web.UI.Page
@@ -107,24 +108,41 @@ public partial class Confirmation : System.Web.UI.Page
 
     protected void SaveOrder()
     {
+        string date = DateTime.Now.ToString();
         string user = (string) Session["userLoggedIn"];
         if (string.IsNullOrEmpty(user))
         {
             user = "1";
         }
 
-
+        //TODO: check if exact info is already saved. if not ->
         //save shipping info
-        string addShippingQuery = "INSERT INTO Shipping_Info (UID,SHIP_TO_NAME,ADDRESS_ONE,ADDRESS_TWO,CITY,STATE,ZIP,PHONE) " +
-            "OUTPUT Inserted.ID " +
+        string addShippingQuery = "INSERT INTO Shipping_Info (UID,SHIP_TO_NAME,ADDRESS_ONE,ADDRESS_TWO,CITY,STATE,ZIP) " +
             "VALUES ('" + user + "','" + shippingInfo[0] + "','" + shippingInfo[1] + "','" + shippingInfo[1] +
-            "','" + shippingInfo[3] + "','" + shippingInfo[4] + "','" + shippingInfo[5] + "','" + shippingInfo[6] + "');";
-        int order = DataAccess.InsertGetKeyQuery(addShippingQuery);
-        Debug.WriteLine(order.ToString());
+            "','" + shippingInfo[3] + "','" + shippingInfo[4] + "','" + shippingInfo[5] + "');";
+        DataAccess.insertQuery(addShippingQuery);
+
+        string getKey = "SELECT ID FROM Shipping_Info WHERE UID ='" + user + "' and SHIP_TO_NAME ='" + shippingInfo[0] + "' and ADDRESS_ONE ='" + shippingInfo[1] + "' and ADDRESS_TWO ='" + 
+            shippingInfo[1] + "' and CITY ='" + shippingInfo[3]+ "' and STATE ='" + shippingInfo[4] + "' and ZIP ='" + shippingInfo[5] + "';";
+        DataTable dt = DataAccess.selectQuery(getKey);
+        string orderKey = dt.Rows[0]["ID"].ToString();
+
         //save payment info
 
+        string[] paymentInfo = (string[])Session["paymentInfo"];
+        string addPaymentQuery;
+        addPaymentQuery = "INSERT INTO Payment_Info (UID,NAME_ON_CARD,CARD_NUM,EXP_MO,EXP_YR,GIFT_CARD,CVV)" +
+        " VALUES ('" + user + "','" + paymentInfo[0] +"','" + paymentInfo[1] + "','" + paymentInfo[2] + "','"
+        + paymentInfo[3] + "','" + paymentInfo[4] + "','" + paymentInfo[5] + "');";
+        DataAccess.insertQuery(addPaymentQuery);
+
+        
+
+        //add to order
         string addOrderQuery = "INSERT INTO Orders (UID,PYMT_INFO,ORDER_DATE,AMMT,SHIP_INFO,FULFILLED)" +
             "VALUES ('" + user + "','" + " ";
+
+        //add to order products
     }
 
     protected void PopulateShippingInfo()

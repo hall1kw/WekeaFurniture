@@ -33,15 +33,5 @@ public static class DataAccess
         cmd.ExecuteNonQuery();
         cnn.Close();
     }
-
-    public static int InsertGetKeyQuery(string query)
-    {
-        int n = 0;
-        SqlConnection cnn = new SqlConnection(myConnectionString);
-        cnn.Open();
-        SqlCommand cmd = new SqlCommand(query, cnn);
-        n = cmd.ExecuteNonQuery();
-        return n;
-    }
 }
 

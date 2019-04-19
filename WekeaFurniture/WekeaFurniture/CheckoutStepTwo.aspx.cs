@@ -165,6 +165,24 @@ public partial class CheckoutStepTwo : System.Web.UI.Page
 
     protected void btnConfirmOrder_Click(object sender, EventArgs e)
     {
+        string[] paymentInfo = new string[6];
+        if (ddlPaymentMethod.SelectedItem.ToString().Equals("Credit Card"))
+        {
+            paymentInfo[0] = txtCardName.Text;
+            paymentInfo[1] = txtCardNum.Text;
+            paymentInfo[2] = txtExpMo.Text;
+            paymentInfo[3] = txtExpYr.Text;
+            paymentInfo[4] = "0";
+            paymentInfo[5] = txtCVV.Text;
+        } else
+        {
+            paymentInfo[1] = "0";
+            paymentInfo[2] = "0";
+            paymentInfo[3] = "0";
+            paymentInfo[4] = "1";
+            paymentInfo[5] = "0";
+        }
+        Session["paymentInfo"] = paymentInfo;
         Response.Redirect("/Confirmation.aspx");
     }
 }
