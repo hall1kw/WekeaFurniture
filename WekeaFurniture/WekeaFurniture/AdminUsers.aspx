@@ -105,7 +105,6 @@
                             <asp:BoundField DataField="CITY" HeaderText="City" ReadOnly="true" SortExpression="CITY" />
                             <asp:BoundField DataField="STATE" HeaderText="State" ReadOnly="true" SortExpression="STATE" />
                             <asp:BoundField DataField="ZIP" HeaderText="Zipcode" ReadOnly="true" SortExpression="ZIP" />
-                            <asp:BoundField DataField="PHONE" HeaderText="Phone" ReadOnly="true" SortExpression="PHONE" />
                             <asp:CommandField ShowDeleteButton="true" />
                         </Columns>
                         <FooterStyle BackColor="#FFC107" Font-Bold="True" ForeColor="White" />
