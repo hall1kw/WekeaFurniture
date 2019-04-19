@@ -36,7 +36,7 @@ public partial class Confirmation : System.Web.UI.Page
         {
             shippingInfo = (string[])Session["shippingInfo"];
             PopulateShippingInfo();
-            EmailConfirmation();
+            //EmailConfirmation();
         }
 
         if (!IsPostBack)
@@ -68,7 +68,7 @@ public partial class Confirmation : System.Web.UI.Page
         }
         catch (System.Exception)
         {
-            Response.Write("<script>alert('Email could not be sent, please retry at a later time.')</script>");
+            //Response.Write("<script>alert('Email could not be sent, please retry at a later time.')</script>");
         }
     }
 

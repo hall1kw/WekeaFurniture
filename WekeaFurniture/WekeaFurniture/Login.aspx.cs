@@ -59,7 +59,8 @@ public partial class Login : System.Web.UI.Page
             string DBpwd = userRow["PASS_HASH"].ToString();
             string DBpwdSalt = userRow["PASS_SALT"].ToString();
             string returnedHash = Validation.VerifyPwdHashWithSalt(pw.Text, userRow["PASS_SALT"].ToString());
-            
+            Console.WriteLine(DBpwd);
+            Console.WriteLine(returnedHash);
             if (DBpwd.Equals(returnedHash))
             {                
                 HttpCookie mycookie = null;
