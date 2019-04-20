@@ -7,6 +7,9 @@ using System.Web.UI.WebControls;
 using System.Net.Mail;
 using System.Data;
 using System.Diagnostics;
+using SendGrid;
+using System.Threading.Tasks;
+using SendGrid.Helpers.Mail;
 
 public partial class Confirmation : System.Web.UI.Page
 {
@@ -37,7 +40,7 @@ public partial class Confirmation : System.Web.UI.Page
         {
             shippingInfo = (string[])Session["shippingInfo"];
             PopulateShippingInfo();
-            EmailConfirmation();
+            //EmailConfirmation();
         }
 
         if (!IsPostBack)
@@ -54,6 +57,20 @@ public partial class Confirmation : System.Web.UI.Page
 
             Session["thisCart"] = null;
         }
+        Execute();
+    }
+
+    static async Task Execute()
+    {
+        var apiKey = "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";
+        var client = new SendGridClient(apiKey);
+        var from = new EmailAddress("hall1kw@cmich.edu", "WeKea Furniture");
+        var subject = "Sending with SendGrid is Fun";
+        var to = new EmailAddress("ken.hall@cmich.edu", "To Test User");
+        var plainTextContent = "and easy to do anywhere, even with C#";
+        var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+        var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+        var response = await client.SendEmailAsync(msg);
     }
 
     protected void EmailConfirmation()
@@ -69,7 +86,7 @@ public partial class Confirmation : System.Web.UI.Page
         }
         catch (System.Exception)
         {
-            Response.Write("<script>alert('Email could not be sent, please retry at a later time.')</script>");
+            //Response.Write("<script>alert('Email could not be sent, please retry at a later time.')</script>");
         }
     }
 
@@ -136,11 +153,20 @@ public partial class Confirmation : System.Web.UI.Page
         + paymentInfo[3] + "','" + paymentInfo[4] + "','" + paymentInfo[5] + "');";
         DataAccess.insertQuery(addPaymentQuery);
 
-        
+        getKey = "SELECT ID FROM Payment_Info WHERE UID='" + user + "' and NAME_ON_CARD='" + paymentInfo[0] + "' and CARD_NUM='" 
+        + paymentInfo[1] + "' and EXP_MO='" + paymentInfo[2] + "' and EXP_YR='"
+        + paymentInfo[3] + "' and GIFT_CARD='" + paymentInfo[4] + "' and CVV='" + paymentInfo[5] + "';";
+        DataTable dt2 = DataAccess.selectQuery(getKey);
+        string paymentKey = dt2.Rows[0]["ID"].ToString();
 
-        //add to order
-        string addOrderQuery = "INSERT INTO Orders (UID,PYMT_INFO,ORDER_DATE,AMMT,SHIP_INFO,FULFILLED)" +
-            "VALUES ('" + user + "','" + " ";
+
+
+        string total = shippingInfo[7].Substring(26);
+        string addOrderQuery = "INSERT INTO Orders (UID,PYMT_INFO,ORDER_DATE,AMMT,SHIP_INFO,FULLFILLED)" +
+            "VALUES ('" + user + "','" + paymentKey + "','" + date + "','" + total
+            + "','" + orderKey + "','0');";
+
+        DataAccess.insertQuery(addOrderQuery);
 
         //add to order products
     }
