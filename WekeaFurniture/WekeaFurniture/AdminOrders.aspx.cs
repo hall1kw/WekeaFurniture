@@ -41,6 +41,8 @@ public partial class AdminOrders : System.Web.UI.Page
         }
     }
 
+    // Event Handlers
+
     protected void GridView1_PagingIndexChanging(object sender, GridViewPageEventArgs e)
     {
         GridView1.PageIndex = e.NewPageIndex;
@@ -58,18 +60,30 @@ public partial class AdminOrders : System.Web.UI.Page
         }
     }
 
-    protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+    protected void DetailsView1_ModeChanging(Object sender, DetailsViewModeEventArgs e)
     {
-        GridView1.EditIndex = e.NewEditIndex;
-        UpdateGridView();
-        GridView1.SelectedIndex = e.NewEditIndex;
+        if (e.NewMode == DetailsViewMode.Edit)
+        {
+            DetailsView1.ChangeMode(DetailsViewMode.Edit);
+        }
+        if (e.NewMode == DetailsViewMode.Insert)
+        {
+            DetailsView1.ChangeMode(DetailsViewMode.Insert);
+        }
+        if (e.NewMode == DetailsViewMode.ReadOnly)
+        {
+            DetailsView1.ChangeMode(DetailsViewMode.ReadOnly);
+        }
+
+        UpdateDetailsView();
     }
 
-    protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    // Update method that will also send out email if Fullfilled is changed to 'True'
+
+    protected void DetailsView1_OnItemUpdating(object sender, DetailsViewUpdateEventArgs e)
     {
-        string perm = ((DropDownList)GridView1.SelectedRow.FindControl("ddlPermission")).SelectedIndex.ToString();
-        string userId = GridView1.SelectedRow.Cells[1].Text.ToString();
-        string sql = "Update Users set PERMISSION=@permission where ID=@id";
+        string fullfilled = ((DropDownList)DetailsView1.FindControl("ddlFullfilled")).SelectedValue.ToString();
+        string sql = "Update Orders set FULLFILLED=@fullfilled where ID=@id";
         using (SqlConnection cnn = new SqlConnection(myConnectionString))
         {
             using (SqlCommand cmd = new SqlCommand())
@@ -77,13 +91,18 @@ public partial class AdminOrders : System.Web.UI.Page
                 cmd.Connection = cnn;
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText = sql;
-                cmd.Parameters.AddWithValue("@id", userId);
-                cmd.Parameters.AddWithValue("@permission", perm);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@fullfilled", fullfilled);
                 try
                 {
                     cnn.Open();
                     cmd.ExecuteNonQuery();
                     Response.Write("<script language='javascript'>alert('Order updated within Database.')</script>");
+                    DetailsView1.ChangeMode(DetailsViewMode.ReadOnly);
+                    if (fullfilled.Equals("True"))
+                    {
+                        // Put your Email stuff here                                                                      <-<-<-<-<-<
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -91,22 +110,15 @@ public partial class AdminOrders : System.Web.UI.Page
                 }
                 finally
                 {
-                    GridView1.EditIndex = -1;
+                    UpdateDetailsView();
                     UpdateGridView();
-                    GridView1.SelectedIndex = -1;
                 }
             }
         }
     }
 
-    protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-    {
-        GridView1.EditIndex = -1;
-        UpdateGridView();
-        GridView1.SelectedIndex = -1;
-    }
-
-
+    // Delete Method (Don't know if will use - TBD
+    /*
     protected void GridView1_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
     {
         string userId = GridView1.Rows[e.RowIndex].Cells[1].Text.ToString();
@@ -133,8 +145,23 @@ public partial class AdminOrders : System.Web.UI.Page
             }
         }
     }
+    */
 
-    
+    // Updates for GridView / DetailsView
+
+    private void UpdateGridView()
+    {
+        GridView1.DataSource = DataAccess.selectQuery("Select * from Orders Order By Fullfilled, ID");
+        GridView1.DataBind();
+    }
+
+    private void UpdateDetailsView()
+    {
+        DetailsView1.DataSource = DataAccess.selectQuery("Select * from Orders where ID=" + id);
+        DetailsView1.DataBind();
+    }
+
+    // Get Info for the DetailsView
 
     protected string Hide_Card()
     {
@@ -143,21 +170,16 @@ public partial class AdminOrders : System.Web.UI.Page
         string card = dr[0].ToString();
         System.Diagnostics.Debug.WriteLine(card);
         string new_card = "XXXX-XXXX-XXXX-";
-        new_card += card.Substring(card.Length - 4);
+        try
+        {
+            new_card += card.Substring(card.Length - 4);
+        }
+        catch (Exception ex)
+        {
+            new_card = "XXXX-XXXX-XXXX-XXXX";
+        }
 
         return new_card;
-    }
-
-    private void UpdateGridView()
-    {
-        GridView1.DataSource = DataAccess.selectQuery("Select * from Orders");
-        GridView1.DataBind();
-    }
-
-    private void UpdateDetailsView()
-    {
-        DetailsView1.DataSource = DataAccess.selectQuery("Select * from Orders where ID=" + id);
-        DetailsView1.DataBind();
     }
 
     protected string getName()
@@ -180,7 +202,7 @@ public partial class AdminOrders : System.Web.UI.Page
         DataTable dt = DataAccess.selectQuery("Select op.PID, p.NAME from Order_Products op, Products p where op.OID=" + id + " and p.ID=op.PID");
         foreach (DataRow dr in dt.AsEnumerable())
         {
-            products += "[Product " + i + "]: " + dr[0].ToString() + " | " + dr[1].ToString() + "<br />";
+            products += "[Product " + i + "]: " + dr[1].ToString() + " (" + dr[0].ToString() + ")<br />";
             i++;
         }
 
@@ -199,6 +221,9 @@ public partial class AdminOrders : System.Web.UI.Page
 
         return quantities;
     }
+
+
+    // Top Buttons to move between Admin pages
 
     protected void ProductButton_Click(object sender, EventArgs e)
     {

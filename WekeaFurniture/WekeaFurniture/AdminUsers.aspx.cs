@@ -319,7 +319,14 @@ public partial class AdminUsers : System.Web.UI.Page
     protected string Hide_Card(string card)
     {
         string new_card = "XXXX-XXXX-XXXX-";
-        new_card += card.Substring(card.Length - 4);
+        try
+        {
+            new_card += card.Substring(card.Length - 4);
+        }
+        catch (Exception ex)
+        {
+            new_card = "XXXX-XXXX-XXXX-XXXX";
+        }
 
         return new_card;
     }

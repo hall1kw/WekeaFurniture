@@ -141,11 +141,6 @@ public partial class Admin : System.Web.UI.Page
         
     }
 
-    protected void DetailsView1_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
-    {
-        
-    }
-
     protected void DetailsView1_ItemUpdating(object sender, DetailsViewUpdateEventArgs e)
     {
         int id = Convert.ToInt32(((Label)DetailsView1.FindControl("lblId")).Text);

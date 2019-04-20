@@ -131,8 +131,7 @@
                                     <asp:Label ID="lblCard" runat="server" Text='<%# Hide_Card(Eval("CARD_NUM").ToString()) %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="EXP_MO" HeaderText="Exp. Month" ReadOnly="true" SortExpression="EXP_MO" />
-                            <asp:BoundField DataField="EXP_YR" HeaderText="Exp. Year" ReadOnly="true" SortExpression="EXP_YR" />
+                            <asp:BoundField DataField="GIFT_CARD" HeaderText="Gift Card" ReadOnly="true" SortExpression="GIFT_CARD" />
                             <asp:CommandField ShowDeleteButton="true" />
                         </Columns>
                         <FooterStyle BackColor="#FFC107" Font-Bold="True" ForeColor="White" />
