@@ -68,7 +68,8 @@
           </tr>
         <tr class ="trow">
             <td class="labelCol">Zip Code</td>
-            <td class="inputCol"><asp:TextBox id="zip" runat="server"/></td> 
+            <td class="inputCol"><asp:TextBox id="zip" runat="server" /></td> 
+            
           </tr>
 
            

@@ -83,18 +83,19 @@ public partial class SignUp : System.Web.UI.Page
                 System.Diagnostics.Debug.Write("Before Insert\n");
 
                 //Insert user's shipping information
-                query = "INSERT INTO Shipping_Info (uid, ship_to_name, address_one, city, state, zip, phone) VALUES('" +
+                query = "INSERT INTO Shipping_Info (uid, ship_to_name, address_one, city, state, zip) VALUES('" +
                     userid + "', '" + first_name.Text + " " + last_name.Text + "', '" + address.Text + "', '" + city.Text
                      + "', '" + state.Text + "', '" + zip.Text + "');";
                 DataAccess.selectQuery(query);
 
-
+                //Create a cookie for new user
                 HttpCookie userInfo = new HttpCookie("userInfo");
                 userInfo["userid"] = userid;
-                userInfo["passhash"] = pwdHashAndSalt[0];
+                userInfo["pw"] = pwdHashAndSalt[0];
                 userInfo.Expires = DateTime.Now.AddHours(2);
                 Response.Cookies.Add(userInfo);
 
+                //Create/overwrite the Session
                 if (Session["userLoggedIn"] == null)
                 {
                     Session["userLoggedIn"] = userid;
@@ -112,10 +113,16 @@ public partial class SignUp : System.Web.UI.Page
             }
         }
     }
+
+    /*
+     * Checks if the form is valid
+     * Returns true if the form is valid, false otherwise
+     */
     protected bool valid_entry()
     {
         bool hasErrors = false;
 
+        
         if (first_name.Text.Length == 0)
         {
             errorMessage.Add("First Name is required");
@@ -128,7 +135,7 @@ public partial class SignUp : System.Web.UI.Page
         }
         if (email.Text.Length == 0)
         {
-            errorMessage.Add("Password should be at least 5 characters long");
+            errorMessage.Add("Email is required");
             hasErrors = true;
         }
         if (pw.Text.Length < 5)
@@ -151,9 +158,12 @@ public partial class SignUp : System.Web.UI.Page
             errorMessage.Add("State should be 2 characters long");
             hasErrors = true;
         }
-        if (zip.Text.Equals(""))
+        int myInt;
+        bool isNumerical = int.TryParse(zip.Text.ToString(), out myInt);
+        System.Diagnostics.Debug.Write("IsNumeric: " + isNumerical + "\n");
+        if (!isNumerical || zip.Text.Equals(""))
         {
-            errorMessage.Add("Zip Code is required");
+            errorMessage.Add("Zip Code is required and must be a number");
             hasErrors = true;
         }
 
