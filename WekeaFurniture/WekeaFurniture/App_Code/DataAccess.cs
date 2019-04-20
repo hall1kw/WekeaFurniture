@@ -31,6 +31,7 @@ public static class DataAccess
         cnn.Open();
         SqlCommand cmd = new SqlCommand(query, cnn);
         cmd.ExecuteNonQuery();
+        cnn.Close();
     }
 }
 

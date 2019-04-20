@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net.Mail;
+using System.Data;
+using System.Diagnostics;
 
 public partial class Confirmation : System.Web.UI.Page
 {
@@ -35,7 +37,7 @@ public partial class Confirmation : System.Web.UI.Page
         {
             shippingInfo = (string[])Session["shippingInfo"];
             PopulateShippingInfo();
-            EmailConfirmation();
+            //EmailConfirmation();
         }
 
         if (!IsPostBack)
@@ -48,6 +50,7 @@ public partial class Confirmation : System.Web.UI.Page
 
             BackOrderMessage();
             UpdateStock();
+            SaveOrder();
 
             Session["thisCart"] = null;
         }
@@ -66,7 +69,7 @@ public partial class Confirmation : System.Web.UI.Page
         }
         catch (System.Exception)
         {
-            Response.Write("<script>alert('Email could not be sent, please retry at a later time.')</script>");
+            //Response.Write("<script>alert('Email could not be sent, please retry at a later time.')</script>");
         }
     }
 
@@ -101,6 +104,54 @@ public partial class Confirmation : System.Web.UI.Page
                 DataAccess.selectQuery("UPDATE Products SET INVENTORY=" + inventory + " WHERE ID=" + item.ID);
             }
         }
+    }
+
+    protected void SaveOrder()
+    {
+        string date = DateTime.Now.ToString();
+        string user = (string) Session["userLoggedIn"];
+        if (string.IsNullOrEmpty(user))
+        {
+            user = "1";
+        }
+
+        //TODO: check if exact info is already saved. if not ->
+        //save shipping info
+        string addShippingQuery = "INSERT INTO Shipping_Info (UID,SHIP_TO_NAME,ADDRESS_ONE,ADDRESS_TWO,CITY,STATE,ZIP) " +
+            "VALUES ('" + user + "','" + shippingInfo[0] + "','" + shippingInfo[1] + "','" + shippingInfo[1] +
+            "','" + shippingInfo[3] + "','" + shippingInfo[4] + "','" + shippingInfo[5] + "');";
+        DataAccess.insertQuery(addShippingQuery);
+
+        string getKey = "SELECT ID FROM Shipping_Info WHERE UID ='" + user + "' and SHIP_TO_NAME ='" + shippingInfo[0] + "' and ADDRESS_ONE ='" + shippingInfo[1] + "' and ADDRESS_TWO ='" + 
+            shippingInfo[1] + "' and CITY ='" + shippingInfo[3]+ "' and STATE ='" + shippingInfo[4] + "' and ZIP ='" + shippingInfo[5] + "';";
+        DataTable dt = DataAccess.selectQuery(getKey);
+        string orderKey = dt.Rows[0]["ID"].ToString();
+
+        //save payment info
+
+        string[] paymentInfo = (string[])Session["paymentInfo"];
+        string addPaymentQuery;
+        addPaymentQuery = "INSERT INTO Payment_Info (UID,NAME_ON_CARD,CARD_NUM,EXP_MO,EXP_YR,GIFT_CARD,CVV)" +
+        " VALUES ('" + user + "','" + paymentInfo[0] +"','" + paymentInfo[1] + "','" + paymentInfo[2] + "','"
+        + paymentInfo[3] + "','" + paymentInfo[4] + "','" + paymentInfo[5] + "');";
+        DataAccess.insertQuery(addPaymentQuery);
+
+        getKey = "SELECT ID FROM Payment_Info WHERE UID='" + user + "' and NAME_ON_CARD='" + paymentInfo[0] + "' and CARD_NUM='" 
+        + paymentInfo[1] + "' and EXP_MO='" + paymentInfo[2] + "' and EXP_YR='"
+        + paymentInfo[3] + "' and GIFT_CARD='" + paymentInfo[4] + "' and CVV='" + paymentInfo[5] + "';";
+        DataTable dt2 = DataAccess.selectQuery(getKey);
+        string paymentKey = dt2.Rows[0]["ID"].ToString();
+
+
+
+        string total = shippingInfo[7].Substring(26);
+        string addOrderQuery = "INSERT INTO Orders (UID,PYMT_INFO,ORDER_DATE,AMMT,SHIP_INFO,FULLFILLED)" +
+            "VALUES ('" + user + "','" + paymentKey + "','" + date + "','" + total
+            + "','" + orderKey + "','0');";
+
+        DataAccess.insertQuery(addOrderQuery);
+
+        //add to order products
     }
 
     protected void PopulateShippingInfo()

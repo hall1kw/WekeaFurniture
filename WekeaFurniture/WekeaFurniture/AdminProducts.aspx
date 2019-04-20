@@ -11,17 +11,25 @@
         <div class="col-sm-2">
             <asp:Button ID="CustomerButton" runat="server" CssClass="form-control" OnClick="CustomerButton_Click" Text="Users"/>
         </div>
+        <div class="col-sm-2">
+            <asp:Button ID="OrderButton" runat="server" CssClass="form-control" Text="Orders" OnClick="OrderButton_Click" />
+        </div>
     </div>
     <br />
     <div class="row">
             <div class=" offset-1 col-sm-4 table-responsive">
+                <h2>Products</h2>
                 <asp:GridView ID="GridView1" PageSize="15" runat="server" OnPageIndexChanging="GridView1_PagingIndexChanging" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID"  EmptyDataText="There are no data records to display." CellPadding="4" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="SelectEvent">
                     <AlternatingRowStyle BackColor="White" />
                     <Columns>
                         <asp:CommandField ShowSelectButton="True" />
                         <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
                         <asp:BoundField DataField="NAME" HeaderText="NAME" SortExpression="NAME" />
-                        <asp:BoundField DataField="PRICE" HeaderText="PRICE" SortExpression="PRICE" />
+                        <asp:TemplateField HeaderText="PRICE">
+                            <ItemTemplate>
+                                <asp:Label ID="Label2" runat="server" Text='<%# String.Format("{0:C}",Eval("PRICE")) %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                     <FooterStyle BackColor="#FFC107" Font-Bold="True" ForeColor="White" />
                     <HeaderStyle BackColor="#74253D" Font-Bold="True" ForeColor="White" />
