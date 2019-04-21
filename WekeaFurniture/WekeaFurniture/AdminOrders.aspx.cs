@@ -103,13 +103,14 @@ public partial class AdminOrders : System.Web.UI.Page
                     System.Diagnostics.Debug.WriteLine("checking email script");
                     if (fullfilled.Equals("True") && !tempVarForEmailControlShowsChangeInFulfilled)
                     {
-                        System.Diagnostics.Debug.WriteLine("Calling email script");
+                        System.Diagnostics.Debug.WriteLine("Calling email script " + id);
                         SendShippingEmail.SendShipEmail(Int32.Parse(id));
                     }
                 }
                 catch (Exception ex)
                 {
                     Response.Write("<script language='javascript'>alert('Error has occured.')</script>");
+                    System.Diagnostics.Debug.WriteLine(ex.ToString());
                 }
                 finally
                 {

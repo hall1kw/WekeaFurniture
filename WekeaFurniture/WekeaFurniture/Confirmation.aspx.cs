@@ -138,11 +138,11 @@ public partial class Confirmation : System.Web.UI.Page
         System.Diagnostics.Debug.WriteLine("before insert shipping");
         string addShippingQuery = "INSERT INTO Shipping_Info (UID,SHIP_TO_NAME,ADDRESS_ONE,ADDRESS_TWO,CITY,STATE,ZIP) " +
             "VALUES ('" + user + "','" + shippingInfo[0] + "','" + shippingInfo[1] + "','" + shippingInfo[1] +
-            "','" + shippingInfo[3] + "','" + shippingInfo[4] + "','" + shippingInfo[5] + "');";
+            "','" + shippingInfo[3] + "','" + shippingInfo[8] + "','" + shippingInfo[5] + "');";
         DataAccess.selectQuery(addShippingQuery);
 
         string getKey = "SELECT ID FROM Shipping_Info WHERE UID ='" + user + "' and SHIP_TO_NAME ='" + shippingInfo[0] + "' and ADDRESS_ONE ='" + shippingInfo[1] + "' and ADDRESS_TWO ='" + 
-            shippingInfo[1] + "' and CITY ='" + shippingInfo[3]+ "' and STATE ='" + shippingInfo[4] + "' and ZIP ='" + shippingInfo[5] + "';";
+            shippingInfo[1] + "' and CITY ='" + shippingInfo[3]+ "' and STATE ='" + shippingInfo[8] + "' and ZIP ='" + shippingInfo[5] + "';";
         DataTable dt = DataAccess.selectQuery(getKey);
         string orderKey = dt.Rows[0]["ID"].ToString();
 

@@ -31,13 +31,15 @@ public class SendShippingEmail
 
     public static void SendShipEmail(int OID)
     {
+        System.Diagnostics.Debug.WriteLine("Starting email script");
         DataTable dt = DataAccess.selectQuery("SELECT TOP 1 * FROM Orders WHERE ID ='" + OID.ToString() + "';");
         DataRow row = dt.Rows[0];
         int orderUser = Int32.Parse(row["UID"].ToString());
         SetRecipientInfo(orderUser);
         int shippingInfo = Int32.Parse(row["SHIP_INFO"].ToString());
         SetShippingInfo(shippingInfo);
-        SetSubject(OID);
+        subject = "A subject";
+        subject = fName + ", your order (Order ID: " + OID.ToString() + ") has shipped!";
         if (row["SHIPPING_METHOD"].ToString().Equals("1")){
             method = "Express 2-Day Shipping";
             expected = DateTime.Today.AddDays(2).ToString();
@@ -47,6 +49,7 @@ public class SendShippingEmail
             expected = DateTime.Today.AddDays(7).ToString();
         }
         body = Body(OID);
+        
         System.Diagnostics.Debug.WriteLine("Calling execute");
         Execute();
     }
@@ -73,7 +76,8 @@ public class SendShippingEmail
 
     protected static void SetRecipientInfo(int UID)
     {
-        DataRow user = DataAccess.ReturnSingleRowQuery("SELECT TOP 1 * FROM USERS WHERE ID = '" + UID.ToString() + "';");
+        DataTable dt = DataAccess.selectQuery("SELECT TOP 1 * FROM USERS WHERE ID = '" + UID.ToString() + "';");
+        DataRow user = dt.Rows[0];
         fName = user["FIRST_NAME"].ToString();
         lName = user["LAST_NAME"].ToString();
         to = new EmailAddress(user["EMAIL"].ToString(), (fName + " " + lName));
@@ -81,7 +85,8 @@ public class SendShippingEmail
 
     protected static void SetShippingInfo(int SHIP_INFO)
     {
-        DataRow shippingDeets = DataAccess.ReturnSingleRowQuery("SELECT TOP 1 * FROM SHIP_INFO WHERE ID = '" + SHIP_INFO.ToString() + "';");
+        DataTable dt = DataAccess.selectQuery("SELECT TOP 1 * FROM Shipping_Info WHERE ID = '" + SHIP_INFO.ToString() + "';");
+        DataRow shippingDeets = dt.Rows[0];
         shipToName = shippingDeets["SHIP_TO_NAME"].ToString();
         lineOne = shippingDeets["ADDRESS_ONE"].ToString();
         lineTwo = shippingDeets["ADDRESS_TWO"].ToString();
@@ -92,10 +97,11 @@ public class SendShippingEmail
 
     static async Task Execute()
     {
-        var apiKey = "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";
+        var apiKey = "<<<REPLACE WITH SENDGRID APIKEY FROM KENS EMAIL>>>";
         var client = new SendGridClient(apiKey);        
        
         var msg = MailHelper.CreateSingleEmail(from, to, subject, body, body);
+        System.Diagnostics.Debug.WriteLine("Final step in mail send");
         var response = await client.SendEmailAsync(msg);
     }
 }
