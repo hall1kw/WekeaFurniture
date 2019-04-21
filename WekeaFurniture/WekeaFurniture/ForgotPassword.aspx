@@ -30,20 +30,17 @@
             <th class="auto-style5"></th> 
           </tr>
           <tr class ="trow">
-            <td class="labelCol">Email</td>
-            <td class="inputCol"><asp:TextBox id="email" name="email" runat="server"/></td> 
+            <td class="labelCol">
+                <asp:Button ID="btnReset" runat="server" Text="Get Reset Link" OnClick="btnReset_Click" /></td>
+            <td class="inputCol"><asp:TextBox id="txtEmail" name="email" runat="server"/></td> 
           </tr>
           <tr class ="trow">
             <td class="labelCol"></td>
             <td class="inputCol">
                 <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label></td> 
-          </tr>
-
-           
+          </tr> 
         </table>
         <br />
-        <asp:Button id="btn_SignUp" class="btn btn-warning my-2 my-sm-0" runat="server" OnClick="btnLogin_Click" Text="Login"/>
-        <asp:Button id="btn_forgotPassword" class="btn btn-warning my-2 my-sm-0" runat="server" Text="Forgot Password" OnClick="btn_forgotPassword_Click"/>
 
     </form>
 </asp:Content>
