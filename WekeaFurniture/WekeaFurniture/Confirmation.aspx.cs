@@ -160,8 +160,8 @@ public partial class Confirmation : System.Web.UI.Page
         string paymentKey = dt2.Rows[0]["ID"].ToString();
 
 
-
-        string total = shippingInfo[7].Substring(26);
+        int loc = shippingInfo[7].LastIndexOf('$');
+        string total = shippingInfo[7].Substring(loc + 1);
         string addOrderQuery = "INSERT INTO Orders (UID,PYMT_INFO,ORDER_DATE,AMMT,SHIP_INFO,FULLFILLED)" +
             "VALUES ('" + user + "','" + paymentKey + "','" + date + "','" + total
             + "','" + orderKey + "','0');";

@@ -176,6 +176,7 @@ public partial class CheckoutStepTwo : System.Web.UI.Page
             paymentInfo[5] = txtCVV.Text;
         } else
         {
+            paymentInfo[0] = "0";
             paymentInfo[1] = "0";
             paymentInfo[2] = "0";
             paymentInfo[3] = "0";
