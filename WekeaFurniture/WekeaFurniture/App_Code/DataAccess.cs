@@ -33,5 +33,16 @@ public static class DataAccess
         cmd.ExecuteNonQuery();
         cnn.Close();
     }
+
+    public static DataRow ReturnSingleRowQuery(string query)
+    {
+        DataTable dt = new DataTable();
+        SqlConnection cnn = new SqlConnection(myConnectionString);
+        cnn.Open();
+        SqlCommand cmd = new SqlCommand(query, cnn);
+        dt.Load(cmd.ExecuteReader());
+        cnn.Close();
+        return dt.Rows[0];
+    }
 }
 

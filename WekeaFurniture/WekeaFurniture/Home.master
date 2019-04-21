@@ -58,9 +58,17 @@
             if (row["PERMISSION"].ToString().Equals("1"))
             {
                 lblStoreMgr.Visible = true;
+                System.Data.DataTable unffCountTable = DataAccess.selectQuery("SELECT COUNT(*) FROM Orders WHERE FULLFILLED = '0'");
+                int ufCount = Int32.Parse(unffCountTable.Rows[0][0].ToString());
+                if (ufCount > 0)
+                {
+                    lblAdminUnfulfilledOrders.Text = "You have " + ufCount + " unfulfilled orders!";
+                    lblAdminUnfulfilledOrders.Visible = true;
+                }
             } else
             {
                 lblStoreMgr.Visible = false;
+                lblAdminUnfulfilledOrders.Visible = false;
             }
 
         }
@@ -158,7 +166,9 @@
                 </strong>
             </td>
             <td style="width:33%;" class="auto-style4">&nbsp;</td>
-            <td style="width:23%;" class="auto-style4">&nbsp;</td>
+            <td style="width:23%;" class="auto-style4">
+                <asp:Label ID="lblAdminUnfulfilledOrders" runat="server" Text=""></asp:Label>
+            </td>
             <td style="width:10%;" class="auto-style5">
                 <a href="AdminProducts.aspx"><asp:Label ID="lblStoreMgr" runat="server" Text="Store Admin" Font-Bold="True" ForeColor="#FFC107" Visible="False"></asp:Label></a>
             </td>

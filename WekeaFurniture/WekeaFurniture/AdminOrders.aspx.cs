@@ -83,6 +83,7 @@ public partial class AdminOrders : System.Web.UI.Page
     protected void DetailsView1_OnItemUpdating(object sender, DetailsViewUpdateEventArgs e)
     {
         string fullfilled = ((DropDownList)DetailsView1.FindControl("ddlFullfilled")).SelectedValue.ToString();
+        bool tempVarForEmailControlShowsChangeInFulfilled = fullfilled.ToString().Equals("0");
         string sql = "Update Orders set FULLFILLED=@fullfilled where ID=@id";
         using (SqlConnection cnn = new SqlConnection(myConnectionString))
         {
@@ -99,9 +100,11 @@ public partial class AdminOrders : System.Web.UI.Page
                     cmd.ExecuteNonQuery();
                     Response.Write("<script language='javascript'>alert('Order updated within Database.')</script>");
                     DetailsView1.ChangeMode(DetailsViewMode.ReadOnly);
-                    if (fullfilled.Equals("True"))
+                    System.Diagnostics.Debug.WriteLine("checking email script");
+                    if (fullfilled.Equals("True") && !tempVarForEmailControlShowsChangeInFulfilled)
                     {
-                        // Put your Email stuff here                                                                      <-<-<-<-<-<
+                        System.Diagnostics.Debug.WriteLine("Calling email script");
+                        SendShippingEmail.SendShipEmail(Int32.Parse(id));
                     }
                 }
                 catch (Exception ex)
