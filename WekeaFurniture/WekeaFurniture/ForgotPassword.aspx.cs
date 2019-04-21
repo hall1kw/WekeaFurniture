@@ -34,20 +34,14 @@ public partial class ForgotPassword : System.Web.UI.Page
             string now = DateTime.Now.ToString();
 
             //insert recovery key into the database
-            string addKey = "INSERT INTO Reset_Password (UID,Query_String,Creation_Time) " +
-                "VALUES ('" + UID + "','" + key + "','" + now + "');";
+            string addKey = "INSERT INTO Password_Resets (KEY, UID, TIME)" +
+                " VALUES ('" + key + "','" + UID + "','" + now + "');";
             DataAccess.insertQuery(addKey);
 
 
-            var apiKey = "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";
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("hall1kw@cmich.edu", "WeKea Furniture");
-            var subject = "Sending with SendGrid is Fun";
-            var to = new EmailAddress("paul.cappaert@gmail.com", "To Test User");
-            var plainTextContent = "and easy to do anywhere, even with C#";
-            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            var response = client.SendEmailAsync(msg);
+            //send email with link
+
+            //if email fails, remove reset key from the database
         } else
         {
             lblMessage.Text = "invalid email address";
