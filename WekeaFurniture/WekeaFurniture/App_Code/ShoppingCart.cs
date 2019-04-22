@@ -82,5 +82,10 @@ public class ShoppingCart
     {
         return _items.Count();
     }
+
+    public List<CartItem>.Enumerator GetEnumerator()
+    {
+        return Items.GetEnumerator();
+    }
 }
 

@@ -40,7 +40,7 @@ public partial class Confirmation : System.Web.UI.Page
         {
             shippingInfo = (string[])Session["shippingInfo"];
             PopulateShippingInfo();
-            //EmailConfirmation();
+            SendConfirmEmail.SendEmail();
         }
 
         if (!IsPostBack)
@@ -56,37 +56,6 @@ public partial class Confirmation : System.Web.UI.Page
             SaveOrder();
 
             Session["thisCart"] = null;
-        }
-        //Execute();
-    }
-
-    static async Task Execute()
-    {
-        var apiKey = "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";
-        var client = new SendGridClient(apiKey);
-        var from = new EmailAddress("hall1kw@cmich.edu", "WeKea Furniture");
-        var subject = "Sending with SendGrid is Fun";
-        var to = new EmailAddress("ken.hall@cmich.edu", "To Test User");
-        var plainTextContent = "and easy to do anywhere, even with C#";
-        var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
-        var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-        var response = await client.SendEmailAsync(msg);
-    }
-
-    protected void EmailConfirmation()
-    {
-        SmtpClient client = new SmtpClient();
-        MailMessage mail = new MailMessage("wekeafurniture@gmail.com", "contact.mjrowland@gmail.com"); 
-        mail.Subject = "Test";
-        mail.Body = "This is a test of the public service announcement. This is only a test.";
-
-        try
-        {
-            client.Send(mail);
-        }
-        catch (System.Exception)
-        {
-            //Response.Write("<script>alert('Email could not be sent, please retry at a later time.')</script>");
         }
     }
 

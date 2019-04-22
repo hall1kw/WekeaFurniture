@@ -33,9 +33,8 @@ public partial class CheckoutStepTwo : System.Web.UI.Page
         {
             shippingInfo = (string[])Session["shippingInfo"];
             PopulateShippingInfo();
-            
         }
-
+        
         if (cbSameAsBilling.Checked.ToString().Equals("False"))
         {
             ClearBilling();
