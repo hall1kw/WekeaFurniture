@@ -39,6 +39,16 @@
             <tr>
                 <td class="auto-style2">
 
+            <asp:Label ID="Label3" runat="server" Text="Enter your email"></asp:Label>
+                </td>
+                <td>
+            <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="auto-style2">
+
             <asp:Label ID="Label1" runat="server" Text="New Password"></asp:Label>
                 </td>
                 <td>
@@ -60,6 +70,7 @@
                 <td class="auto-style4"></td>
                 <td class="auto-style5">
                     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Reset Password" />
+                    <asp:Label ID="lblWarning" runat="server" Text=""></asp:Label>
                 </td>
                 <td class="auto-style5"></td>
             </tr>

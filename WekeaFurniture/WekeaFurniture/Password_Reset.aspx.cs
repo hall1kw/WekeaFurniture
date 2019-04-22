@@ -18,8 +18,10 @@ public partial class Password_Reset : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
+        lblWarning.Text = "";
         string newPass = txtPass.Text;
         string newPass2 = txtPass2.Text;
+
 
         if (newPass == newPass2 && newPass != "")
         {
@@ -27,14 +29,14 @@ public partial class Password_Reset : System.Web.UI.Page
             DataTable dt = DataAccess.selectQuery(getKey);
             string userID = dt.Rows[0]["UID"].ToString();
             TimeSpan span = DateTime.Now.Subtract(DateTime.Parse(dt.Rows[0]["TIME"].ToString()));
-            if (span.Minutes < 15)
+
+            string getEmail = "SELECT EMAIL FROM Users WHERE ID = '" + userID + "';";
+            DataTable userInfo = DataAccess.selectQuery(getEmail);
+            string email = userInfo.Rows[0]["EMAIL"].ToString();
+
+
+            if (span.Minutes < 15 && email == txtEmail.Text)
             {
-
-                string getEmail = "SELECT EMAIL FROM Users WHERE ID = '" + userID + "';";
-                DataTable userInfo = DataAccess.selectQuery(getEmail);
-                string email = userInfo.Rows[0]["EMAIL"].ToString();
-
-
                 //run password through hashing algorithm
                 String[] hash = Validation.PassHash(newPass);
 
@@ -44,14 +46,19 @@ public partial class Password_Reset : System.Web.UI.Page
                     "WHERE ID = '" + userID + "';";
                 DataAccess.selectQuery(update);
 
-                
+                string delete = "DELETE FROM Password_Resets WHERE query_string = '" + resetKey + "';";
+                DataAccess.selectQuery(delete);
 
-                //update password hash and salt on user table
-                //email confirmation to user that password is changed
+                Response.Redirect("Login.aspx");
+
             }
+
+            if (email != txtEmail.Text)
+                lblWarning.Text = "Invalid email";
+
         } else
         {
-
+            lblWarning.Text = "Password does not match";
         }
 
 

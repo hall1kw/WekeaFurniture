@@ -12,8 +12,20 @@ using System.Web;
 /// </summary>
 public class SendResetLink
 {
+
+    public static EmailAddress from = new EmailAddress("hall1kw@cmich.edu", "WeKea Furniture");
+    public static EmailAddress to;
+    public static string subject;
+    public static string body;
+
+
     public static void sendResetLink(string email, string resetKey)
     {
+        to = new EmailAddress(email, "User");
+        subject = "password reset WeKea Furniture";
+        body = "Reset your password at https://wekeafurniture20190329101320.azurewebsites.net/Password_Reset.aspx?Key=" 
+            + resetKey;
+        Execute();
 
     }
 
@@ -22,8 +34,8 @@ public class SendResetLink
         var apiKey = "<<<REPLACE WITH SENDGRID APIKEY FROM KENS EMAIL>>>";
         var client = new SendGridClient(apiKey);
 
-        //var msg = MailHelper.CreateSingleEmail(from, to, subject, body, body);
+        var msg = MailHelper.CreateSingleEmail(from, to, subject, body, body);
         System.Diagnostics.Debug.WriteLine("Final step in mail send");
-        //var response = await client.SendEmailAsync(msg);
+        var response = await client.SendEmailAsync(msg);
     }
 }
