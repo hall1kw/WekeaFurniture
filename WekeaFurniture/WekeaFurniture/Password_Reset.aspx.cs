@@ -23,12 +23,29 @@ public partial class Password_Reset : System.Web.UI.Page
 
         if (newPass == newPass2 && newPass != "")
         {
-            string getKey = "SELECT * FROM Password_Resets WHERE KEY = '" + resetKey + "';";
+            string getKey = "SELECT * FROM Password_Resets WHERE query_string = '" + resetKey + "';";
             DataTable dt = DataAccess.selectQuery(getKey);
-            int expr = DateTime.Compare(DateTime.Now, DateTime.Parse(dt.Rows[0]["TIME"].ToString()));
-            if (expr < 30)
+            string userID = dt.Rows[0]["UID"].ToString();
+            TimeSpan span = DateTime.Now.Subtract(DateTime.Parse(dt.Rows[0]["TIME"].ToString()));
+            if (span.Minutes < 15)
             {
+
+                string getEmail = "SELECT EMAIL FROM Users WHERE ID = '" + userID + "';";
+                DataTable userInfo = DataAccess.selectQuery(getEmail);
+                string email = userInfo.Rows[0]["EMAIL"].ToString();
+
+
                 //run password through hashing algorithm
+                String[] hash = Validation.PassHash(newPass);
+
+
+                //updates the user table
+                string update = "UPDATE Users SET PASS_HASH = '" + hash[0] + "', PASS_SALT = '" + hash[1] + "'" +
+                    "WHERE ID = '" + userID + "';";
+                DataAccess.selectQuery(update);
+
+                
+
                 //update password hash and salt on user table
                 //email confirmation to user that password is changed
             }

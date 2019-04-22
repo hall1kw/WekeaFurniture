@@ -29,17 +29,22 @@ public partial class ForgotPassword : System.Web.UI.Page
         {
             string UID = dt.Rows[0]["ID"].ToString();
 
+            //removes all other reset keys that may exist for the user
+            string delete = "DELETE FROM Password_Resets WHERE UID = '" + UID + "';";
+            DataAccess.selectQuery(delete);
+
             //generate a random 50 character string
             string key = RandomString(50, false);
             string now = DateTime.Now.ToString();
 
             //insert recovery key into the database
-            string addKey = "INSERT INTO Password_Resets (KEY, UID, TIME)" +
+            string addKey = "INSERT INTO Password_Resets (query_string, UID, TIME)" +
                 " VALUES ('" + key + "','" + UID + "','" + now + "');";
-            DataAccess.insertQuery(addKey);
+            DataAccess.selectQuery(addKey);
 
 
             //send email with link
+
 
             //if email fails, remove reset key from the database
         } else
