@@ -144,7 +144,7 @@ public partial class Confirmation : System.Web.UI.Page
         string getKey = "SELECT ID FROM Shipping_Info WHERE UID ='" + user + "' and SHIP_TO_NAME ='" + shippingInfo[0] + "' and ADDRESS_ONE ='" + shippingInfo[1] + "' and ADDRESS_TWO ='" + 
             shippingInfo[1] + "' and CITY ='" + shippingInfo[3]+ "' and STATE ='" + shippingInfo[8] + "' and ZIP ='" + shippingInfo[5] + "';";
         DataTable dt = DataAccess.selectQuery(getKey);
-        string orderKey = dt.Rows[0]["ID"].ToString();
+        string shippingKey = dt.Rows[0]["ID"].ToString();
 
         //save payment info
 
@@ -167,12 +167,25 @@ public partial class Confirmation : System.Web.UI.Page
         string total = shippingInfo[7].Substring(26);
         System.Diagnostics.Debug.WriteLine("before insert order " + user);
         string addOrderQuery = "INSERT INTO Orders (UID,PYMT_INFO,ORDER_DATE,AMMT,SHIP_INFO,FULLFILLED)" +
-            "VALUES ('" + user + "','" + paymentKey + "','" + date + "','" + total
-            + "','" + orderKey + "','0');";
+            " VALUES ('" + user + "','" + paymentKey + "','" + date + "','" + total
+            + "','" + shippingKey + "','0');";
 
         DataAccess.selectQuery(addOrderQuery);
 
+        getKey = "SELECT ID FROM Orders WHERE UID='" + user + "' and PYMT_INFO='" + paymentKey +"' and ORDER_DATE='" + date + "' and AMMT='" +
+            total + "' and SHIP_INFO='" + shippingKey + "' and FULLFILLED='0';";
+        DataTable dt3 = DataAccess.selectQuery(getKey);
+        string orderKey = dt3.Rows[0]["ID"].ToString();
+
         //add to order products
+
+        string orderProductsQuery = "";
+        foreach (CartItem item in thisCart.Items)
+        {
+            orderProductsQuery = "INSERT INTO Order_Products (PID,OID,QTY)" +
+                " VALUES ('" + item.ID + "','" + orderKey + "','" + item.Quantity + "');";
+            DataAccess.selectQuery(orderProductsQuery);
+        }
     }
 
     protected void PopulateShippingInfo()
