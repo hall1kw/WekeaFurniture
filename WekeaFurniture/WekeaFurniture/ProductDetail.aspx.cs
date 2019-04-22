@@ -83,7 +83,11 @@ public partial class ProductDetail : System.Web.UI.Page
                 "Order_Products.PID = '" + id + "';";
             DataTable dt = DataAccess.selectQuery(joinquery);
 
-            if (dt.Rows.Count > 0)
+            string getReviews = "SELECT UID FROM Reviews WHERE UID = '" + user + "';";
+            DataTable reviews = DataAccess.selectQuery(getReviews);
+
+
+            if (dt.Rows.Count > 0 && reviews.Rows.Count == 0)
                 validation = true;
         }
 
@@ -95,6 +99,7 @@ public partial class ProductDetail : System.Web.UI.Page
             string query = "INSERT INTO Reviews (PID, UID, Rating, Review) VALUES ('"
                 + id + "','" + user + "','" + stars + "','" + review + "')";
             DataAccess.insertQuery(query);
+            Response.Redirect("ProductDetail.aspx?ID=" + id);
         } else
         {
             RadioButtonList1.SelectedIndex = -1;
