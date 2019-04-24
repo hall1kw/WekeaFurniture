@@ -44,7 +44,7 @@ public partial class ForgotPassword : System.Web.UI.Page
 
 
             //send email with link
-            //SendResetLink.sendResetLink(email, key);
+            SendResetLink.sendResetLink(email, key);
 
             lblMessage.Text = "A reset link has been sent to your email";
             

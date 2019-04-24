@@ -83,7 +83,7 @@ public partial class ProductDetail : System.Web.UI.Page
                 "Order_Products.PID = '" + id + "';";
             DataTable dt = DataAccess.selectQuery(joinquery);
 
-            string getReviews = "SELECT UID FROM Reviews WHERE UID = '" + user + "';";
+            string getReviews = "SELECT UID FROM Reviews WHERE UID = '" + user + "' and PID = '" + id + "';";
             DataTable reviews = DataAccess.selectQuery(getReviews);
 
 

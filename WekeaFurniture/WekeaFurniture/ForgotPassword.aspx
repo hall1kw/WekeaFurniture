@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Home.master" CodeFile="ForgotPassword.aspx.cs" Inherits="ForgotPassword" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Home.master" CodeFile="ForgotPassword.aspx.cs" Inherits="ForgotPassword" Async="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
