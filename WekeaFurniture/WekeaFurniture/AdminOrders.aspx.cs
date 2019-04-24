@@ -121,38 +121,6 @@ public partial class AdminOrders : System.Web.UI.Page
         }
     }
 
-    // Delete Method (Don't know if will use - TBD
-    /*
-    protected void GridView1_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
-    {
-        string userId = GridView1.Rows[e.RowIndex].Cells[1].Text.ToString();
-        string sqlOrders = "Delete from Orders where ID=" + userId;
-
-        using (SqlConnection conn = new SqlConnection(myConnectionString))
-        {
-            using (SqlCommand cmd = new SqlCommand())
-            {
-
-                try
-                {
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-
-                }
-                finally
-                {
-                    UpdateGridView();
-                }
-            }
-        }
-    }
-    */
-
-    // Updates for GridView / DetailsView
-
     private void UpdateGridView()
     {
         GridView1.DataSource = DataAccess.selectQuery("Select * from Orders Order By Fullfilled, ID");
